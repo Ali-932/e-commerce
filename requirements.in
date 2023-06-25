@@ -1,0 +1,4 @@
+django==4.2.2
+django-browser-reload==1.10.0
+pip-lock==2.10.0
+ipython==8.14.0
