@@ -1,0 +1,60 @@
+  .custom-button {
+    background-color: #FE5353;
+    color: #ffffff;
+  }
+  .custom-button:hover {
+  background-color: #ff0000;
+  color: #ffffff;
+}
+
+.arabic-font{
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+.logo-size{
+   margin-right: 200px;
+}
+/*.banenrwidth{*/
+/*    width: 289px;*/
+/*    height: 420px;*/
+/*}*/
+/*.btn-custom {*/
+/*  background-color: rgba(255, 255, 255, 0.5);*/
+/*  opacity: 0.5;*/
+/*}*/
+
+/*.btn-custom:hover {*/
+/*  background-color: rgba(255, 255, 255, 1);*/
+/*  opacity: 1;*/
+/*}*/
+
+.btn-outline-white-3 {
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.3); /* Modified: Changed the alpha value to 0.5 */
+    background-image: none;
+    border-color: #fff;
+    box-shadow: none;
+}
+.btn-outline-white-3:hover,
+.btn-outline-white-3:focus,
+.btn-outline-white-3.focus,
+.btn-outline-white-3:not(:disabled):not(.disabled):active,
+.btn-outline-white-3:not(:disabled):not(.disabled).active,
+.show > .btn-outline-white-3.dropdown-toggle {
+    color: #333;
+    background-color: #fff;
+    border-color: #fff;
+    box-shadow: none;
+}
+
+.btn-outline-white-3.disabled,
+.btn-outline-white-3:disabled {
+    color: #fff;
+    background-color: transparent;
+}
+
+.custom-lower-header-container{
+    height: 80px;
+}
+
