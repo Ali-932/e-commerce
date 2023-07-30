@@ -7,6 +7,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import RedirectView
 
+from ecommerce.abstract.utlites.base_function import _common_base_View
 from ecommerce.home.models import BModel, AModel, CModel, DModel
 from ecommerce.home.models import nav_ad as NAV
 
@@ -23,23 +24,30 @@ class RootUrlView(RedirectView):
 def index(request):
     models = [AModel, BModel, CModel, DModel]
     ads = []
+
     for model in models:
         try:
             ad = model.objects.get(active=True)
         except model.DoesNotExist:
             ad = None
         ads.append(ad)
-    try:
-        nav_ad = NAV.objects.get(active=True)
-    except ObjectDoesNotExist:
-        nav_ad = None
 
-    return render(request, 'abstract/index-20.html', {
+    param = _common_base_View(request)
+    template = 'abstract/index-20.html'
+
+    context = {
         'pretitle_url': reverse('home:index'),
         'adA': ads[0],
         'adB': ads[1],
         'adC': ads[2],
         'adD': ads[3],
-        'nav_ad': nav_ad,
-    })
+        'nav_ad': param['nav_ad']
+    }
+
+    if request.htmx:
+        context['base'] = 'abstract/empty.html'
+    else:
+        context['base'] = 'abstract/_base.html'
+
+    return render(request, template, context)
 

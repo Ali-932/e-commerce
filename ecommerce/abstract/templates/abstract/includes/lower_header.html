@@ -8,7 +8,7 @@
                             <i class="icon-bars"></i>
                         </button>
 
-                        <a href="index.html" class="logo">
+                        <a href="#" hx-push-url="true" hx-swap="innerHTML" hx-target="#main" hx-get={% url 'home:index' %} class="logo">
                             <div class="logo-size">
                             <img src={% static "images/logo.png" %} width=105 height=25>
                             </div>

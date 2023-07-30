@@ -1,9 +1,8 @@
 
 {% load static %}
-
 <div class="row">
-                        <div class="col-md-12 col-lg-6">
-                           <div class="banner banner-big banner-overlay">
+            <div class="col-md-12 col-lg-6">
+               <div class="banner banner-big banner-overlay">
     <a href="#">
         <img src= {{ adA.image.url }}  alt="Banner">
 
@@ -11,7 +10,7 @@
     </a>
     <div class="banner-content">
         <h4 class="banner-subtitle text-white"><a class="arabic-font"  href="#">{{ adA.Title }}</a></h4><!-- End .banner-subtitle -->
-        <h2 class="banner-title text-white"><a class="arabic-font" href="#">{{ adA.Description|slice:"20" }} <br>{{ adA.Description|slice:"20:60" }}</a></h2><!-- End .banner-title -->
+        <h2 class="banner-title text-white"><a  class="arabic-font" href="#">{{ adA.Description|slice:"20" }} <br>{{ adA.Description|slice:"20:60" }}</a></h2><!-- End .banner-title -->
         {% if adA.prompt_text %}
         <a href="#" class="btn btn-outline-white-3 banner-link text-shadow">{{ adA.prompt_text}}<i class="icon-long-arrow-right"></i></a>
         {% endif %}
@@ -29,7 +28,8 @@
             <h4 class="banner-subtitle text-white"><a class="arabic-font" href="#">{{ adB.Title }}</a></h4><!-- End .banner-subtitle -->
             <h3 class="banner-title text-white "><a class="arabic-font center-text" href="#">{{ adB.Description}}</a></h3><!-- End .banner-title -->
             {% if adB.prompt_text %}
-            <a href="#" class="btn btn-outline-white-3 banner-link text-shadow arabic-font">{{ adB.prompt_text }}<i class="icon-long-arrow-right"></i></a>
+            <a href="#" hx-get={% url 'home:quality_rep' %} hx-target="#main" hx-swap="innerHTML" hx-push-url="true"  class="btn btn-outline-white-3 banner-link text-shadow
+             arabic-font">{{ adB.prompt_text }}<i class="icon-long-arrow-right"></i></a>
             {% endif %}
         </div><!-- End .banner-content -->
     </div><!-- End .banner -->

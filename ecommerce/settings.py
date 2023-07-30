@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'ecommerce.home',
     'simple_menu',
     'django_sass',
+    "django_htmx",
 
 ]
 
@@ -61,6 +62,7 @@ MIDDLEWARE = [
     'ecommerce.htmx_messages.middleware.HtmxMessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "django_browser_reload.middleware.BrowserReloadMiddleware",
+    "django_htmx.middleware.HtmxMiddleware",
 ]
 
 AUTH_USER_MODEL = 'account.User'
