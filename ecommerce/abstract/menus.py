@@ -1,5 +1,7 @@
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from simple_menu import Menu, MenuItem
+
+from ecommerce.abstract.utlites.menu_nums import menu_nums
 
 transaction_children = [
     MenuItem(
@@ -317,13 +319,13 @@ reports_children = [
         column=1,
     ),
 ]
-
 Menu.add_item('onesight',
               MenuItem(
                   'الرئيسية',
                   icon='home',
-                  url='',
+                  url=reverse('home:index'),
                   weight=20,
+                  num=menu_nums.get('home', 0)
               ))
 
 Menu.add_item('onesight',
@@ -334,6 +336,8 @@ Menu.add_item('onesight',
                   weight=20,
                   children=transaction_children,
                   columns=[1, 2],
+                  num=menu_nums.get('manga', 1)
+
               ))
 
 Menu.add_item('onesight',
@@ -344,6 +348,7 @@ Menu.add_item('onesight',
                   weight=20,
                   children=inventory_children,
                   columns=[1, 2],
+                  num=menu_nums.get('manhwa', 2)
               ))
 Menu.add_item('onesight',
               MenuItem(
@@ -353,13 +358,15 @@ Menu.add_item('onesight',
                   weight=20,
                   children=project_children,
                   columns=[1, ],
+                  num=menu_nums.get('comics', 3)
               ))
 Menu.add_item('onesight',
               MenuItem(
                   'نبذة عنا',
                   icon='people-simple',
-                  url='',
+                  url=reverse('home:quality_rep'),
                   weight=20,
                   children=hr_children,
                   columns=[1, ],
+                  num= menu_nums.get('about', 4)
               ))

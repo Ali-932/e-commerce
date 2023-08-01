@@ -19,22 +19,8 @@
 }
 
 .logo-size{
-   margin-right: 200px;
-}
+   margin-right: 200px;}
 
-/*.banenrwidth{*/
-/*    width: 289px;*/
-/*    height: 420px;*/
-/*}*/
-/*.btn-custom {*/
-/*  background-color: rgba(255, 255, 255, 0.5);*/
-/*  opacity: 0.5;*/
-/*}*/
-
-/*.btn-custom:hover {*/
-/*  background-color: rgba(255, 255, 255, 1);*/
-/*  opacity: 1;*/
-/*}*/
 
 .btn-outline-white-3 {
     color: #fff;
@@ -79,3 +65,22 @@
   text-align: center !important;
 }
 
+.flickity-viewport {
+  height:400px !important;
+}
+
+.stroke-text {
+  color: white;
+  text-shadow:
+    -0.2px -0.2px 0 black,
+    0.2px -0.2px 0 black,
+    -0.2px 0.2px 0 black,
+    0.2px 0.2px 0 black;
+}
+.sf-with-ul{
+    font-size:1.9rem;
+    letter-spacing:.01em;
+    color:#fff; !important;
+    transition:all .3s
+
+}

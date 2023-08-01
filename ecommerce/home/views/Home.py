@@ -8,6 +8,7 @@ from django.urls import reverse
 from django.views.generic import RedirectView
 
 from ecommerce.abstract.utlites.base_function import _common_base_View
+from ecommerce.abstract.utlites.menu_nums import menu_nums
 from ecommerce.home.models import BModel, AModel, CModel, DModel
 from ecommerce.home.models import nav_ad as NAV
 
@@ -34,6 +35,7 @@ def index(request):
 
     param = _common_base_View(request)
     template = 'abstract/index-20.html'
+    menu_num = menu_nums.get('home',0)
 
     context = {
         'pretitle_url': reverse('home:index'),
@@ -41,7 +43,8 @@ def index(request):
         'adB': ads[1],
         'adC': ads[2],
         'adD': ads[3],
-        'nav_ad': param['nav_ad']
+        'nav_ad': param['nav_ad'],
+        'menu_num': menu_num
     }
 
     if request.htmx:

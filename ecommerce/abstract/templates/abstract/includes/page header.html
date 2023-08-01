@@ -34,14 +34,22 @@
                             </div><!-- End .category-dropdown -->
                         </div><!-- End .header-left -->
          <div class="header-center">
-
-                            <nav class="main-nav">
+                            <script>
+                                menu_num={{ menu_num }}
+                            </script>
+                            <nav class="main-nav" x-data="{nav_bar : menu_num, $debug: true }">
                                 {% generate_menu %}
+
                                 <ul class="menu sf-arrows">
                                     {% for item in menus.onesight %}
-                                    <li>
-                                        <a class="sf-with-ul arabic-font">{{ item.title }}</a>
-
+                                    <li id="head_icon{{ item.num }}" name="page_header_icons" x-bind:class="{'active' : get_num() == nav_bar }">
+                                        <a class="sf-with-ul arabic-font" id="a{{ item.num }}"
+                                           x-on:click="nav_bar=$event.target.id.charAt($event.target.id.length -1);"
+                                           hx-swap="innerHTML"
+                                           hx-target="#main"
+                                           hx-push-url="true"
+                                           hx-get="{{ item.url }}"
+                                        >{{ item.title }}</a>
                                         <div class="megamenu megamenu-md">
                                         <div class="row no-gutters">
                                             <div class="col-md-8">
