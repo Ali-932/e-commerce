@@ -28,7 +28,7 @@
             <h4 class="banner-subtitle text-white"><a class="arabic-font" href="#">{{ adB.Title }}</a></h4><!-- End .banner-subtitle -->
             <h3 class="banner-title text-white "><a class="arabic-font center-text" href="#">{{ adB.Description}}</a></h3><!-- End .banner-title -->
             {% if adB.prompt_text %}
-            <a href="#" hx-get={% url 'home:quality_rep' %} hx-target="#main" hx-swap="innerHTML" hx-push-url="true"  class="btn btn-outline-white-3 banner-link text-shadow
+            <a href="#" hx-get={% url 'home:quality_rep' %} hx-target="#main" hx-swap="innerHTML settle:2s" hx-push-url="true" hx-boost="true"  class="btn btn-outline-white-3 banner-link text-shadow
              arabic-font">{{ adB.prompt_text }}<i class="icon-long-arrow-right"></i></a>
             {% endif %}
         </div><!-- End .banner-content -->

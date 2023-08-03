@@ -23,5 +23,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("reload/", include("django_browser_reload.urls")),
     path('', include('ecommerce.home.urls')),
+    path('', include('ecommerce.product.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

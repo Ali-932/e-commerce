@@ -1,9 +1,15 @@
+{% load compress %}
 {% load static %}
-<main class="min-h-screen text-white" x-data="carouselFilter()" dir="ltr">
+{#    {% compress css %}#}
+{#    <link rel="stylesheet" href="{% static 'css/tailwind.css' %}">#}
+{#    {% endcompress %}#}
+<main class="min-h-screen" x-data="carouselFilter()" dir="ltr">
   <div class="container grid grid-cols-1">
     <div class="flex py-5 justify-center">
-      <a class="px-2 text-lg font-bold hover:text-amber-800	 arabic-font" :class="{ 'text-gray-800': active != 0 }" href="#" @click.prevent="changeActive(0)">الجودة الخارجية</a>
-      <a class="px-2 text-lg font-bold hover:text-amber-800	 arabic-font" :class="{ 'text-gray-700': active != 1 }" href="#" @click.prevent="changeActive(1)">الجودة الداخلية</a>
+      <a class="px-2 text-lg font-bold hover:text-amber-800 text-current:text-lime-400
+      	 arabic-font text-decoration-none" :class="{ 'text-black': active != 0 }" href="#" @click.prevent="changeActive(0)">الجودة الخارجية</a>
+      <a class="px-2 text-lg font-bold hover:text-amber-800
+      	 arabic-font text-decoration-none" :class="{ 'text-black': active != 1 }" href="#" @click.prevent="changeActive(1)">الجودة الداخلية</a>
     </div>
 
     <div class="row-start-2 col-start-1"
@@ -49,20 +55,23 @@
 
 
         <div class="carousel col-start-1 row-start-1" x-ref="carousel">
-          <div class="w-3/5 px-2">
+          <div class="w-3/5 px-2" name="aaa">
             <img
+              class="lazy"
               src={% static 'images/about/IMG_0360 copy.jpg' %}
-              loading="lazy">
+              loading="eager">
           </div>
-          <div class="w-3/5 px-2">
+          <div class="w-3/5 px-2 ">
             <img
+              class="lazy"
               src={% static 'images/about/IMG_0359 copy.jpg' %}
-              loading="lazy">
+              loading="eager">
           </div>
           <div class="w-3/5 px-2">
             <img
+              class="lazy"
               src={% static 'images/about/IMG_0361.jpg' %}
-              loading="lazy">
+              loading="eager">
           </div>
         </div>
       </div>
@@ -114,18 +123,20 @@
         <div class="carousel col-start-1 row-start-1" x-ref="carousel">
           <div class="w-3/5 px-2">
             <img
+              class="lazy"
               src={% static 'images/about/IMG_0362.jpg' %}
-              loading="lazy">
+              loading="eager">
           </div>
           <div class="w-3/5 px-2">
             <img
+              class="lazy"
               src={% static 'images/about/IMG_0363.jpg' %}
-              loading="lazy">
+              loading="eager">
           </div>
           <div class="w-3/5 px-2">
             <img
               src={% static 'images/about/IMG_0364.jpg' %}
-              loading="lazy">
+              loading="eager">
           </div>
           </div>
         </div>

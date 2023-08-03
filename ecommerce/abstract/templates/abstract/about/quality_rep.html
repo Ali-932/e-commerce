@@ -1,7 +1,11 @@
     {% extends base %}
+{% load compress %}
 {% load static %}
 {% block content %}
     <div dir="rtl">
+{#    {% compress css %}#}
+{#    <link rel="stylesheet" href="{% static 'css/tailwind.css' %}">#}
+{#    {% endcompress %}#}
  <div class="container">
 	        	<div class="page-header page-header-big mt-1" style="background-image: url({% static 'images/about-header-bg copy.jpg' %})">
                     <div class="text-center arabic-font">
@@ -52,7 +56,8 @@
                             <div class="col-lg-7">
 
                                 <div>
-                                    {% include 'abstract/includes/image slider.html' %}
+                                {% include 'abstract/includes/image slider.html' %}
+
 {#                                    <img src=  {% static "images/about/img-1 copy.jpg" %} alt=""  style="width: 396px; height: 290px">#}
 {#                                    <img src={% static "images/about/img-2 copy.jpg" %} alt=""  style="width: 276px; height: 320px">#}
                                 </div><!-- End .about-images -->

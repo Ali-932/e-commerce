@@ -49,8 +49,14 @@ INSTALLED_APPS = [
     'simple_menu',
     'django_sass',
     "django_htmx",
+    'compressor',
 
 ]
+COMPRESS_ROOT = BASE_DIR / 'static'
+
+COMPRESS_ENABLED = True
+
+STATICFILES_FINDERS = ('compressor.finders.CompressorFinder',)
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

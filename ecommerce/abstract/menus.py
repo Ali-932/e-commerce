@@ -330,35 +330,35 @@ Menu.add_item('onesight',
 
 Menu.add_item('onesight',
               MenuItem(
-                  'المانجا',
+                  'المنتجات',
                   # icon='receipt',
-                  url='',
+                  url=reverse('product:list-products'),
                   weight=20,
                   children=transaction_children,
                   columns=[1, 2],
-                  num=menu_nums.get('manga', 1)
+                  num=menu_nums.get('products', 1)
 
               ))
 
 Menu.add_item('onesight',
               MenuItem(
-                  'المانهوا',
+                  'الاكثر مبيعا',
                   icon='warehouse-full',
                   url='',
                   weight=20,
                   children=inventory_children,
                   columns=[1, 2],
-                  num=menu_nums.get('manhwa', 2)
+                  num=menu_nums.get('best_sellers', 2)
               ))
 Menu.add_item('onesight',
               MenuItem(
-                  'الكوميك',
+                  'المضاف حديثاً',
                   icon='diagram-project',
                   url='',
                   weight=20,
                   children=project_children,
                   columns=[1, ],
-                  num=menu_nums.get('comics', 3)
+                  num=menu_nums.get('new_arrival', 3)
               ))
 Menu.add_item('onesight',
               MenuItem(
@@ -366,7 +366,6 @@ Menu.add_item('onesight',
                   icon='people-simple',
                   url=reverse('home:quality_rep'),
                   weight=20,
-                  children=hr_children,
                   columns=[1, ],
                   num= menu_nums.get('about', 4)
               ))

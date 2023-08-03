@@ -1,7 +1,7 @@
 menu_nums = {
     'home': 0,
-    'manga': 1,
-    'manhwa': 2,
-    'comics': 3,
+    'products': 1,
+    'best_sellers': 2,
+    'new_arrival': 3,
     'about': 4,
 }

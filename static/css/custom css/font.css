@@ -1,0 +1,26 @@
+.arabic-font{
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+.arabic-font h1 {
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.force-rtl {
+  text-align: right !important;
+}
+.force-center {
+  text-align: center !important;
+}
+
+.stroke-text {
+  color: white;
+  text-shadow:
+    -0.2px -0.2px 0 black,
+    0.2px -0.2px 0 black,
+    -0.2px 0.2px 0 black,
+    0.2px 0.2px 0 black;
+}
