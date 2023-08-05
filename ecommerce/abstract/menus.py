@@ -1,81 +1,106 @@
 from django.urls import reverse_lazy, reverse
 from simple_menu import Menu, MenuItem
 
-from ecommerce.abstract.utlites.menu_nums import menu_nums
+from ecommerce.abstract.utlites.menu_nums import menu_nums, CategoryChoices
 
-transaction_children = [
+manga_children = [
     MenuItem(
-        'الزبائن',
+        CategoryChoices.SHONEN,
         url='',
         icon='people-line',
         column=1,
     ),
     MenuItem(
-        'أوامر البيع',
+        CategoryChoices.KODOMO,
         url='',
         icon='cart-arrow-up',
         column=1,
     ),
     MenuItem(
-        'فواتير المبيعات',
+        CategoryChoices.SEINEN,
         url='',
         icon='file-invoice',
         column=1,
     ),
     MenuItem(
-        'قبض دفعة',
+        CategoryChoices.SHOUJO,
         url='',
         icon='arrow-left',
         column=1,
     ),
     MenuItem(
-        'سندات القبض',
+        CategoryChoices.JOSEI,
         url='',
         icon='file-import',
         column=1,
     ),
     MenuItem(
-        'سند ائتمان للزبون',
+        CategoryChoices.SEIJIN,
         url='',
         icon='file-alt',
         column=1,
     ),
     MenuItem(
-        'الموردون',
+        CategoryChoices.REDISU,
         url='',
         icon='forklift',
-        column=2
+        column=1
     ),
     MenuItem(
-        'أوامر الشراء',
-        url='',
-        icon='cart-arrow-down',
-        column=2
-    ),
-    MenuItem(
-        'فواتير المشتريات',
+        CategoryChoices.GEKIGA,
         url='',
         icon='list-alt',
-        column=2
+        column=1
     ),
-    MenuItem(
-        'تسديد دفعة',
-        url='',
-        icon='arrow-right',
-        column=2
-    ),
-    MenuItem(
-        'سندات الدفع',
-        url='',
-        icon='file-export',
-        column=2
-    ),
-    MenuItem(
-        'سند ائتمان للمورد',
-        url='',
-        icon='file-alt',
-        column=2
-    ),
+MenuItem(
+    'ايسيكاي',
+    url='',
+    icon='Isekai',
+    column=2,
+),
+MenuItem(
+    'الرومانسية',
+    url='',
+    icon='Romance',
+    column=2,
+),
+MenuItem(
+    'الكوميديا',
+    url='',
+    icon='Comedy',
+    column=2,
+),
+MenuItem(
+    'شريحة من الحياة',
+    url='',
+    icon='Slice of Life',
+    column=2,
+),
+MenuItem(
+    'الميكا',
+    url='',
+    icon='Mecha',
+    column=2,
+),
+MenuItem(
+    'الرعب',
+    url='',
+    icon='Horror',
+    column=2,
+),
+MenuItem(
+    'الرياضة',
+    url='',
+    icon='Sports',
+    column=2,
+),
+MenuItem(
+    'شوتا',
+    url='',
+    icon='Shota',
+    column=2,
+)
+
 ]
 
 inventory_children = [
@@ -334,7 +359,7 @@ Menu.add_item('onesight',
                   # icon='receipt',
                   url=reverse('product:list-products'),
                   weight=20,
-                  children=transaction_children,
+                  children=manga_children,
                   columns=[1, 2],
                   num=menu_nums.get('products', 1)
 
