@@ -47,11 +47,13 @@ INSTALLED_APPS = [
     'ecommerce.product',
     'ecommerce.htmx_messages',
     'ecommerce.home',
+    # 3d party apps
     'simple_menu',
     'django_sass',
     "django_htmx",
     'compressor',
     'djmoney',
+    'silk',
 
 ]
 COMPRESS_ROOT = BASE_DIR / 'static'
@@ -71,11 +73,13 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'silk.middleware.SilkyMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'ecommerce.htmx_messages.middleware.HtmxMessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "django_browser_reload.middleware.BrowserReloadMiddleware",
     "django_htmx.middleware.HtmxMiddleware",
+
 ]
 
 AUTH_USER_MODEL = 'account.User'

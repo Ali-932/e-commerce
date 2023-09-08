@@ -9,7 +9,6 @@ def _common_base_View(request: HttpRequest,
         nav_ad = NAV.objects.get(active=True)
     except ObjectDoesNotExist:
         nav_ad = None
-    return {
-        'nav_ad': nav_ad,
-    }
+    return nav_ad
+
 

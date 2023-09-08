@@ -1,17 +1,17 @@
 from django import forms
 from django.contrib import admin
-from .models import Author, Product, Volume
+from .models import Product, Volume
 from ..abstract.utlites.menu_nums import CategoryChoices
 
 
 
 
-class AuthorAdmin(admin.ModelAdmin):
-    list_display = ["name", "born_location", "born_date"]
-    search_fields = ["name"]
-
-admin.site.register(Author, AuthorAdmin)
-
+# class AuthorAdmin(admin.ModelAdmin):
+#     list_display = ["name", "born_location", "born_date"]
+#     search_fields = ["name"]
+#
+# admin.site.register(Author, AuthorAdmin)
+#
 
 class ProductForm(forms.ModelForm):
     category = forms.MultipleChoiceField(choices=CategoryChoices.choices)
@@ -21,9 +21,8 @@ class ProductForm(forms.ModelForm):
         fields = '__all__'
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ["name", "category", "author", "created_at"]
+    list_display = ["name", "created_at"]
     search_fields = ["name"]
-    list_filter = ["category", "author"]
     form = ProductForm
 admin.site.register(Product, ProductAdmin)
 

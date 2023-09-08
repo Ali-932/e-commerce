@@ -42,15 +42,16 @@
 
                                 <ul class="menu">
                                     {% for item in menus.onesight %}
-                                    <li id="head_icon{{ item.num }}" name="page_header_icons" x-bind:class="{'active' : get_num() == nav_bar }">
+                                    <li id="head_icon{{ item.num }}" name="page_header_icons" x-bind:class="{'active' : get_num() === nav_bar }">
                                         <a id="a{{ item.num }}"
                                            {% if item.children %} class="sf-with-ul arabic-font" {% else %}
                                             class="arabic-font" {% endif %}
                                            x-on:click="nav_bar=$event.target.id.charAt($event.target.id.length -1);"
                                            hx-swap="innerHTML"
-                                           hx-target="#main"
+                                           hx-target="#main_nav"
                                            hx-push-url="true"
                                            hx-get="{{ item.url }}"
+                                           hx-vals='{"nav": "true"}'
                                         >{{ item.title }}</a>
                                         {% if item.children %}
                                         <div class="megamenu megamenu-md">

@@ -33,7 +33,7 @@ def index(request):
             ad = None
         ads.append(ad)
 
-    param = _common_base_View(request)
+    nav_ad = _common_base_View(request)
     template = 'abstract/index-20.html'
     menu_num = menu_nums.get('home',0)
 
@@ -43,7 +43,7 @@ def index(request):
         'adB': ads[1],
         'adC': ads[2],
         'adD': ads[3],
-        'nav_ad': param['nav_ad'],
+        'nav_ad': nav_ad,
         'menu_num': menu_num
     }
 

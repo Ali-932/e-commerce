@@ -25,4 +25,6 @@ urlpatterns = [
     path('', include('ecommerce.home.urls')),
     path('', include('ecommerce.product.urls')),
 
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += [path('silk/', include('silk.urls', namespace='silk'))]
