@@ -86,3 +86,13 @@ document.body.addEventListener('htmx:afterOnLoad', function(event) {
 </script>
 
 
+<script>
+    document.body.addEventListener('htmx:afterSwap', function () {
+    Alpine.nextTick(() => {
+        Alpine.discoverUninitializedComponents((el) => {
+            Alpine.initializeComponent(el);
+        });
+    });
+});
+
+</script>

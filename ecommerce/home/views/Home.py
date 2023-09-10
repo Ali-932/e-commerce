@@ -33,7 +33,7 @@ def index(request):
             ad = None
         ads.append(ad)
 
-    nav_ad = _common_base_View(request)
+    nav_ad = NAV.objects.get(active=True)
     template = 'abstract/index-20.html'
     menu_num = menu_nums.get('home',0)
 
@@ -47,10 +47,7 @@ def index(request):
         'menu_num': menu_num
     }
 
-    if request.htmx:
-        context['base'] = 'abstract/empty.html'
-    else:
-        context['base'] = 'abstract/_base.html'
 
     return render(request, template, context)
+
 

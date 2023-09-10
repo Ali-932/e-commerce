@@ -51,7 +51,7 @@
                                            hx-target="#main_nav"
                                            hx-push-url="true"
                                            hx-get="{{ item.url }}"
-                                           hx-vals='{"nav": "true"}'
+                                           hx-select="#main_nav"
                                         >{{ item.title }}</a>
                                         {% if item.children %}
                                         <div class="megamenu megamenu-md">

@@ -142,3 +142,8 @@
     pointer-events: none !important;
 }
 
+
+input[type="checkbox"] {
+accent-color: #333333;
+}
+
