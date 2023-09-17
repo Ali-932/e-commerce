@@ -1,5 +1,6 @@
 from django import template
 import re
+from django.utils.safestring import mark_safe
 
 register = template.Library()
 
@@ -25,3 +26,13 @@ def query_transform(context, **kwargs):
     for k, v in kwargs.items():
         query[k] = v
     return query.urlencode()
+
+@register.simple_tag(name='score_filter')
+def score_filter(value):
+    value = float(value)
+    if value >= 7:
+        return mark_safe(f'<span style="color: green;">التقييم :{value}</span>')
+    elif 5 <= value < 7:
+        return mark_safe(f'<span style="color: yellow;">التقييم :{value}</span>')
+    else:
+        return mark_safe(f'<span style="color: red;">التقييم :{value}</span>')

@@ -708,7 +708,7 @@ div.breadcrumbs {
     padding: 10px 40px;
     border: none;
     color: var(--breadcrumbs-fg);
-    text-align: left;
+    text-align: right;
 }
 
 div.breadcrumbs a {

@@ -4,9 +4,11 @@ import pandas as pd
 import json
 from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
+from translatepy import Translator
 
+translator = Translator()
 # try:
-Gdata = pd.read_json('Anime1Gmanga2.json', encoding='utf-8',orient = 'records')
+Gdata = pd.read_json('Anime1Gmanga3.json', encoding='utf-8',orient = 'records')
 Adata = pd.read_json('manga2.json', encoding='utf-8',orient = 'records')
 # Gdata = Gdata[Gdata['manga'].apply(lambda x: len(x['volumes']) > 0)]
 
@@ -44,6 +46,12 @@ for title1 in titles1:
             if type(manga) is not dict:
                 continue
             if manga['title'] == title1['title']:
+                filtered_items[0]['synopsis']=str(translator.translate(manga['synopsis'],'arabic')) if manga['synopsis'] else None
+                filtered_items[0]['background']=str(translator.translate(manga['background'],'arabic')) if manga['background'] else None
+                authors=eval(filtered_items[0]['authors'])
+                for i in authors:
+                    i['role'] = str(translator.translate(i['role'],'arabic')) if i['role'] else None
+                filtered_items[0]['authors']=str(authors)
                 info = (
                     {}
                     | {
@@ -65,4 +73,5 @@ for title1 in titles1:
                 # print('found',manga)
                 Gdata['manga'] = Gdata['manga'].drop(index)
                 break
-Gdata.to_json('Anime1Gmanga3.json',orient='records', force_ascii=False, indent=4)
+
+Gdata.to_json('Anime1Gmanga0.json',orient='records', force_ascii=False, indent=4)

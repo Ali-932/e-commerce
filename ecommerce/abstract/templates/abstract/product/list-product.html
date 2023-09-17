@@ -1,0 +1,13 @@
+{% load product_tags %}
+                        <div>
+                            <div class="products mb-3" id="products_page">
+                                <div class="row justify-content-center">
+                                    {% for volume in volumes %}
+                                    <div class="col-6 col-md-4 col-lg-4 col-xl-3">
+                                      {% include 'abstract/includes/product_view.html' with volume=volume %}
+                                    </div><!-- End .col-sm-6 col-lg-4 col-xl-3 -->
+                                    {% endfor %}
+                                </div><!-- End .row -->
+                            </div><!-- End .products -->
+
+</div>

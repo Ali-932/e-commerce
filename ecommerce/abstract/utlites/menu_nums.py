@@ -61,7 +61,7 @@ class ThemeChoices(models.TextChoices):
     HIGH_STAKES_GAME = 'لعبة المخاطر العالية', 'High Stakes Game'
 
 class DemographicChoices(models.TextChoices):
-    KIDS = 'الأطفال', 'Kids'
+    KIDS = 'كودومو', 'Kids'
     SHOUJO = 'شوجو', 'Shoujo'
     SHOUNEN = 'شونين', 'Shounen'
     SEINEN = 'سينين', 'Seinen'

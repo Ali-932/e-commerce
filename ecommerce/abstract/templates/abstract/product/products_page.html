@@ -5,14 +5,11 @@
 {% load product_tags %}
        {% block content %}
 
-        <main class="main">
-        	<div class="page-header text-center mb-5" style="background-image:url({% static  'images/page-header-bg-1.jpg' %})" >
-
-        		<div class="container arabic-font">
-        			<h1 class="page-title text-white">المانجا<span>''</span></h1>
-        		</div><!-- End .container -->
-        	</div><!-- End .page-header -->
-
+        <main class="main" id="#main_list_product">
+<div class="container mb-5" style="position: relative;">
+  <img src="{{ product_banner.image.url }}" alt="Product Banner" style="width: 100%; object-fit: fill">
+  <h1 class="page-title arabic-font stroke-text" style="color: #fefefe;position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1; font-weight: 600;">{{ product_banner.Title }}<span></span></h1>
+</div>
             <div class="page-content">
                 <div class="container">
                 	<div class="row">
@@ -40,6 +37,7 @@
                                     hx-include=".included"
                                     name="q"
                                     type="text"
+                                    value="{{ request.GET.q }}"
 
 >
                                 <label class="mx-2 arabic-font custom-label" for="search_product">:البحث</label>
@@ -48,10 +46,20 @@
                 					<div class="toolbox-sort mx-1" dir="rtl">
                 						<label class="ml-1 arabic-font" for="sortby">افرز بواسطة:</label>
                 						<div class="select-custom">
-											<select name="sortby" id="sortby" class="form-control arabic-font mr-2">
-												<option value="popularity" selected="selected">بدون</option>
-												<option value="rating">المضاف مؤخراً</option>
-												<option value="date">الاكثر مبيعاً</option>
+											<select id="sortby" class="form-control arabic-font mr-2 included"
+                                                        hx-get=?{% query_transform %}"
+                                                        hx-swap="innerHTML"
+                                                        hx-target="#product_with_pag"
+                                                        hx-select="#product_with_pag"
+                                                        hx-trigger="change delay:500ms"
+                                                        hx-indicator="#products_page"
+                                                        hx-include=".included"
+                                                        name="sortby">
+												<option value="" selected="selected">بدون</option>
+												<option value="-product__score">الاعلى تقييماً</option>
+                                                <option value="product__score">الاقل تقييماً</option>
+{#												<option value="HS">الاعلى مبيعاً</option>#} #TODO
+                                                <option value="?">عشوائي</option>
 											</select>
 										</div>
                 					</div><!-- End .toolbox-sort -->
@@ -62,8 +70,7 @@
                 		<aside class="col-lg-3 order-lg-first">
                 			<div class="sidebar sidebar-shop">
                 				<div class="widget widget-clean">
-                					<a href="#" class="sidebar-filter-clear m-auto arabic-font force-rtl">تنظيف</a>
-                                    <label class="arabic-font force-rtl">: التصفية </label>
+                                    <h3 class="arabic-font force-rtl" style="margin-left: 200px">التصفية</h3>
                 				</div><!-- End .widget widget-clean -->
 
                 				<div class="widget widget-collapsible" >
@@ -92,7 +99,7 @@
                                                         hx-indicator="#products_page"
                                                         hx-include=".included"
                                                         name="demo"
-                                                        value="{{ key }}"
+                                                        value="{{ demo }}"
                                                         >
                                                     </div>
                                                 </div>
@@ -103,6 +110,44 @@
 										</div><!-- End .widget-body -->
 									</div><!-- End .collapse -->
         						</div><!-- End .widget -->
+                                                        <div class="widget widget-collapsible" >
+    								<h3 class="widget-title">
+									    <a class="force-rtl arabic-font" data-toggle="collapse" href="#widget-3" role="button" aria-expanded="true" aria-controls="widget-3"
+                                        style="padding-right: 35px">
+									        التصنيف
+									    </a>
+									</h3><!-- End .widget-title -->
+
+									<div class="collapse show" id="widget-3" >
+										<div class="widget-body">
+											<div class="" >
+                                        <div class="container force-rtl" >
+                                            {% for genre,key in genres.items %}
+                                            <div class="row mr-4" style="display: flex; justify-content: flex-end; align-items: center;">
+                                                <div class="col-9" style="">
+                                                    <div class="form-check" style="display: inline-flex;">
+                                                        <label for="cat-3{{ genre }}" class="form-check-label arabic-font mr-2">{{ genre }}</label>
+                                                        <input type="checkbox" class="checkbox included" id="cat-3{{ genre }}"
+                                                        hx-get=?{% query_transform %}"
+                                                        hx-swap="innerHTML"
+                                                        hx-target="#product_with_pag"
+                                                        hx-select="#product_with_pag"
+                                                        hx-trigger="change delay:500ms"
+                                                        hx-indicator="#products_page"
+                                                        hx-include=".included"
+                                                        name="genre"
+                                                        value="{{ genre }}"
+>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+											</div><!-- End .filter-items -->
+										</div><!-- End .widget-body -->
+									</div><!-- End .collapse -->
+        						</div><!-- End .widget -->
+
                                 <div class="widget widget-collapsible" >
     								<h3 class="widget-title">
 									    <a class="force-rtl arabic-font" data-toggle="collapse" href="#widget-2" role="button" aria-expanded="true" aria-controls="widget-2"
@@ -129,44 +174,7 @@
                                                         hx-indicator="#products_page"
                                                         hx-include=".included"
                                                         name="theme"
-                                                        value="{{ key }}"
->
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            {% endfor %}
-                                        </div>
-											</div><!-- End .filter-items -->
-										</div><!-- End .widget-body -->
-									</div><!-- End .collapse -->
-        						</div><!-- End .widget -->
-                            <div class="widget widget-collapsible" >
-    								<h3 class="widget-title">
-									    <a class="force-rtl arabic-font" data-toggle="collapse" href="#widget-3" role="button" aria-expanded="true" aria-controls="widget-3"
-                                        style="padding-right: 35px">
-									        التصنيف
-									    </a>
-									</h3><!-- End .widget-title -->
-
-									<div class="collapse show" id="widget-3" >
-										<div class="widget-body">
-											<div class="" >
-                                        <div class="container force-rtl" >
-                                            {% for genre,key in genres.items %}
-                                            <div class="row mr-4" style="display: flex; justify-content: flex-end; align-items: center;">
-                                                <div class="col-9" style="">
-                                                    <div class="form-check" style="display: inline-flex;">
-                                                        <label for="cat-3{{ genre }}" class="form-check-label arabic-font mr-2">{{ genre }}</label>
-                                                        <input type="checkbox" class="checkbox included" id="cat-3{{ genre }}"
-                                                        hx-get=?{% query_transform %}"
-                                                        hx-swap="innerHTML"
-                                                        hx-target="#product_with_pag"
-                                                        hx-select="#product_with_pag"
-                                                        hx-trigger="change delay:500ms"
-                                                        hx-indicator="#products_page"
-                                                        hx-include=".included"
-                                                        name="genre"
-                                                        value="{{ key }}"
+                                                        value="{{ theme }}"
 >
                                                     </div>
                                                 </div>

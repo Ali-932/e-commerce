@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib import admin
-from .models import Product, Volume
+from .models import Product, Volume, ProductBanner
 from ..abstract.utlites.menu_nums import CategoryChoices
 
 
@@ -33,3 +33,11 @@ class VolumeAdmin(admin.ModelAdmin):
     list_filter = ["product"]
 
 admin.site.register(Volume, VolumeAdmin)
+
+class AAdmin(admin.ModelAdmin):
+    # Customize the admin options for your model
+    list_display = ('Title', 'Description', 'image')
+    list_filter = ('Title', 'Description')
+    search_fields = ('Title', 'Description')
+
+admin.site.register(ProductBanner, AAdmin)
