@@ -8,6 +8,11 @@ from ecommerce.abstract.utlites.menu_nums import DemographicChoices,ThemeChoices
 from ecommerce.product.models import Product, Volume
 import json
 
+from translatepy.translators.google import GoogleTranslateV2 as GoogleTranslate
+
+translator = GoogleTranslate()
+
+
 class Command(BaseCommand):
     help = "upload accounts (create COA)"
 
@@ -30,7 +35,11 @@ class Command(BaseCommand):
             for author in list_obj:
                 first=author['first_name']
                 last=author['last_name']
-                au[f'{first} {last}']=author['role']
+                name=f'{first} {last}'
+                print(name)
+                name=translator.translate(name,destination_language='arabic',source_language='english')
+                print(name)
+                au[f'{name}']=author['role']
             self.handel_product(i,au)
 
 

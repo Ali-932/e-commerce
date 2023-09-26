@@ -1,5 +1,6 @@
-{% include 'abstract/includes/header.html' %}
+{% include 'abstract/includes/upper/header.html' %}
 {% load static %}
+{% load humanize %}
 <div class="header-middle">
                 <div class="container">
                     <div class="header-left ">
@@ -69,27 +70,40 @@
                                 </a>
                             </div><!-- End .compare-dropdown -->
 
-                            <div class="dropdown cart-dropdown pl-4">
-                                <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                            <div class="dropdown cart-dropdown pl-4" id="dropdown_cart" hx-swap-oob="true">
+                                <a style="cursor: pointer"
+                                           hx-get="{% url 'orders:cart' %}"
+                                           hx-target="#main_nav"
+                                           hx-push-url="true"
+                                           hx-select="#main_nav"
+                                           hx-indicator="#main_nav"
+                                   class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
                                     <div class="icon">
                                         <i class="icon-shopping-cart"></i>
-                                        <span class="cart-count">2</span>
+                                        <span class="cart-count">{{ total_count }}</span>
                                     </div>
                                     <p class="arabic-font">سلة المشتريات</p>
                                 </a>
 
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <div class="dropdown-cart-products">
+                                <div class="dropdown-menu dropdown-menu-right scrollbar-juicy-peach" style="max-height: 400px; overflow-y: auto;">
+                                    <div class="dropdown-cart-products hx-disabled" >
+                                        {% for order in orders %}
                                         <div class="product">
-                                            <div class="product-cart-details">
+                                            <div class="row">
+                                                <div class="col-4 p-0">
+                                                <img src="{{ order.volume.image }}">
+                                                </div>
+                                                <div class="col-8" >
                                                 <h4 class="product-title">
-                                                    <a href="product.html">Beige knitted elastic runner shoes</a>
+                                                    <a href="product.html">{{ order.volume.product}} {{ order.volume }}</a>
                                                 </h4>
 
-                                                <span class="cart-product-info">
-                                                    <span class="cart-product-qty">1</span>
-                                                    x $84.00
+                                                <span class="cart-product-info arabic-font" dir="ltr">
+                                                    <span class="cart-product-qty"> الكمية :{{ order.quantity }}</span>
+                                                    <br>
+                                                    IQD السعر :{{ order.price.amount|intcomma}}
                                                 </span>
+                                                </div>
                                             </div><!-- End .product-cart-details -->
 
                                             <figure class="product-image-container">
@@ -97,39 +111,40 @@
 {#                                                    <img src="assets/images/products/cart/product-1.jpg" alt="product">#}
                                                 </a>
                                             </figure>
-                                            <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
+                                            <a      style="cursor: pointer"
+                                                    class="btn-remove"
+                                                    title="Remove Product"
+                                                    hx-get='{% url 'orders:delete_order' pk=order.id %}'
+                                                    hx-swap='innerHTML'
+                                                    hx-target="#dropdown_cart"
+                                                    hx-select="#dropdown_cart"
+                                                    hx-indicator="#dropdown_cart"><i class="icon-close"
+                                            ></i></a>
                                         </div><!-- End .product -->
-
-                                        <div class="product">
-                                            <div class="product-cart-details">
-                                                <h4 class="product-title">
-                                                    <a href="product.html">Blue utility pinafore denim dress</a>
-                                                </h4>
-
-                                                <span class="cart-product-info">
-                                                    <span class="cart-product-qty">1</span>
-                                                    x $76.00
-                                                </span>
-                                            </div><!-- End .product-cart-details -->
-
-                                            <figure class="product-image-container">
-                                                <a href="product.html" class="product-image">
-{#                                                    <img src="assets/images/products/cart/product-2.jpg" alt="product">#}
-                                                </a>
-                                            </figure>
-                                            <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
-                                        </div><!-- End .product -->
+                                        {% endfor %}
                                     </div><!-- End .cart-product -->
 
                                     <div class="dropdown-cart-total">
-                                        <span>Total</span>
+                                        <span class="arabic-font">السعر الكلي</span>
 
-                                        <span class="cart-total-price">$160.00</span>
+                                        <span class="cart-total-price arabic-font">{{ total_price|intcomma|default:' لا توجد منتجات في السلة' }} {% if total_price %}IQD{% endif %}</span>
                                     </div><!-- End .dropdown-cart-total -->
 
                                     <div class="dropdown-cart-action">
-                                        <a href="cart.html" class="btn btn-primary">View Cart</a>
-                                        <a href="checkout.html" class="btn btn-outline-primary-2"><span>Checkout</span><i class="icon-long-arrow-right"></i></a>
+                                        <a href="#" style="cursor: pointer"
+                                           hx-get="{% url 'orders:cart' %}"
+                                           hx-target="#main_nav"
+                                           hx-push-url="true"
+                                           hx-select="#main_nav"
+                                           hx-indicator="#main_nav"
+                                           class="btn btn-outline-primary-2 arabic-font">سلة المشتريات</a>
+                                        <a href="#" style="cursor: pointer"
+                                           hx-get="{% url 'orders:checkout' %}"
+                                           hx-target="#main_nav"
+                                           hx-push-url="true"
+                                           hx-select="#main_nav"
+                                           hx-indicator="#main_nav"
+                                           class="btn btn-outline-primary-2 arabic-font"><span>الدفع</span><i class="icon-long-arrow-right"></i></a>
                                     </div><!-- End .dropdown-cart-total -->
                                 </div><!-- End .dropdown-menu -->
                             </div><!-- End .cart-dropdown -->

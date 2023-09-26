@@ -1,0 +1,89 @@
+
+
+{% load product_tags %}
+<div id="product_view_dev">
+<form
+                        hx-post="?{% query_transform %}"
+                        hx-indicator="#ht-spp"
+                        hx-vars="{'pk': {{ volume.id }}}"
+                        hx-select="#product_view_dev"
+                        hx-select-oob="#dropdown_cart"
+                        hx-swap="afterbegin"
+
+>
+{% csrf_token %}
+                        <div class="hx-disabled product product-7 text-center" id="ht-spp">
+                                            <figure class="product-media2">
+{#                                                <span class="product-label label-new">New</span>#}
+                                                <a style="cursor: pointer"
+                                                hx-get={% url 'product:view-product' pk=volume.id %}
+                                                hx-target="#main_nav"
+                                                hx-push-url="true"
+                                                hx-swap="innerHTML"
+                                                hx-select="#main_nav"
+                                                hx-trigger="click"
+                                                hx-indicator="#ht-spp, #pagination_pointers, #pagination_pre, #pagination_next"
+                                                >
+                                                    <img src={{ volume.image }} alt="Product" class="product-image" style="height: 250px; object-fit: cover;">
+                                                </a>
+
+                                                <div class="product-action-vertical" style="right: 0.5rem">
+                                                    <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span style="min-width: 50px" class="arabic-font">اعجاب</span></a>
+{#                                                    <a href="../popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>#}
+                                                </div><!-- End .product-action-vertical -->
+
+                                                <div class="product-action2">
+                                                   <button class="btn-product d-flex justify-content-center align-items-center"
+                                                      style="border: transparent; border-bottom: 1px solid white; cursor: pointer;">
+                                                      <i class="fa fa-shopping-cart mr-2 fa-xs" style="size: 10px" aria-hidden="true"></i>
+                                                      <span class="force-rtl arabic-font"
+                                                      >اضف الى السلة</span>
+                                                   </button>
+                                                </div> <!-- End .product-action -->
+                                            </figure><!-- End .product-media -->
+
+                                            <div class="product-body">
+                                            <div>
+                                                <h1 class="product-title scrollbar-juicy-peach" style="height: 70px; overflow: auto;"><a style="font-size: 1.6rem">{{ volume.product.name }} - Volume {{ volume.volume_number }}</a></h1><!-- End .product-title -->
+                                                </div>
+                                            <div class="scrollbar-juicy-peach" style="height: 45px; overflow: auto;">
+                                                    {% for author,key in volume.product.author.items %}
+                                                <h2 class="product-title fxs-1 arabic-font" style="direction: rtl;"
+                                                    ><a class="arabic-font" style="font-size: 1.2rem">{{ key }} : {{ author }} </a></h2>
+                                                    {% endfor %}
+                                            </div>
+                                                <div class="product-cat my-2 scrollbar-juicy-peach" style="height: 50px; overflow: auto;">
+                                                    <a>{{ volume.product.demographics|remove_brackets }} | {{ volume.product.themes|remove_brackets }} |
+                                                    {{ volume.product.genres|remove_brackets }}</a>
+                                                </div><!-- End .product-cat -->
+
+                                                <div class="ratings-container row align-items-center justify-content-center">
+
+                                                    <div class="col-6">
+                                                        <div>{% score_filter volume.product.score %}</div><!-- End .ratings-val -->
+                                                    </div><!-- End .ratings -->
+                                            <div class="col-6">
+                                              <div class="row d-flex align-items-center justify-content-center">
+                                                <div>
+                                                  <span class="ratings-text text-muted force-rtl arabic-font">الفصول: {{ volume.start_chapter }} - {{ volume.end_chapter }}</span>
+                                                </div>
+                                              </div>
+                                            </div>
+                                                </div><!-- End .rating-container -->
+                                            <div class="row mb-1">
+                                            <div class="col-sm-7">
+                                                    {{ form.language }}
+                                                </div>
+                                                <div class="col-sm-5">
+                                                    {{ form.quantity }}
+                                                </div>
+                                            </div>
+                                                <div class="product-price">
+                                                    {{ volume.price.amount }} IQD
+                                                </div><!-- End .product-price -->
+                                            </div><!-- End .product-body -->
+                                        </div><!-- End .product -->
+
+</form>
+
+</div>

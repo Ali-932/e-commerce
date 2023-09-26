@@ -1,0 +1,6 @@
+
+
+                <div id="product_with_pag">
+                    {% include 'abstract/product/product_list/list-product.html' with volumes=volumes pagination=pagination form=form %}
+                    {% include 'abstract/includes/paginator.html' with pagination=pagination %}
+                </div>

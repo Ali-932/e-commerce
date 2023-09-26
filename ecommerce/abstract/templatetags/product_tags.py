@@ -33,6 +33,6 @@ def score_filter(value):
     if value >= 7:
         return mark_safe(f'<span style="color: green;">التقييم :{value}</span>')
     elif 5 <= value < 7:
-        return mark_safe(f'<span style="color: yellow;">التقييم :{value}</span>')
+        return mark_safe(f'<span style="color: #8B8000;">التقييم :{value}</span>')
     else:
         return mark_safe(f'<span style="color: red;">التقييم :{value}</span>')

@@ -49,7 +49,7 @@ class Product(models.Model):
         return self.name
 
 
-class Volume(models.Model):
+class Volume(models.Model): #TODO change volume name to item and make it proxy model
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, blank=True, related_name='volume')
     volume_number = models.IntegerField(null=True, blank=True)
     price = MoneyField(max_digits=14, decimal_places=0, default_currency='IQD', default=8000)

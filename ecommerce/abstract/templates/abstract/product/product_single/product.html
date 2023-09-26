@@ -59,7 +59,7 @@
                     </nav><!-- End .pager-nav -->
                 </div><!-- End .container -->
             </nav><!-- End .breadcrumb-nav -->
-            <div class="page-content" id>
+            <div class="page-content">
                 <div class="container">
                 <div id="single_product_page">
                     <div class="product-details-top">
@@ -104,67 +104,9 @@
                                     <div class="product-price force-rtl" style="display: block;direction: ltr;margin-bottom: 1.6rem">
                                         {{ volume.price.amount }} {{ volume.price.currency }}
                                     </div><!-- End .product-price -->
-                                <div class="row">
-                                    <div class="col-6">
-                                    <div class="details-filter-row details-row-size arabic-font force-rtl">
-                                        <label for="qty">الكمية : </label>
-                                        <div class="product-details-quantity mr-2">
-                                            <input type="number" id="qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
-                                        </div><!-- End .product-details-quantity -->
-                                    </div><!-- End .details-filter-row -->
+                                <div id="product_form">
+                        {% include 'abstract/product/product_single/product_form.html' %}
                                 </div>
-                                </div>
-                                    <div class="row">
-                                    <div class="col-6">
-                                    <div class="details-filter-row details-row-size arabic-font force-rtl">
-                                        <label for="qty">اللغة : </label>
-                                        <div class="product-details-quantity mr-2">
-                                    <div class="p-0" style="">
-                                        <div class="container my-3" x-data="{ selected: '',hover_selected:'' }">
-                                                  <div class="row">
-                                                    <div
-                                                         class="product-cat d-flex justify-content-center" style=""
-                                                         >
-                                                      <div class=""
-                                                       @mouseover="hover_selected ='AR'"
-                                                       @mouseout="hover_selected =''"
-                                                        @click="selected ='AR'"
-                                                       x-bind:class="
-                                                            selected === 'AR' ? 'selected-ar' : hover_selected === 'AR' ? 'hover-selected-ar' : 'default-style'">
-                                                        <a
-                                                        x-bind:class="selected==='AR' ? 'text-selected' :hover_selected==='AR'?'text-selected-hover'
-                                                        :'text-selected-defualt'"
-                                                        >عربي</a>
-                                                      </div><!-- End .product-cat -->
-                                                    </div>
-                                                    <div class="product-cat d-flex justify-content-center">
-                                                      <div class=""
-                                                       @mouseover="hover_selected ='EN'"
-                                                       @mouseout="hover_selected =''"
-                                                           @click="selected ='EN'"
-                                                       x-bind:class="
-                                                            selected === 'EN' ? 'selected-ar' : hover_selected === 'EN' ? 'hover-selected-ar' : 'default-style'">
-                                                        <a
-                                                        x-bind:class="selected==='EN' ? 'text-selected' :hover_selected==='EN'?'text-selected-hover'
-                                                        :'text-selected-defualt'"
-                                                        >انكليزي</a>
-                                                      </div><!-- End .product-cat -->
-                                                    </div>
-                                                  </div>
-                                                </div>
-                                            </div>
-                                        </div><!-- End .product-details-quantity -->
-                                    </div><!-- End .details-filter-row -->
-                                </div>
-                                </div>
-
-                                    </div>
-                                    <div class="product-details-action">
-                                                   <a href="#" class="btn-product d-flex justify-content-center align-items-center">
-                                                     <span class="force-rtl arabic-font">اضف الى السلة</span>
-                                                      <i class="fa fa-shopping-cart mr-2 fa-xs cart" aria-hidden="true"></i>
-                                                   </a>
-
                                 </div><!-- End .product-details -->
                             </div><!-- End .col-md-6 -->
                         </div><!-- End .row -->
@@ -301,7 +243,7 @@
                         }'>
                         {% for volume in volume_suggestions %}
                             <div class="col-11 ml-3">
-                                        {% include 'abstract/includes/product_view.html' with volume=volume %}
+                             {% include 'abstract/product/product_single/product_view.html' with volume=volume %}
                             </div>
                         {% endfor %}
                     </div><!-- End .owl-carousel -->

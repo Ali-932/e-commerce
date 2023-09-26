@@ -24,7 +24,7 @@ urlpatterns = [
     path("reload/", include("django_browser_reload.urls")),
     path('', include('ecommerce.home.urls')),
     path('', include('ecommerce.product.urls')),
-
+    path('', include('ecommerce.order.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += [path('silk/', include('silk.urls', namespace='silk'))]

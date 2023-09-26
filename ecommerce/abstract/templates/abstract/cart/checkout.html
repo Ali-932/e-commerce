@@ -1,0 +1,88 @@
+{% extends 'abstract/_base.html' %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+        <main class="main hx-disabled" id="main_nav">
+            <div class="page-content mt-3 mx-5">
+            	<div class="checkout">
+	                <div class="container">
+            			<form
+                            hx-post="{% url 'orders:checkout' %}"
+                            _="on htmx:confirm(issueRequest)
+                            halt the event
+                            call Swal.fire({
+                            title: 'تأكيد',
+                            text:'هل تريد تثبيت طلبك؟',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonText: 'نعم, ثبت الطلب',
+                            confirmButtonColor: '#FE5656',
+                            cancelButtonText: 'لا',
+                            customClass: 'arabic-font p-2 h6'
+                            })
+                            if result.isConfirmed issueRequest()"
+                            hx-target="#order_form_div"
+                            hx-swap="outerHTML"
+                            hx-indicator="#main_nav"
+                            hx-select="#order_form_div"
+>
+		                	<div class="row">
+		                		<div class="col-lg-8 arabic-font force-rtl px-5" dir="rtl" id="order_form_div">
+		                			{% crispy form %}
+		                		</div><!-- End .col-lg-9 -->
+
+		                		<aside class="col-lg-3">
+		                			<div class="summary">
+		                				<h3 class="summary-title arabic-font force-rtl pb-2">طلبيتك الخاصة</h3><!-- End .summary-title -->
+
+		                				<table class="table table-summary">
+	                					<tbody>
+	                						<tr class="summary-subtotal arabic-font" dir="rtl">
+                                                <td dir="ltr">{{ total_price|default:' لا توجد منتجات في السلة'|intcomma }} {% if total_price %}IQD{% endif %}</td>
+	                							<td>مجموع سعر المنتجات:</td>
+	                						</tr><!-- End .summary-subtotal -->
+	                						<tr class="summary-subtotal arabic-font" dir="rtl">
+                                                <td dir="ltr">5,000 IQD</td>
+{#                                                #TODO make global dlivery price#}
+	                							<td>التوصيل:</td>
+	                						</tr><!-- End .summary-subtotal -->
+	                						<tr class="summary-total arabic-font">
+                                                <td>{{ total_price|add:5000|default:' لا توجد منتجات في السلة'|intcomma }} {% if total_price %}IQD{% endif %}</td>
+	                							<td>:المجموع الكلي</td>
+	                						</tr><!-- End .summary-total -->
+	                					</tbody>
+	                				</table><!-- End .table table-summary -->
+
+		                				<div class="accordion-summary" id="accordion-payment" dir="rtl">
+										    <div class="card" >
+										        <div class="card-header" id="heading-1">
+										            <h2 class="card-title">
+										                <a class="arabic-font" role="button" data-toggle="collapse" href="#collapse-1" aria-expanded="true" aria-controls="collapse-1">
+										                    الدفع عند الاستلام
+										                </a>
+										            </h2>
+										        </div><!-- End .card-header -->
+										        <div id="collapse-1" class="collapse show" aria-labelledby="heading-1" data-parent="#accordion-payment">
+										            <div class="card-body arabic-font">
+										                يتم الدفع عند وصول المندوب الى عنوانك والتواصل معكم
+										            </div><!-- End .card-body -->
+										        </div><!-- End .collapse -->
+										    </div><!-- End .card -->
+                                        </div><!-- End .accordion -->
+
+		                				<button type="submit"
+                                                class="btn btn-outline-primary-2 btn-order btn-block">
+		                					<span class="btn-text arabic-font">ثبت طلبك</span>
+		                					<span class="btn-hover-text arabic-font">اضغظ لثبيت الطلب</span>
+		                				</button>
+		                			</div><!-- End .summary -->
+		                		</aside><!-- End .col-lg-3 -->
+		                	</div><!-- End .row -->
+            			</form>
+	                </div><!-- End .container -->
+                </div><!-- End .checkout -->
+            </div><!-- End .page-content -->
+        </main><!-- End .main -->
+
+{% endblock %}

@@ -7,7 +7,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import RedirectView
 
-from ecommerce.abstract.utlites.base_function import _common_base_View
+from ecommerce.abstract.utlites.base_function import common_views
 from ecommerce.abstract.utlites.menu_nums import menu_nums
 from ecommerce.home.models import BModel, AModel, CModel, DModel
 from ecommerce.home.models import nav_ad as NAV
@@ -33,9 +33,8 @@ def index(request):
             ad = None
         ads.append(ad)
 
-    nav_ad = NAV.objects.get(active=True)
     template = 'abstract/index-20.html'
-    menu_num = menu_nums.get('home',0)
+    menu_num, orders, total_info, nav_bar, authors = common_views(request)
 
     context = {
         'pretitle_url': reverse('home:index'),
@@ -43,9 +42,14 @@ def index(request):
         'adB': ads[1],
         'adC': ads[2],
         'adD': ads[3],
-        'nav_ad': nav_ad,
-        'menu_num': menu_num
+        'nav_ad': nav_bar,
+        'menu_num': menu_num,
+        'orders': orders,
+        'total_price': total_info['sum'],
+        'total_count': total_info['count'],
+        'authors': authors
     }
+
 
 
     return render(request, template, context)

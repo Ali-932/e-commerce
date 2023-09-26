@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "django_browser_reload",
+    "django.contrib.humanize",
     'taggit',
     # internal apps
     'ecommerce.abstract',
@@ -55,8 +56,15 @@ INSTALLED_APPS = [
     'djmoney',
     'silk',
     'django_filters',
+    'crispy_forms',
+    "crispy_bootstrap4",
 
 ]
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
+
+CRISPY_TEMPLATE_PACK = "bootstrap4"
+
 COMPRESS_ROOT = BASE_DIR / 'static'
 
 COMPRESS_ENABLED = True

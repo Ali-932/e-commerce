@@ -18,7 +18,9 @@
 <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.x.x/dist/alpine.js"></script>
 <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
 <script src="https://unpkg.com/htmx.org@1.9.4"></script>
-
+<script src="{% static 'toasts.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://unpkg.com/hyperscript.org@0.9.11"></script>
 
 <script>
     function carousel() {
@@ -83,41 +85,84 @@ document.body.addEventListener('htmx:afterOnLoad', function(event) {
 });
 
 </script>
+<script>
+$(document).on('htmx:afterSettle', function(event) {
+$('.input-spinner').remove();
 
+$('.qty').each(function() {
+    $(this).inputSpinner(
+        {
+            decrementButton: '<i class="icon-minus"></i>',
+            incrementButton: '<i class="icon-plus"></i>',
+            groupClass: 'input-spinner',
+            buttonsClass: 'btn-spinner',
+            buttonsWidth: '26px'
+        }
+    );
+});
+});
+$(window).on("popstate", function() {
+  $(document).ready(function() {
+    $(".input-spinner").remove(); // or $(".input-spinner").hide();
+          location.reload(true);
+
+  });
+});
+</script>
 
 <script>
-$(document).on('htmx:afterSwap', function(event) {
-  // Check if the swapped content contains the carousel container
-  var $carouselContainer = $(event.target).find('#myCarousel');
-  if ($carouselContainer.length) {
-    // Initialize the carousel
-      console.log("carousel");
-    $carouselContainer.owlCarousel({
-      // Add your carousel options here
-      nav: false,
-      dots: true,
-      loop: false,
-      responsive: {
-        0: {
-          items: 1
-        },
-       480: {
-          items: 2
-        },
-        768: {
-          items: 3
-        },
-        992: {
-          items: 4
-        },
-      1200: {
-            items:4,
-            nav:true,
-            dots:false
-      }
-      }
-    });
+// Store the Owl Carousel configuration in a variable
+var owlCarouselOptions = {
+  // Add your carousel options here
+  nav: false,
+  dots: true,
+  loop: false,
+  responsive: {
+    0: {
+      items: 1
+    },
+    480: {
+      items: 2
+    },
+    768: {
+      items: 3
+    },
+    992: {
+      items: 4
+    },
+    1200: {
+      items: 4,
+      nav: true,
+      dots: false
+    }
   }
+};
+
+// Initialize Owl Carousel on page load
+$(document).ready(function() {
+  initOwlCarousel();
 });
 
+// Reinitialize Owl Carousel on htmx afterSwap event
+$(document).on('htmx:afterSettle', function(event) {
+  setTimeout(function() {
+    initOwlCarousel();
+  }, 0);
+});
+
+// Function to initialize or reinitialize Owl Carousel
+function initOwlCarousel() {
+  $('.owl-carousel').each(function() {
+    var $carouselContainer = $(this);
+
+    // Check if the carousel is already initialized
+    if (typeof $carouselContainer.data('owl.carousel') === 'undefined') {
+      // Initialize the carousel with the stored configuration
+      $carouselContainer.owlCarousel(owlCarouselOptions);
+
+      // Update Owl Carousel's internal settings to reflect the newly initialized state
+      $carouselContainer.trigger('refresh.owl.carousel');
+    }
+  });
+}
 </script>

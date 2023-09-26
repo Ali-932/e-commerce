@@ -24,3 +24,11 @@
     -0.2px 0.2px 0 black,
     0.2px 0.2px 0 black;
 }
+
+.asteriskField {
+    color: #FE5353;
+}
+
+.swal-wide{
+    width:850px !important;
+}

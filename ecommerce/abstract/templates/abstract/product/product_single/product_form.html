@@ -1,0 +1,36 @@
+        <form
+                hx-post="{% url 'product:view-product' pk=volume.id %}"
+                       hx-indicator="#main_nav"
+                       hx-select-oob="#dropdown_cart"
+                        hx-select="#product_form"
+
+        >
+            {% csrf_token %}
+    <div class="row" id="product_singe_form">
+        <div class="col-6">
+            <div class="details-filter-row details-row-size arabic-font force-rtl">
+                <label for="qty">الكمية : </label>
+                <div class="product-details-quantity mr-2">
+                    {{ form.quantity }}
+{#                    <input type="number" id="qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>#}
+                </div><!-- End .product-details-quantity -->
+            </div><!-- End .details-filter-row -->
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <div class="details-filter-row details-row-size arabic-font force-rtl">
+                <label for="lang">اللغة : </label>
+                <div class="product-details-quantity mr-2 mt-3 mb-4" dir="ltr">
+                            {{ form.language }}
+                </div><!-- End .product-details-quantity -->
+            </div><!-- End .details-filter-row -->
+        </div>
+    </div>
+    <div class="product-details-action">
+        <button type="submit" class="btn-product d-flex justify-content-center align-items-center">
+            <span class="force-rtl arabic-font">اضف الى السلة</span>
+            <i class="fa fa-shopping-cart mr-2 fa-xs cart" aria-hidden="true"></i>
+        </button>
+    </div>
+</form>

@@ -40,7 +40,6 @@ class CustomUserManager(UserManager):
 class User(IntEntity, AbstractUser):
     name = models.CharField('الاسم', max_length=255, null=True, blank=True)
     address1 = models.CharField('العنوان 1', max_length=255, null=True, blank=True)
-    address2 = models.CharField('العنوان 2', max_length=255, null=True, blank=True)
     phone_number_1 = PhoneNumberField('رقم الهاتف 1', null=True, blank=True)
     phone_number_2 = PhoneNumberField('رقم الهاتف 2', null=True, blank=True)
     username = models.NOT_PROVIDED
@@ -58,4 +57,5 @@ class User(IntEntity, AbstractUser):
 
     def __str__(self):
         return f'{self.name}'
+
 

@@ -1,16 +1,20 @@
 from django.shortcuts import render
+
+from ecommerce.abstract.utlites.base_function import common_views
 from ecommerce.abstract.utlites.menu_nums import menu_nums
 from ecommerce.home.models import nav_ad as NAV
 
 
 def quality_page(request):
-    menu_num = menu_nums.get('about',4)
-    nav_bar = 0 if request.htmx else NAV.objects.get(active=True) # we only need the nav bar if we are refreshing the page
+    menu_num, orders, total_info, nav_bar, authors = common_views(request)
 
     context = {
-        'base': 'base_template',
-        'nav_ad': nav_bar,
-        'menu_num': menu_num
+    'nav_ad': nav_bar,
+    'menu_num': menu_num,
+    'orders':orders,
+    'total_price':total_info['sum'],
+    'total_count':total_info['count'],
+    'authors': authors
     }
 
     return render(request, 'abstract/about/quality_rep.html', context)

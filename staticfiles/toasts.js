@@ -9,7 +9,7 @@
     delete element.dataset.toastTemplate
 
     // Set the CSS class
-    element.className += " " + message.tags
+    element.className += "alert-" + message.tags
 
     // Set the text
     htmx.find(element, "[data-toast-body]").innerText = message.message

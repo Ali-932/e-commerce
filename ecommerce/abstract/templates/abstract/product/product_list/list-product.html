@@ -4,7 +4,7 @@
                                 <div class="row justify-content-center">
                                     {% for volume in volumes %}
                                     <div class="col-6 col-md-4 col-lg-4 col-xl-3">
-                                      {% include 'abstract/includes/product_view.html' with volume=volume %}
+                                      {% include 'abstract/product/product_single/product_view.html' with volume=volume form=form %}
                                     </div><!-- End .col-sm-6 col-lg-4 col-xl-3 -->
                                     {% endfor %}
                                 </div><!-- End .row -->

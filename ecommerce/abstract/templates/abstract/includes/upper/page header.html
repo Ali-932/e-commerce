@@ -1,9 +1,22 @@
 {% load static %}
 {% load simple_menu %}
+<style>
+
+
+input[type="radio"] {
+    visibility:hidden;
+}
+label[for="author"] {
+    cursor: pointer;
+}
+{#input:checked + label {#}
+{#    background: red;#}
+{#}#}
+</style>
 
 <header class="header header-12">
     <div>
-    {% include 'abstract/includes/lower_header.html' %}<!-- End .header-middle -->
+    {% include 'abstract/includes/upper/lower_header.html' with orders=orders %}<!-- End .header-middle -->
 </div>
     <div class="header-bottom sticky-header">
         <!-- <div class="container"> -->
@@ -16,18 +29,29 @@
 
                                 <div class="dropdown-menu">
                                     <nav class="side-nav">
-                                        <ul class="menu-vertical sf-arrows">
-                                            <li class="item-lead"><a href="#">Best Books of 2018</a></li>
-                                            <li class="item-lead"><a href="#">New for 2019</a></li>
-                                            <li><a href="#">Art & Photography</a></li>
-                                            <li><a href="#">Biography</a></li>
-                                            <li><a href="#">Children's Books</a></li>
-                                            <li><a href="#">Crafts & Hobbies</a></li>
-                                            <li><a href="#">Fiction</a></li>
-                                            <li><a href="#">Food & Drink</a></li>
-                                            <li><a href="#">Graphic Novels, Anime & Manga</a></li>
-                                            <li><a href="#">Health & Fitness Books</a></li>
-                                            <li><a href="#">Young Adult</a></li>
+                                        <ul class="menu-vertical sf-arrows mb-2 mt-1">
+                                            {% for author in authors %}
+                                                <li>
+                                                <div class="radio-container force-rtl p-3">
+                                            <input
+                                                type="radio"
+                                                hx-get="{% url 'product:list-products' %}"
+                                                hx-swap="innerHTML"
+                                                hx-target="#product_with_pag"
+                                                hx-select="#product_with_pag"
+                                                hx-indicator="#products_page"
+                                                hx-vals='{"author": "{{ author }}"}'
+                                               hx-push-url="true"
+                                                hx-trigger="change"
+                                                hx-include=".included"
+                                                class="included"
+                                                value="{{ author }}"
+                                                id="{{ author }}"
+                                            >
+                                                <label class="arabic-font force-rtl mr-4" style="cursor: pointer" for="{{ author }}">{{ author }}</label>
+                                                </div></li>
+                                            {% endfor %}
+
                                         </ul><!-- End .menu-vertical -->
                                     </nav><!-- End .side-nav -->
                                 </div><!-- End .dropdown-menu -->
@@ -103,4 +127,5 @@
                         </div><!-- End .header-right -->
 
     </div><!-- End .header-bottom -->
+    </div>
 </header><!-- End .header -->
