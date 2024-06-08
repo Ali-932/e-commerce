@@ -25,7 +25,7 @@ class OrderForm(forms.ModelForm):
     phone2=forms.CharField(max_length=11,widget=forms.TextInput(attrs={'class':'form-control'}),validators=[digits_only,starts_with_07],required=False,label="رقم الهاتف الثاني")
     email=forms.EmailField(max_length=100,widget=forms.EmailInput(attrs={'class':'form-control'}),required=False,label="البريد الالكتروني")
     notes=forms.CharField(max_length=400,widget=forms.Textarea(attrs={'class':'form-control'}),required=False,label="ملاحظات")
-    instagram_user=forms.CharField(max_length=100,widget=forms.TextInput(attrs={'class':'form-control'}),required=False,label="اسم المستخدم في الانستغرام")
+    instagram_username=forms.CharField(max_length=100,widget=forms.TextInput(attrs={'class':'form-control'}),required=False,label="اسم المستخدم في الانستغرام")
     defualt_address=forms.BooleanField(widget=forms.CheckboxInput(attrs={'class':'form-check-input'}),required=False,label="هل تريد اني يكون هذا عنوانك الافتراضي؟")
 
     def __init__(self, *args, **kwargs):
@@ -39,7 +39,7 @@ class OrderForm(forms.ModelForm):
         Column(
             Row(
                     'name',
-                    'instagram_user', css_class='col-10 justify-content-around'
+                    'instagram_username', css_class='col-10 justify-content-around'
 
 
                 ),

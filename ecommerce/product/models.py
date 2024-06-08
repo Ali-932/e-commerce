@@ -6,14 +6,27 @@ from ecommerce.abstract.utlites.menu_nums import CategoryChoices,DemographicChoi
 from ecommerce.home.models import AdModel
 
 
+class SpecialOfferProducts(models.Model):
+    class Language_CHOICES(models.TextChoices):
+        AR = 'AR', 'عربي'
+        EN = 'EN', 'انكليزي'
+    language = models.CharField(max_length=2, choices=Language_CHOICES.choices, default=Language_CHOICES.AR)
+    quantity = models.IntegerField(default=0)
+    price = MoneyField(max_digits=14, decimal_places=0, default_currency='IQD', default=5000)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    is_available = models.BooleanField(default=False, editable=False)
+    volume = models.ForeignKey('Volume', on_delete=models.CASCADE, related_name='special_offer', null=True, blank=True)
+    def save(self, *args, **kwargs):
+        if self.quantity > 0:
+            self.is_available = True
+        super().save(*args, **kwargs)
 class Product(models.Model):
     class ProductType(models.TextChoices):
         Manga = 'مانجا', 'Manga'
         Light_Novel = 'رواية خفيفة', 'Light Novel'
         Manhwa = 'مانهوا', 'Manhwa'
         Comic = 'كوميك', 'Comic'
-        Package = 'باقة', 'Package'
-
     name = models.CharField(max_length=400)
     genres = ArrayField(
         models.CharField(max_length=100, choices=GenresChoices.choices,null=True, blank=True),

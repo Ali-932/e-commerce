@@ -3,7 +3,7 @@ from django.db import models
 menu_nums = {
     'home': 0,
     'products': 1,
-    'best_sellers': 2,
+    'special-offers': 2,
     'new_arrival': 3,
     'about': 4,
 }

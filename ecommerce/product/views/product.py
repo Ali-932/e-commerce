@@ -1,26 +1,26 @@
-from django.db.models import Max, F, Sum, Count
+from django.db.models import Max
 from django.shortcuts import render
 
 from ecommerce.abstract.utlites.base_function import common_views
 from ecommerce.abstract.utlites.menu_nums import menu_nums
 from ecommerce.abstract.utlites.products.procces_form import process_form
-from ecommerce.order.models import  OrderItem
 from ecommerce.product.froms.main_product_from import ProductForm
 from ecommerce.product.models import Volume
-from ecommerce.home.models import nav_ad as NAV
+
 
 def product(request, pk: int):
     template = 'abstract/product/product_single/product.html'
     form = ProductForm(request.POST or None)
     if request.method == 'POST' and form.is_valid():
-        volume, template, items, items_total_info = process_form(request, form, pk, 'abstract/product/product_single/product.html',
-                                        'abstract/product/product_single/product_view.html')
-        context= {
-        'volume': volume,
-        'form': form,
-        'items':items,
-        'total_price':items_total_info['sum'],
-        'total_count':items_total_info['count'],
+        volume, template, items, items_total_info = process_form(request, form, pk,
+                                                                 'abstract/product/product_single/product.html',
+                                                                 'abstract/product/product_single/product_view.html')
+        context = {
+            'volume': volume,
+            'form': form,
+            'items': items,
+            'total_price': items_total_info['sum'],
+            'total_count': items_total_info['count'],
         }
 
         return render(request, template, context)
@@ -51,7 +51,7 @@ def product(request, pk: int):
         'prev_volume': prev_volume,
         'volume_suggestions': suggestions,
         'form': form,
-        'menu_num':menu_num,
+        'menu_num': menu_num,
         **common
     }
 

@@ -28,54 +28,6 @@ MenuItem(
         icon='file-invoice',
         column=1,
     ),
-# MenuItem(
-#     'ايسيكاي',
-#     url='',
-#     icon='Isekai',
-#     column=2,
-# ),
-# MenuItem(
-#     'الرومانسية',
-#     url='',
-#     icon='Romance',
-#     column=2,
-# ),
-# MenuItem(
-#     'الكوميديا',
-#     url='',
-#     icon='Comedy',
-#     column=2,
-# ),
-# MenuItem(
-#     'شريحة من الحياة',
-#     url='',
-#     icon='Slice of Life',
-#     column=2,
-# ),
-# MenuItem(
-#     'الميكا',
-#     url='',
-#     icon='Mecha',
-#     column=2,
-# ),
-# MenuItem(
-#     'الرعب',
-#     url='',
-#     icon='Horror',
-#     column=2,
-# ),
-# MenuItem(
-#     'الرياضة',
-#     url='',
-#     icon='Sports',
-#     column=2,
-# ),
-# MenuItem(
-#     'شوتا',
-#     url='',
-#     icon='Shota',
-#     column=2,
-# )
 
 ]
 
@@ -104,11 +56,11 @@ Menu.add_item('onesight',
               MenuItem(
                   'عروض خاصة',
                   icon='warehouse-full',
-                  url='',
+                  url=reverse('product:list-special-offer-products'),
                   weight=20,
                   # children=inventory_children,
                   columns=[1, 2],
-                  num=menu_nums.get('best_sellers', 2)
+                  num=menu_nums.get('special-offers', 2)
               ))
 Menu.add_item('onesight',
               MenuItem(

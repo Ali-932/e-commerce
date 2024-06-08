@@ -16,13 +16,17 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+envf = os.path.join(BASE_DIR, '.env')
+if os.path.isfile(envf):
+    from dotenv import load_dotenv
+    load_dotenv(envf)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-a=zj2!)j7o^jfb56m65f@=6zq9n#b!&b0sqd7i)%)5!g07d4)b'
-
+SPREADSHEET_API = os.getenv('SPREADSHEET_API')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 

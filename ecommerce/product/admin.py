@@ -1,18 +1,18 @@
 from django import forms
 from django.contrib import admin
-from .models import Product, Volume, ProductBanner
+from .models import Product, Volume, ProductBanner, SpecialOfferProducts
 from ..abstract.utlites.menu_nums import CategoryChoices
 
 
 
 
-# class AuthorAdmin(admin.ModelAdmin):
-#     list_display = ["name", "born_location", "born_date"]
-#     search_fields = ["name"]
-#
-# admin.site.register(Author, AuthorAdmin)
-#
+class SpecialOfferProductsAdmin(admin.ModelAdmin):
+    raw_id_fields = ('volume',)
+    list_display = ["language", "quantity", "price", "volume"]
+    search_fields = ["language"]
+    list_filter = ["language"]
 
+admin.site.register(SpecialOfferProducts, SpecialOfferProductsAdmin)
 class ProductForm(forms.ModelForm):
     category = forms.MultipleChoiceField(choices=CategoryChoices.choices)
 

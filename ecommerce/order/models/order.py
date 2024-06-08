@@ -1,17 +1,14 @@
 from decimal import Decimal
 
-import uuid
-
-import shortuuid
 from django.db import models
-from django.db.models.signals import post_save, pre_save
+from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from djmoney.models.fields import MoneyField
+from shortuuid.django_fields import ShortUUIDField
 
 from ecommerce.abstract.models.choices import ProvinceChoices
 from ecommerce.account.models import User
-from ecommerce.product.models import Product, Volume
-from shortuuid.django_fields import ShortUUIDField
+from ecommerce.product.models import Volume
 
 
 class Order(models.Model):
