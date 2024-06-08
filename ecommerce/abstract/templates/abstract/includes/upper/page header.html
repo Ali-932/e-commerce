@@ -9,25 +9,22 @@ input[type="radio"] {
 label[for="author"] {
     cursor: pointer;
 }
-{#input:checked + label {#}
-{#    background: red;#}
-{#}#}
 </style>
 
 <header class="header header-12">
     <div>
-    {% include 'abstract/includes/upper/lower_header.html' with orders=orders %}<!-- End .header-middle -->
+    {% include 'abstract/includes/upper/lower_header.html' with items=items %}<!-- End .header-middle -->
 </div>
     <div class="header-bottom sticky-header">
         <!-- <div class="container"> -->
-        <div style="background-color: #333; display: flex; width: 100%;">
+        <div style="background-color: #333; display: flex; width: 100%;" x-data="{nav_bar : '{{ menu_num }}' }">
     <div class="header-left">
                             <div class="dropdown category-dropdown">
                                 <a href="#" class="dropdown-toggle arabic-font" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static" title="Browse Categories">
                                     اشهر المانغاكا
                                 </a>
 
-                                <div class="dropdown-menu">
+                                <div class="dropdown-menu" id="radio_author">
                                     <nav class="side-nav">
                                         <ul class="menu-vertical sf-arrows mb-2 mt-1">
                                             {% for author in authors %}
@@ -37,16 +34,16 @@ label[for="author"] {
                                                 type="radio"
                                                 hx-get="{% url 'product:list-products' %}"
                                                 hx-swap="innerHTML"
-                                                hx-target="#product_with_pag"
-                                                hx-select="#product_with_pag"
+                                                hx-target="#main_nav"
+                                                hx-select="#main_nav"
                                                 hx-indicator="#products_page"
-                                                hx-vals='{"author": "{{ author }}"}'
-                                               hx-push-url="true"
+                                                hx-push-url="true"
                                                 hx-trigger="change"
-                                                hx-include=".included"
                                                 class="included"
+                                                name="author"
                                                 value="{{ author }}"
                                                 id="{{ author }}"
+                                                @click="nav_bar='1'"
                                             >
                                                 <label class="arabic-font force-rtl mr-4" style="cursor: pointer" for="{{ author }}">{{ author }}</label>
                                                 </div></li>
@@ -58,9 +55,8 @@ label[for="author"] {
                             </div><!-- End .category-dropdown -->
                         </div><!-- End .header-left -->
          <div class="header-center">
-                            <nav class="main-nav" x-data="{nav_bar : '{{ menu_num }}' }">
+                            <nav class="main-nav">
                                 {% generate_menu %}
-
                                 <ul class="menu">
                                     {% for item in menus.onesight %}
                                     <li id="head_icon{{ item.num }}" name="page_header_icons" x-bind:class="{'active' : '{{ item.num }}' === nav_bar }">
@@ -74,6 +70,7 @@ label[for="author"] {
                                            hx-get="{{ item.url }}"
                                            hx-select="#main_nav"
                                            hx-indicator="#main_nav"
+                                           hx-on:click="clearAuthorSelection()"
                                         >{{ item.title }}</a>
                                         {% if item.children %}
                                         <div class="megamenu megamenu-md" style="width: 400px; height: 290px;">

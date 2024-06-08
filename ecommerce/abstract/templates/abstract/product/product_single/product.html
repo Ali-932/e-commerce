@@ -243,7 +243,7 @@
                         }'>
                         {% for volume in volume_suggestions %}
                             <div class="col-11 ml-3">
-                             {% include 'abstract/product/product_single/product_view.html' with volume=volume %}
+                             {% include 'abstract/product/product_single/product_view.html' with volume=volume flexablesize=True %}
                             </div>
                         {% endfor %}
                     </div><!-- End .owl-carousel -->

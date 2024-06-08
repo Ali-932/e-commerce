@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     "crispy_bootstrap4",
 
+
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
@@ -133,6 +134,12 @@ LOGGING = {
 }
 INTERNAL_IPS = [
     "127.0.0.1",
+]
+
+
+
+SILKY_IGNORE_PATHS = [
+    '/admin/jsi18n/'
 ]
 
 TEMPLATES = [

@@ -7,7 +7,7 @@ from ecommerce.order.models import ShippingAddress
 
 @receiver(post_save, sender=User)
 def create_address(sender, instance,created, **kwargs):
-    if created:
+    if created and not instance.is_superuser:
         ShippingAddress.objects.create(user=instance,
                                    name=instance.name,
                                    province=instance.province,

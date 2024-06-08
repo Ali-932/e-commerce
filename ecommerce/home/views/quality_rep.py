@@ -6,15 +6,12 @@ from ecommerce.home.models import nav_ad as NAV
 
 
 def quality_page(request):
-    menu_num, orders, total_info, nav_bar, authors = common_views(request)
+    common = {} if request.htmx else common_views(request)
+    menu_num = menu_nums.get('about', 4)
 
     context = {
-    'nav_ad': nav_bar,
-    'menu_num': menu_num,
-    'orders':orders,
-    'total_price':total_info['sum'],
-    'total_count':total_info['count'],
-    'authors': authors
+        'menu_num': menu_num,
+        **common,
     }
 
     return render(request, 'abstract/about/quality_rep.html', context)

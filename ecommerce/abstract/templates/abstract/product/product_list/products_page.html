@@ -5,7 +5,7 @@
 {% load product_tags %}
        {% block content %}
 
-        <main class="main" id="#main_list_product">
+        <main class="main" id="main_nav_products">
 <div class="container mb-5" style="position: relative;">
   <img src="{{ product_banner.image.url }}" alt="Product Banner" style="width: 100%; object-fit: fill">
   <h1 class="page-title arabic-font stroke-text" style="color: #fefefe;position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1; font-weight: 600;">{{ product_banner.Title }}<span></span></h1>
@@ -15,13 +15,29 @@
                 	<div class="row">
                 		<div class="col-lg-9">
                 			<div class="toolbox">
-                				<div class="toolbox-left">
+                				<div class="toolbox-left" id="author_card">
                 					<div class="toolbox-info">
+                                        {% if author %}
+                                            <div>
+                                          <div class="px-2">
+                                              <p class="text-xl inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"> {{ author }}
+                                            <button type="button" class="close" data-dismiss="alert"
+                                            hx-get="{% url 'product:list-products' %}"
+                                            hx-swap="innerHTML"
+                                            hx-target="#main_nav"
+                                           hx-select="#main_nav"
+                                           hx-indicator="#main_nav"
+                                           hx-on:click="clearAuthorSelection()"
+                                            >
+                                            &times;
+                                            </button></p>
+                                          </div>
+                                        </div>
+                                        {% endif %}
                 					</div><!-- End .toolbox-info -->
                 				</div><!-- End .toolbox-left -->
 
                 				<div class="toolbox-right">
-
                            <div class="toolbox-layout toolbox-sort arabic-font select-custom-custom">
                             <form style="display: flex inline;">
                                 <input
@@ -38,7 +54,6 @@
                                     name="q"
                                     type="text"
                                     value="{{ request.GET.q }}"
-
 >
                                 <label class="mx-2 arabic-font custom-label" for="search_product">:البحث</label>
                             </form>

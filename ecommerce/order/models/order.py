@@ -1,6 +1,8 @@
 from decimal import Decimal
 
 import uuid
+
+import shortuuid
 from django.db import models
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
@@ -9,12 +11,13 @@ from djmoney.models.fields import MoneyField
 from ecommerce.abstract.models.choices import ProvinceChoices
 from ecommerce.account.models import User
 from ecommerce.product.models import Product, Volume
+from shortuuid.django_fields import ShortUUIDField
 
 
 class Order(models.Model):
     class Status_CHOICES(models.TextChoices):
         PENDING = 'قيد الانتظار', 'pending'
-        CONFIRMED = 'تم التأكيد', 'confirmed'
+        CONFIRMED = 'تم التأكيد من قبل الزبون', 'confirmed'
         ON_WORK = 'قيد العمل', 'on_work'
         CANCELED = 'ملغي', 'canceled'
         DELIVERED = 'تم التوصيل', 'delivered'
@@ -32,13 +35,13 @@ class Order(models.Model):
     notes = models.TextField(blank=True, null=True)
     discount = models.IntegerField(default=0)
     active = models.BooleanField(default=True)
-    uuid = models.UUIDField(default=uuid.uuid4, editable=False)
+    uuid = ShortUUIDField(length=8, max_length=8)
 
 class OrderItem(models.Model):
     class Language_CHOICES(models.TextChoices):
         AR = 'AR', 'عربي'
         EN = 'EN', 'انكليزي'
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
     volume = models.ForeignKey(Volume, on_delete=models.SET_NULL, null=True, blank=True) #it should be forginkey to have multuple same volume in different lagnuges
     quantity = models.IntegerField(default=0)
     price = MoneyField(max_digits=14, decimal_places=0, default_currency='IQD', default=8000)

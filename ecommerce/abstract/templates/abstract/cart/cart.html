@@ -20,49 +20,49 @@
 									</thead>
 
 									<tbody>
-                                    {% for order in orders %}
+                                    {% for item in items %}
 										<tr>
 											<td class="product-col">
 												<div class="product p-0">
 													<figure class="product-media">
 														<a
                                                         style="cursor: pointer"
-                                                        hx-get={% url 'product:view-product' pk=order.volume.id %}
+                                                        hx-get={% url 'product:view-product' pk=item.volume.id %}
                                                         hx-target="#main_nav"
                                                         hx-push-url="true"
                                                         hx-swap="innerHTML"
                                                         hx-select="#main_nav"
                                                         hx-trigger="click"
 >
-															<img src={{ order.volume.image }} alt="Product image" >
+															<img src={{ item.volume.image }} alt="Product image" >
 														</a>
 													</figure>
 
 													<h3 class="product-title">
 														<a
                                                         style="cursor: pointer"
-                                                        hx-get={% url 'product:view-product' pk=order.volume.id %}
+                                                        hx-get={% url 'product:view-product' pk=item.volume.id %}
                                                         hx-target="#main_nav"
                                                         hx-push-url="true"
                                                         hx-swap="innerHTML"
                                                         hx-select="#main_nav"
                                                         hx-trigger="click"
                                                         >
-                                                            {{ order.volume.product }} Volume {{ order.volume.volume_number }}  -  {{ order.get_language_display }}  </a>
+                                                            {{ item.volume.product }} Volume {{ item.volume.volume_number }}  -  {{ item.get_language_display }}  </a>
 													</h3><!-- End .product-title -->
 												</div><!-- End .product -->
 											</td>
-											<td class="price-col">{{ order.volume.price.amount|intcomma }} IQD</td>
+											<td class="price-col">{{ item.volume.price.amount|intcomma }} IQD</td>
 											<td class="quantity-col">
                                                 <div class="cart-product-quantity" style="margin-left: 2rem">
-                                                    <span>{{ order.quantity }}</span>
+                                                    <span>{{ item.quantity }}</span>
                                                 </div><!-- End .cart-product-quantity -->
                                             </td>
-											<td class="total-col">{{ order.price.amount|intcomma }} IQD</td>
+											<td class="total-col">{{ item.price.amount|intcomma }} IQD</td>
 											<td class="remove-col"><button
                                                     class="btn-remove"
                                                     title="Remove Product"
-                                                    hx-get='{% url 'orders:delete_order' pk=order.id %}'
+                                                    hx-get='{% url 'orders:delete_order' pk=item.id %}'
                                                     hx-swap='innerHTML'
                                                     hx-target="#cart_orders"
                                                     hx-select="#cart_orders"
@@ -86,12 +86,12 @@
 	                							<td>مجموع سعر المنتجات:</td>
 	                						</tr><!-- End .summary-subtotal -->
 	                						<tr class="summary-subtotal arabic-font" dir="rtl">
-                                                <td dir="ltr">5,000 IQD</td>
+                                                <td dir="ltr">{{ delivery_price.amount|intcomma }} IQD</td>
 {#                                                #TODO make global dlivery price#}
 	                							<td>التوصيل:</td>
 	                						</tr><!-- End .summary-subtotal -->
 	                						<tr class="summary-total arabic-font">
-                                                <td>{{ total_price|add:5000|intcomma|default:' لا توجد منتجات في السلة' }} {% if total_price %}IQD{% endif %}</td>
+                                                <td>{{ total_price|add:delivery_price.amount|intcomma|default:' لا توجد منتجات في السلة' }} {% if total_price %}IQD{% endif %}</td>
 	                							<td>:المجموع الكلي</td>
 	                						</tr><!-- End .summary-total -->
 	                					</tbody>

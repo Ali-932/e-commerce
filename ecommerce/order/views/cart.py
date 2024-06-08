@@ -1,18 +1,17 @@
+from django.contrib import messages
 from django.shortcuts import render
 
 from ecommerce.abstract.utlites.base_function import common_views
-from ecommerce.order.forms.order_form import OrderForm
+from ecommerce.abstract.utlites.permission_check import permission_check
 
 
 def cart_page(request):
+    if not request.user.is_authenticated:
+        return permission_check(request)
+
     template = 'abstract/cart/cart.html'
-    menu_num, orders, total_info, nav_bar, authors = common_views(request)
+    common = common_views(request)
     context = {
-        'nav_ad': nav_bar,
-        'menu_num': menu_num,
-        'orders':orders,
-        'total_price':total_info['sum'],
-        'total_count':total_info['count'],
-        'authors': authors
+        **common,
     }
     return render(request, template, context)

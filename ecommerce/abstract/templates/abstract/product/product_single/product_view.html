@@ -24,7 +24,7 @@
                                                 hx-trigger="click"
                                                 hx-indicator="#ht-spp, #pagination_pointers, #pagination_pre, #pagination_next"
                                                 >
-                                                    <img src={{ volume.image }} alt="Product" class="product-image" style="height: 250px; object-fit: cover;">
+                                                    <img src={{ volume.image }} alt="Product" class="product-image"  style="{% if not flexablesize %} height: 250px; {% else %} height: 350px; {% endif %}object-fit: cover;">
                                                 </a>
 
                                                 <div class="product-action-vertical" style="right: 0.5rem">
@@ -49,7 +49,8 @@
                                             <div class="scrollbar-juicy-peach" style="height: 45px; overflow: auto;">
                                                     {% for author,key in volume.product.author.items %}
                                                 <h2 class="product-title fxs-1 arabic-font" style="direction: rtl;"
-                                                    ><a class="arabic-font" style="font-size: 1.2rem">{{ key }} : {{ author }} </a></h2>
+                                                    ><a class="arabic-font" style="font-size: 1.2rem"
+                                                    >{{ key }} : {{ author }}</a></h2>
                                                     {% endfor %}
                                             </div>
                                                 <div class="product-cat my-2 scrollbar-juicy-peach" style="height: 50px; overflow: auto;">

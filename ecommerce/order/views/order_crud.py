@@ -1,20 +1,23 @@
 from django.contrib import messages
 from django.db.models import Sum, Count
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
+from ecommerce.abstract.utlites.permission_check import permission_check
 from ecommerce.order.models import Order, OrderItem
 
 
 def delete_order(request, pk: int):
+    if not request.user.is_authenticated:
+        return permission_check(request)
     template='abstract/cart/cart.html'
     OrderItem.objects.get(pk=pk).delete()
-    orders= OrderItem.objects.select_related('volume','order').filter(order__user=request.user)
+    items= OrderItem.objects.select_related('volume','order').filter(order__user=request.user,order__active=True)
+    items_total_info=items.aggregate(sum=Sum('price'),count=Count('id'))
     messages.error(request, 'تم ازالة المجلد من الطلبية')
-    total_info=orders.aggregate(sum=Sum('volume__price'),count=Count('volume__id'))
     context = {
-        'orders': orders,
-        'total_price': total_info['sum'],
-        'total_count': total_info['count']
+        'items': items,
+        'total_price': items_total_info['sum'],
+        'total_count': items_total_info['count']
     }
 
     return render(request,template,context)

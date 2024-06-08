@@ -8,6 +8,9 @@ from ecommerce.product.models import Volume
 
 @transaction.atomic
 def process_form(request, form, pk=None ,form_temp=None ,alternative_temp=None):
+    if not request.user.is_authenticated:
+        messages.error(request, 'يجب تسجيل الدخول اولا')
+        return None, None
     cleaned_data = form.cleaned_data
     template = form_temp
 
@@ -29,12 +32,12 @@ def process_form(request, form, pk=None ,form_temp=None ,alternative_temp=None):
     )
 
     order_item.quantity = cleaned_data['quantity']
-    orders= OrderItem.objects.select_related('volume','order').filter(order__user=request.user, order__active=True)
-    total_info=orders.aggregate(sum=Sum('price'),count=Count('id'))
+    # orders= OrderItem.objects.select_related('volume','order').filter(order__user=request.user, order__active=True)
+    # items_total_info=orders.aggregate(sum=Sum('price'),count=Count('id'))
     if created:
         messages.success(request, 'تم اضافه الطلب بنجاح')
     else:
         messages.info(request, 'تم تغيير الكمية')
 
     order_item.save()
-    return volume, template , orders, total_info
+    return volume, template

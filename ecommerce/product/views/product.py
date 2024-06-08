@@ -13,14 +13,14 @@ def product(request, pk: int):
     template = 'abstract/product/product_single/product.html'
     form = ProductForm(request.POST or None)
     if request.method == 'POST' and form.is_valid():
-        volume, template, orders, total_info = process_form(request, form, pk, 'abstract/product/product_single/product.html',
+        volume, template, items, items_total_info = process_form(request, form, pk, 'abstract/product/product_single/product.html',
                                         'abstract/product/product_single/product_view.html')
         context= {
         'volume': volume,
         'form': form,
-        'orders':orders,
-        'total_price':total_info['sum'],
-        'total_count':total_info['count'],
+        'items':items,
+        'total_price':items_total_info['sum'],
+        'total_count':items_total_info['count'],
         }
 
         return render(request, template, context)
@@ -42,19 +42,17 @@ def product(request, pk: int):
     suggestions = Volume.objects.filter(
         product__genres__overlap=volume.product.genres
     ).exclude(pk=volume.pk).select_related('product').order_by('?')[:4]
-    menu_num, orders, total_info, nav_bar, authors = common_views(request)
+    common = {} if request.htmx else common_views(request)
+    menu_num = menu_nums.get('product', 1)
+
     context = {
-        'nav_ad': nav_bar,
-        'menu_num': menu_num,
         'volume': volume,
         'next_volume': next_volume,
         'prev_volume': prev_volume,
         'volume_suggestions': suggestions,
         'form': form,
-        'orders':orders,
-        'total_price':total_info['sum'],
-        'total_count':total_info['count'],
-        'authors': authors
+        'menu_num':menu_num,
+        **common
     }
 
     return render(request, template, context)

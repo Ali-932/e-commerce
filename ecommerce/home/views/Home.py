@@ -1,6 +1,7 @@
 import contextlib
 
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Subquery, Count
 from django.shortcuts import render
 
 # Create your views here.
@@ -9,8 +10,10 @@ from django.views.generic import RedirectView
 
 from ecommerce.abstract.utlites.base_function import common_views
 from ecommerce.abstract.utlites.menu_nums import menu_nums
-from ecommerce.home.models import BModel, AModel, CModel, DModel
+from ecommerce.home.models import BModel, AModel, CModel, DModel, VolumeABanner, VolumeBBanner
 from ecommerce.home.models import nav_ad as NAV
+from ecommerce.order.models import Order, OrderItem
+from ecommerce.product.models import Volume
 
 
 class RootUrlView(RedirectView):
@@ -23,7 +26,7 @@ class RootUrlView(RedirectView):
 
 # @login_required
 def index(request):
-    models = [AModel, BModel, CModel, DModel]
+    models = [AModel, BModel, CModel, DModel, VolumeABanner, VolumeBBanner]
     ads = []
 
     for model in models:
@@ -34,20 +37,24 @@ def index(request):
         ads.append(ad)
 
     template = 'abstract/index-20.html'
-    menu_num, orders, total_info, nav_bar, authors = common_views(request)
-
+    menu_num = menu_nums.get('home', 0)
+    common = {} if request.htmx else common_views(request)
+    best_sellers_volumes = Volume.objects.exclude(
+        orderitem__order__status=Order.Status_CHOICES.PENDING).annotate(
+        times_ordered=Count('orderitem')).order_by('-times_ordered')[:12]
+    new_release = Volume.objects.order_by('-id')[:12]
     context = {
         'pretitle_url': reverse('home:index'),
         'adA': ads[0],
         'adB': ads[1],
         'adC': ads[2],
         'adD': ads[3],
-        'nav_ad': nav_bar,
+        'volume_a_banner': ads[4],
+        'volume_b_banner': ads[5],
         'menu_num': menu_num,
-        'orders': orders,
-        'total_price': total_info['sum'],
-        'total_count': total_info['count'],
-        'authors': authors
+        'best_sellers': best_sellers_volumes,
+        'new_release': new_release,
+        **common
     }
 
 

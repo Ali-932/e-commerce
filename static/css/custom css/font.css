@@ -32,3 +32,13 @@
 .swal-wide{
     width:850px !important;
 }
+
+.fix_account{
+    font-size: 3rem;
+    color: #333;
+    line-height: 1
+}
+    .fix_account :hover{
+    color: #FE5353;
+}
+

@@ -8,9 +8,9 @@
 
 {#                <img src="{% static 'images/demos/demo-20/banners/banner-1.jpg' %}" alt="Banner">#}
     </a>
-    <div class="banner-content">
-        <h4 class="banner-subtitle text-white force-rtl"><a class="arabic-font"  href="#">{{ adA.Title }}</a></h4><!-- End .banner-subtitle -->
-        <h2 class="banner-title text-white force-rtl"><a  class="arabic-font " href="#">{{ adA.Description|slice:"20" }} <br>{{ adA.Description|slice:"20:60" }}</a></h2><!-- End .banner-title -->
+    <div class="banner-content force-rtl row d-flex justify-content-end">
+        <h4 class="banner-subtitle text-white"><a class="arabic-font force-rtl"  href="#">{{ adA.Title }}</a></h4><!-- End .banner-subtitle -->
+        <h2 class="banner-title text-white force-rtl"><a  class="arabic-font force-rtl" href="#">{{ adA.Description|slice:"20" }} <br>{{ adA.Description|slice:"20:60" }}</a></h2><!-- End .banner-title -->
         {% if adA.prompt_text %}
         <a href="#" class="btn btn-outline-white-3 banner-link text-shadow">{{ adA.prompt_text}}<i class="icon-long-arrow-right"></i></a>
         {% endif %}
@@ -28,7 +28,14 @@
             <h4 class="banner-subtitle text-white"><a class="arabic-font" href="#">{{ adB.Title }}</a></h4><!-- End .banner-subtitle -->
             <h3 class="banner-title text-white "><a class="arabic-font center-text" href="#">{{ adB.Description}}</a></h3><!-- End .banner-title -->
             {% if adB.prompt_text %}
-            <a href="#" hx-get={% url 'home:quality_rep' %} hx-target="#main" hx-swap="innerHTML" hx-push-url="true" hx-boost="true"  class="btn btn-outline-white-3 banner-link text-shadow
+            <a href="#"
+               hx-get={% url 'home:quality_rep' %}
+               hx-target="#main_nav"
+                hx-target="#main_nav"
+                hx-select="#main_nav"
+                hx-indicator="#main_nav"
+
+               class="btn btn-outline-white-3 banner-link text-shadow
              arabic-font">{{ adB.prompt_text }}<i class="icon-long-arrow-right"></i></a>
             {% endif %}
         </div><!-- End .banner-content -->

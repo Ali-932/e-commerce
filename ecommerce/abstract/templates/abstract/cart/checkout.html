@@ -1,6 +1,5 @@
 {% extends 'abstract/_base.html' %}
 {% load humanize %}
-{% load crispy_forms_tags %}
 
 {% block content %}
         <main class="main hx-disabled" id="main_nav">
@@ -26,12 +25,10 @@
                             hx-swap="outerHTML"
                             hx-indicator="#main_nav"
                             hx-select="#order_form_div"
+                            hx-select-oob="#dropdown_cart, #dropdown_orders"
 >
 		                	<div class="row">
-		                		<div class="col-lg-8 arabic-font force-rtl px-5" dir="rtl" id="order_form_div">
-		                			{% crispy form %}
-		                		</div><!-- End .col-lg-9 -->
-
+                                {% include 'abstract/cart/checkout_form.html' %}
 		                		<aside class="col-lg-3">
 		                			<div class="summary">
 		                				<h3 class="summary-title arabic-font force-rtl pb-2">طلبيتك الخاصة</h3><!-- End .summary-title -->
@@ -43,12 +40,11 @@
 	                							<td>مجموع سعر المنتجات:</td>
 	                						</tr><!-- End .summary-subtotal -->
 	                						<tr class="summary-subtotal arabic-font" dir="rtl">
-                                                <td dir="ltr">5,000 IQD</td>
-{#                                                #TODO make global dlivery price#}
+                                                <td dir="ltr">{{ delivery_price.amount|intcomma|default:' ' }} IQD</td>
 	                							<td>التوصيل:</td>
 	                						</tr><!-- End .summary-subtotal -->
 	                						<tr class="summary-total arabic-font">
-                                                <td>{{ total_price|add:5000|default:' لا توجد منتجات في السلة'|intcomma }} {% if total_price %}IQD{% endif %}</td>
+                                                <td>{{ total_price|add:delivery_price.amount|default:' لا توجد منتجات في السلة'|intcomma }} {% if total_price %}IQD{% endif %}</td>
 	                							<td>:المجموع الكلي</td>
 	                						</tr><!-- End .summary-total -->
 	                					</tbody>

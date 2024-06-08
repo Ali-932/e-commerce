@@ -36,7 +36,8 @@ admin.site.register(Volume, VolumeAdmin)
 
 class AAdmin(admin.ModelAdmin):
     # Customize the admin options for your model
-    list_display = ('Title', 'Description', 'image')
+    raw_id_fields = ('volume',)
+    list_display = ('Title', 'Description', 'image','active')
     list_filter = ('Title', 'Description')
     search_fields = ('Title', 'Description')
 

@@ -12,6 +12,7 @@ class Product(models.Model):
         Light_Novel = 'رواية خفيفة', 'Light Novel'
         Manhwa = 'مانهوا', 'Manhwa'
         Comic = 'كوميك', 'Comic'
+        Package = 'باقة', 'Package'
 
     name = models.CharField(max_length=400)
     genres = ArrayField(

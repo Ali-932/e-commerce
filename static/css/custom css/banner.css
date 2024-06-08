@@ -29,3 +29,23 @@
     top:105px;
     left: 100px;
 }
+
+.volume-button-banner{
+    background: transparent !important;
+}
+.volume-button-banner:hover{
+    background: white !important;
+}
+
+.login-button{
+    background: #FE5353 !important;
+    border-color: #FE5353 !important;
+
+}
+.volume-button:hover{
+    background: white !important;
+    color: #FE5353 !important;
+    border-color: #FE5353 !important;
+}
+
+
