@@ -1,9 +1,5 @@
-import contextlib
-
-from django.core.exceptions import ObjectDoesNotExist
-from django.db.models import Subquery, Count
+from django.db.models import Count
 from django.shortcuts import render
-
 # Create your views here.
 from django.urls import reverse
 from django.views.generic import RedirectView
@@ -11,9 +7,10 @@ from django.views.generic import RedirectView
 from ecommerce.abstract.utlites.base_function import common_views
 from ecommerce.abstract.utlites.menu_nums import menu_nums
 from ecommerce.home.models import BModel, AModel, CModel, DModel, VolumeABanner, VolumeBBanner
-from ecommerce.home.models import nav_ad as NAV
-from ecommerce.order.models import Order, OrderItem
+from ecommerce.order.models import Order
 from ecommerce.product.models import Volume
+from ecommerce.settings import LIGHT_REQUESTS_RATE_LIMIT
+from django_ratelimit.decorators import ratelimit
 
 
 class RootUrlView(RedirectView):
@@ -25,6 +22,7 @@ class RootUrlView(RedirectView):
 
 
 # @login_required
+@ratelimit(key='ip', method='GET', rate=LIGHT_REQUESTS_RATE_LIMIT, block=True)
 def index(request):
     models = [AModel, BModel, CModel, DModel, VolumeABanner, VolumeBBanner]
     ads = []
@@ -57,8 +55,4 @@ def index(request):
         **common
     }
 
-
-
     return render(request, template, context)
-
-

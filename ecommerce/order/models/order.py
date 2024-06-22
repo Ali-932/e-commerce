@@ -41,6 +41,7 @@ class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
     volume = models.ForeignKey(Volume, on_delete=models.SET_NULL, null=True, blank=True) #it should be forginkey to have multuple same volume in different lagnuges
     quantity = models.IntegerField(default=0)
+    single_piece_price = MoneyField(max_digits=14, decimal_places=0, default_currency='IQD', default=8000)
     price = MoneyField(max_digits=14, decimal_places=0, default_currency='IQD', default=8000)
     language = models.CharField(max_length=100, choices=Language_CHOICES.choices, default=Language_CHOICES.AR)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -53,6 +54,7 @@ class OrderItem(models.Model):
 @receiver(pre_save, sender=OrderItem)
 def calculate_price(sender, instance, **kwargs):
     if instance.quantity!=0:
+        instance.single_piece_price.amount = instance.price.amount
         instance.price.amount*=Decimal(instance.quantity)
 
 class ShippingAddress(models.Model):

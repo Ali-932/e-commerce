@@ -66,11 +66,11 @@ Menu.add_item('onesight',
               MenuItem(
                   'حزمة مجلدات',
                   icon='diagram-project',
-                  url='',
+                  url=reverse('product:list-package-products'),
                   weight=20,
                   # children=project_children,
-                  columns=[1, ],
-                  num=menu_nums.get('new_arrival', 3)
+                  columns=[1,2],
+                  num=menu_nums.get('packages', 3)
               ))
 Menu.add_item('onesight',
               MenuItem(

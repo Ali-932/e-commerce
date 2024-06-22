@@ -1,11 +1,15 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, logout, login
 from django.shortcuts import render, redirect
+from django_ratelimit.decorators import ratelimit
 
 from ecommerce.abstract.utlites.base_function import common_views
 from ecommerce.account.forms import LoginForm, RegisterForm
+from ecommerce.account.models import User
+from ecommerce.settings import HEAVY_REQUESTS_RATE_LIMIT
 
 
+@ratelimit(key='ip', method='POST', rate=HEAVY_REQUESTS_RATE_LIMIT, block=True)
 def login_view(request):
     if request.method == 'POST':
         template = 'abstract/auth/login.html'
@@ -13,26 +17,28 @@ def login_view(request):
         log_in_form = LoginForm(request.POST)
         if sign_up_form.is_valid():
             sign_up_form.save()
-            context={
+            context = {
                 'sign_up_form': sign_up_form,
                 'log_in_form': log_in_form,
-                'go_login': True
             }
             return render(request, template, context)
 
         if log_in_form.is_valid():
-            user = authenticate(
-                request,
-                username=log_in_form.cleaned_data['username'],
-                password=log_in_form.cleaned_data['password'],
-            )
-            messages.success(request, 'تم تسجيل الدخول بنجاح')
-            print(user)
+            username = log_in_form.cleaned_data['username']
+            password = log_in_form.cleaned_data['password']
+
+            user = authenticate(request, username=username, password=password)
+
             if user is not None:
                 login(request, user)
+                messages.success(request, 'تم تسجيل الدخول بنجاح')
                 return redirect('home:index')
             else:
-                log_in_form.add_error('username', 'اسم المستخدم أو كلمة المرور غير صحيحة')
+                if User.objects.filter(username=username).exists():
+                    log_in_form.add_error('password', 'كلمة المرور غير صحيحة')
+                else:
+                    log_in_form.add_error('username', 'اسم المستخدم غير صحيح')
+
             return render(request, template, {'sign_up_form': sign_up_form, 'log_in_form': log_in_form})
 
     if request.user.is_authenticated:
@@ -42,18 +48,15 @@ def login_view(request):
     common = {} if request.htmx else common_views(request)
 
     template = 'abstract/auth/login.html'
-    sign_up_flag = request.GET.get('sign_up', False)
-    login_flag = request.GET.get('login', False)
     context = {
         'sign_up_form': sign_up_form,
         'log_in_form': log_in_form,
-        'go_signup': sign_up_flag,
-        'go_login': login_flag,
         **common
     }
 
     return render(request, template, context)
 
+#no need for throttling
 def logout_user(request):
     logout(request)
     return redirect('home:index')

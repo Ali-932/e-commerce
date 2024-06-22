@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib import admin
-from .models import Product, Volume, ProductBanner, SpecialOfferProducts
+from .models import Product, Volume, ProductBanner, SpecialOfferProducts, VolumesPackage
 from ..abstract.utlites.menu_nums import CategoryChoices
 
 
@@ -13,6 +13,36 @@ class SpecialOfferProductsAdmin(admin.ModelAdmin):
     list_filter = ["language"]
 
 admin.site.register(SpecialOfferProducts, SpecialOfferProductsAdmin)
+
+
+
+
+
+
+
+
+
+
+
+class VolumesPackageAdmin(admin.ModelAdmin):
+    raw_id_fields = ('volumes',)
+    list_display = ["product", "price", "created_at"]
+    search_fields = ["product__name"]
+    list_filter = ["product"]
+
+admin.site.register(VolumesPackage, VolumesPackageAdmin)
+
+
+
+
+
+
+
+
+
+
+
+
 class ProductForm(forms.ModelForm):
     category = forms.MultipleChoiceField(choices=CategoryChoices.choices)
 

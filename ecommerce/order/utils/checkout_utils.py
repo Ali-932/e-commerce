@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.db.models import Sum, OuterRef, Subquery
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from djmoney.money import Money
 
 from ecommerce.abstract.utlites.base_function import common_views
@@ -12,16 +12,27 @@ from ecommerce.product.models import SpecialOfferProducts
 from ecommerce.settings import SPREADSHEET_API
 
 
-def remove_item_if_special_offer(items):
+def remove_item_if_special_offer(request, items):
     # sop = SpecialOfferProducts.objects.filter(volume__in=items.values('volume_id'), is_available=True, language=languages)
     # Assuming items is a queryset
-    items_subquery = items.filter(volume_id=OuterRef('volume_id')).values('language')[:1]
 
-    sop = SpecialOfferProducts.objects.filter(
-        volume__in=items.values('volume_id'),
-        is_available=True,
-        language=Subquery(items_subquery)
-    )
+    for item in items:
+        sop = SpecialOfferProducts.objects.filter(volume=item.volume, is_available=True, language=item.language)
+        if sop.exists():
+            sop = sop.first()
+            if sop.quantity <= 0:
+                messages.error(request, 'العنصر غير متوفر حالياً')
+                raise ValueError('العنصر غير متوفر حالياً')
+            sop.quantity -= 1
+            sop.save()
+
+    # items_subquery = items.filter(volume_id=OuterRef('volume_id')).values('language')[:1]
+    #
+    # sop = SpecialOfferProducts.objects.filter(
+    #     volume__in=items.values('volume_id'),
+    #     is_available=True,
+    #     language=Subquery(items_subquery)
+    # )
 
 
 def order_save_and_modify_address(form, request, initial_address, template):
@@ -66,9 +77,11 @@ def order_save_and_modify_address(form, request, initial_address, template):
         Address.save()
     common = common_views(request)
     items = order.items.all()
-    send_order_to_sheet(cleaned_data, order, request.user, items)
-    remove_item_if_special_offer(items)
+    # print(items.values())
+    # send_order_to_sheet(cleaned_data, order, request.user, items)
+    remove_item_if_special_offer(request, items)
     return render(request, template, {'form': form, **common})
+
 
 def send_order_to_sheet(cleaned_data, order, user, items):
     order_str = ''
@@ -78,20 +91,19 @@ def send_order_to_sheet(cleaned_data, order, user, items):
         languages.add(item.language)
     language = languages.pop() if len(languages) == 1 else 'MIXED'
     order_dict = {
-        'data':{
-        'USER': user.username,
-        'INSTA': cleaned_data['instagram_username'],
-        'ADDRESS': cleaned_data['province'] + cleaned_data['address'],
-        'ORDER': order_str,
-        'LANG': language,
-        'Count': order.total_quantity,
-        'Deliv': float(Global.get_instance().delivery_price.amount),
-        'PRICE': float(order.total_price.amount),
-        'PHONE': f'{cleaned_data["phone"]} \n {cleaned_data["phone2"] or ""}',
-        'STATUS': order.status,
-        'DATE': str(order.updated_at.date()),
+        'data': {
+            'USER': user.username,
+            'INSTA': cleaned_data['instagram_username'],
+            'ADDRESS': cleaned_data['province'] + cleaned_data['address'],
+            'ORDER': order_str,
+            'LANG': language,
+            'Count': order.total_quantity,
+            'Deliv': float(Global.get_instance().delivery_price.amount),
+            'PRICE': float(order.total_price.amount),
+            'PHONE': f'{cleaned_data["phone"]} \n {cleaned_data["phone2"] or ""}',
+            'STATUS': order.status,
+            'DATE': str(order.updated_at.date()),
         }}
-    print(order_dict)
     post_to_sheet = requests.post(SPREADSHEET_API, json=order_dict)
 
     if post_to_sheet.status_code == 200:

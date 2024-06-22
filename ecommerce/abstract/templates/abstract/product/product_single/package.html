@@ -76,8 +76,8 @@
                                         padding-right: 2.5rem;
                                         flex: none;
                                         max-width: 100%">
-                                            <img id="product-zoom" src="{{ volume.image }}"
-                                                 data-zoom-image="{{ volume.image }}" alt="product image"
+                                            <img id="product-zoom" src="{{ volume.image.url }}"
+                                                 data-zoom-image="{{ volume.image.url }}" alt="product image"
                                                  style="size: 30rem">
                                             <a href="#" id="btn-product-gallery" class="btn-product-gallery">
                                                 <i class="icon-arrows"></i>
@@ -91,7 +91,10 @@
                                     <h1 class="product-title force-rtl">{{ volume.product.name }}</h1>
                                     <!-- End .product-title -->
                                     <h3 class="product-title force-rtl product-title-volume">
-                                        Volume {{ volume.volume_number }}</h3><!-- End .product-title -->
+                                        Package {{ volume.volume_number }}</h3><!-- End .product-title -->
+                                    <!-- End .product-title -->
+                                    <h5 class="product-title force-rtl product-title-volume">
+                                        {{ volume.end_volume }} - {{ volume.start_volume }}</h5><!-- End .product-title -->
                                     {% for author,key in volume.product.author.items %}
                                         <h2 class="product-title product-title-volume force-rtl arabic-font"
                                         ><a class="arabic-font" style="font-size: 1.2rem">{{ key }} : {{ author }} </a>

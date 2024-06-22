@@ -9,7 +9,7 @@
                 <i class="icon-bars"></i>
             </button>
 
-            <a href="#" hx-push-url="true" hx-swap="innerHTML" hx-target="#main" hx-get={% url 'home:index' %}>
+            <a href={% url 'home:index' %} class="logo">
                 <div class="ml-5">
                     <img src={% static "images/logo.png" %} width=110 height=30>
                 </div>
@@ -20,14 +20,14 @@
             <div class="header-search header-search-extended header-search-visible header-search-no-radius">
                 <a href="#" class="search-toggle" role="button"><i class="icon-search"></i></a>
                 <form
-{#                        x-on:click="nav_bar=$event.target.id.charAt($event.target.id.length -1);"#}
+                        {#                        x-on:click="nav_bar=$event.target.id.charAt($event.target.id.length -1);"#}
                         hx-swap="innerHTML"
                         hx-target="#main_nav"
                         hx-push-url="true"
                         hx-get="{% url 'product:list-products' %}"
                         hx-select="#main_nav"
                         hx-indicator="#main_nav"
-{#                        hx-on:click="clearAuthorSelection()"#}
+                        {#                        hx-on:click="clearAuthorSelection()"#}
                 >
                     <div class="header-search-wrapper search-wrapper-wide">
                         <label for="q" class="sr-only">Search</label>
@@ -139,14 +139,17 @@
                      style="max-height: 400px; overflow-y: auto;">
                     <div class="dropdown-cart-products hx-disabled">
                         {% for item in items %}
-                            <div class="product">
+                            <div class="product"
+                                 style="overflow: visible"
+                            >
                                 <div class="row">
                                     <div class="col-4 p-0">
                                         <img src="{{ item.volume.image }}">
                                     </div>
                                     <div class="col-8">
                                         <h4 class="product-title">
-                                            <a href="product.html">{{ item.volume.product }} {{ item.volume }}
+                                            <a href={% url 'product:view-product' item.volume.pk %}>{{ item.volume.product }}
+                                                Volume {{ item.volume.volume_number }}
                                                 - {{ item.language }}</a>
                                         </h4>
 

@@ -1,14 +1,18 @@
 from django.db import transaction
 from django.db import transaction
 from django.shortcuts import render
+from django_ratelimit.decorators import ratelimit
 
 from ecommerce.abstract.utlites.base_function import common_views
 from ecommerce.abstract.utlites.permission_check import permission_check
 from ecommerce.order.forms.order_form import OrderForm
 from ecommerce.order.models import ShippingAddress
 from ecommerce.order.utils.checkout_utils import order_save_and_modify_address
+from ecommerce.settings import MEDIUM_REQUESTS_RATE_LIMIT, HEAVY_REQUESTS_RATE_LIMIT
 
 
+@ratelimit(key='ip', method='GET', rate=MEDIUM_REQUESTS_RATE_LIMIT, block=True)
+@ratelimit(key='ip', method='POST', rate=HEAVY_REQUESTS_RATE_LIMIT, block=True)
 def checkout_page(request):
     if not request.user.is_authenticated:
         return permission_check(request)
@@ -25,7 +29,6 @@ def checkout_page(request):
         template = 'abstract/cart/checkout.html'
         if form.is_valid():
             with transaction.atomic():
-
                 return order_save_and_modify_address(
                     form, request, initial_address, template
                 )
