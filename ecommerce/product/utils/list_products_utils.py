@@ -8,7 +8,7 @@ from ecommerce.abstract.utlites.paginator import paginated_response, CustomPagin
 from ecommerce.abstract.utlites.products.procces_form import process_form
 from ecommerce.abstract.utlites.search import get_search_results
 from ecommerce.product.froms.main_product_from import ProductForm
-from ecommerce.product.models import Volume, ProductBanner, SpecialOfferProducts, VolumesPackage
+from ecommerce.product.models import Volume, ProductBanner, InventoryProduct, VolumesPackage
 
 
 def get_product_list_context(request, view_page='products'):
@@ -16,7 +16,6 @@ def get_product_list_context(request, view_page='products'):
     if request.method == 'POST':
         if form.is_valid():
             volume, template = process_form(request, form,
-                                            view_page,
                                             alternative_temp='abstract/product/product_list/products_page.html')
             common = common_views(request)
             context = {
@@ -35,46 +34,33 @@ def get_product_list_context(request, view_page='products'):
     product_banner = ProductBanner.objects.filter(active=True).first()
     # items = Volume.objects.none()
     if view_page == 'products':
-        items = Volume.objects.select_related('product').filter(product__type='Manga').only('product__name',
-                                                                                            'product__genres',
-                                                                                            'product__themes',
-                                                                                            'product__demographics',
-                                                                                            'product__score',
-                                                                                            'product__author',
-                                                                                            'volume_number', 'price',
-                                                                                            'image', 'start_chapter',
-                                                                                            'end_chapter',
-                                                                                            'price_currency',
-                                                                                            )
+        items = Volume.objects.select_related('product').only('product__name',
+                                                              'product__genres',
+                                                              'product__themes',
+                                                              'product__demographics',
+                                                              'product__score',
+                                                              'product__author',
+                                                              'volume_number', 'price',
+                                                              'image', 'start_chapter',
+                                                              'end_chapter',
+                                                              'price_currency',
+                                                              )
+        # items = Volume.objects.all()
     elif view_page == 'special-offer':
-        sop_ids = SpecialOfferProducts.objects.filter(is_available=True).values('id')
-        items = Volume.objects.filter(special_offer__in=sop_ids).select_related('product').only(
+        # sop_ids = InventoryProduct.objects.filter(is_available=True).values('id')
+        items = InventoryProduct.objects.filter(is_available=True).select_related('product').only(
             'product__name',
             'product__genres',
             'product__themes',
             'product__demographics',
             'product__score',
             'product__author',
-            'volume_number',
-            'image',
-            'start_chapter',
+            'volume_number', 'price',
+            'image', 'start_chapter',
             'end_chapter',
             'price_currency',
-        ).annotate(
-            discount_price=F('special_offer__price')
-        ).annotate(
-            language_available=F('special_offer__language')
-        ).annotate(
-            quantity_available=F('special_offer__quantity')
         )
     elif view_page == 'packages':
-        first_volume_number = Volume.objects.filter(
-            package=OuterRef('pk')
-        ).order_by('volume_number').values('volume_number')[:1]
-
-        last_volume_number = Volume.objects.filter(
-            package=OuterRef('pk')
-        ).order_by('-volume_number').values('volume_number')[:1]
         items = VolumesPackage.objects.select_related('product').only(
             'product__name',
             'product__genres',
@@ -82,15 +68,13 @@ def get_product_list_context(request, view_page='products'):
             'product__demographics',
             'product__score',
             'product__author',
-            'price',
+            'volume_number', 'price',
+            'image', 'start_volume',
+            'end_volume',
             'price_currency',
-            'image',
-        ).annotate(
-            start_volume=Coalesce(Subquery(first_volume_number), -1),
-            end_volume=Coalesce(Subquery(last_volume_number), -1),
-            number_of_volumes=Count('volumes')
+            'volume_count'
         )
-
+    print(items.values())
     author = None
     if request.htmx:
         filters = Q()
@@ -115,12 +99,12 @@ def get_product_list_context(request, view_page='products'):
             items = items[offset:limit]
 
     common = {} if request.htmx else common_views(request)
-    if view_page == 'products':
-        menu_num = menu_nums.get('products', 1)
-    elif view_page == 'special-offer':
-        menu_num = menu_nums.get('special-offers', 2)
-    elif view_page == 'packages':
-        menu_num = menu_nums.get('packages', 3)
+    # if view_page == 'products':
+    menu_num = menu_nums.get('products', 1)
+    # elif view_page == 'special-offer':
+    #     menu_num = menu_nums.get('special-offers', 2)
+    # elif view_page == 'packages':
+    #     menu_num = menu_nums.get('packages', 3)
     paginator = CustomPaginator(items, per_page)
     objs = paginator.page(page)
 

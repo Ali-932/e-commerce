@@ -17,3 +17,4 @@ class ProductForm(forms.Form):
     price = forms.DecimalField(label='السعر', required=True, decimal_places=5, widget=forms.NumberInput(
         attrs={'class': 'form control', 'name': 'price', 'id': 'price_id'}
     ))
+

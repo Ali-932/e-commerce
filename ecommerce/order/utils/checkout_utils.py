@@ -8,16 +8,16 @@ from ecommerce.home.models import Global
 from ecommerce.order.models import Order
 import requests
 
-from ecommerce.product.models import SpecialOfferProducts
+from ecommerce.product.models import InventoryProduct
 from ecommerce.settings import SPREADSHEET_API
 
 
 def remove_item_if_special_offer(request, items):
-    # sop = SpecialOfferProducts.objects.filter(volume__in=items.values('volume_id'), is_available=True, language=languages)
+    # sop = InventoryProduct.objects.filter(volume__in=items.values('volume_id'), is_available=True, language=languages)
     # Assuming items is a queryset
 
     for item in items:
-        sop = SpecialOfferProducts.objects.filter(volume=item.volume, is_available=True, language=item.language)
+        sop = InventoryProduct.objects.filter(volume=item.volume, is_available=True, language=item.language)
         if sop.exists():
             sop = sop.first()
             if sop.quantity <= 0:
@@ -28,7 +28,7 @@ def remove_item_if_special_offer(request, items):
 
     # items_subquery = items.filter(volume_id=OuterRef('volume_id')).values('language')[:1]
     #
-    # sop = SpecialOfferProducts.objects.filter(
+    # sop = InventoryProduct.objects.filter(
     #     volume__in=items.values('volume_id'),
     #     is_available=True,
     #     language=Subquery(items_subquery)

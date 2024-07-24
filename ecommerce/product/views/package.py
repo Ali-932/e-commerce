@@ -38,8 +38,6 @@ def package(request, pk: int):
         package=OuterRef('pk')
     ).order_by('-volume_number').values('volume_number')[:1]
     item = VolumesPackage.objects.filter(pk=pk).select_related('product').annotate(
-        start_volume=Coalesce(Subquery(first_volume_number), -1),
-        end_volume=Coalesce(Subquery(last_volume_number), -1),
         total_volumes=Count('product__volume'),
     ).first()
     next_package = VolumesPackage.objects.filter(

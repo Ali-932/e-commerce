@@ -2,20 +2,23 @@ from django.contrib import messages
 from django.db import transaction
 
 from ecommerce.order.models import Order, OrderItem
-from ecommerce.product.models import Volume, SpecialOfferProducts
+from ecommerce.product.models import Volume, InventoryProduct, Item
+from django.shortcuts import get_object_or_404
 
 
-def _validate_quantity(cleaned_data, volume, view_page):
+def _validate_quantity(cleaned_data, volume):
     form_quantity = cleaned_data['quantity']
-    if view_page == 'special-offer':
-        special_offer_product = SpecialOfferProducts.objects.get(volume=volume, is_available=True,
-                                                                 language=cleaned_data['language'])
+    item = Item.objects.get(id=volume)
+    if item.type == Item.Type_CHOICES.InventoryProduct:
+        special_offer_product = InventoryProduct.objects.get(pk=volume, is_available=True,
+                                                             language=cleaned_data['language'])
         if int(form_quantity) > int(special_offer_product.quantity):
             raise ValueError('حدثت مشكله اثناء معالجة الطلب')
     return form_quantity
 
+
 @transaction.atomic
-def process_form(request, form, view_page, pk=None, form_temp=None, alternative_temp=None):
+def process_form(request, form, pk=None, form_temp=None, alternative_temp=None):
     if not request.user.is_authenticated:
         messages.error(request, 'يجب تسجيل الدخول اولا')
         return None, None
@@ -28,14 +31,14 @@ def process_form(request, form, view_page, pk=None, form_temp=None, alternative_
     if not order:
         order = Order.objects.create(user=request.user, active=True)
 
-    volume = Volume.objects.filter(pk=pk).select_related('product').first()
+    volume = Item.objects.filter(pk=pk).select_related('product').first()
     if not volume:
         messages.error(request, 'المنتج غير موجود')
         return None, template
 
     try:
-        price = _validate_price(cleaned_data, volume, view_page)
-        quantity = _validate_quantity(cleaned_data, volume, view_page)
+        price = _validate_price(cleaned_data, pk)
+        quantity = _validate_quantity(cleaned_data, pk)
     except ValueError as e:
         messages.error(request, str(e))
         return None, template
@@ -61,15 +64,15 @@ def process_form(request, form, view_page, pk=None, form_temp=None, alternative_
     return volume, template
 
 
-def _validate_price(cleaned_data, volume, view_page):
+def _validate_price(cleaned_data, pk):
     form_price = cleaned_data['price']
-
-    if view_page == 'special-offer':
-        special_offer_product = SpecialOfferProducts.objects.get(volume=volume, is_available=True,
-                                                                 language=cleaned_data['language'])
-        database_price = special_offer_product.price.amount
-    else:
-        database_price = volume.price.amount
+    item = get_object_or_404(Item, pk=pk)
+    if item.type == Item.Type_CHOICES.InventoryProduct:
+        item = InventoryProduct.objects.filter(pk=pk, is_available=True,
+                                               language=cleaned_data['language']).first()
+        if not item:
+            raise ValueError('حدثت مشكله اثناء معالجة الطلب')
+    database_price = item.price.amount
 
     if form_price != database_price:
         raise ValueError('حدثت مشكله اثناء معالجة الطلب')

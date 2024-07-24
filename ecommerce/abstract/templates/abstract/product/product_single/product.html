@@ -28,7 +28,11 @@
                             hx-indicator="#main_nav"
                             style="cursor: pointer;"
                     >{{ volume.product }}</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">volume {{ volume.volume_number }}</li>
+                    <li class="breadcrumb-item active" aria-current="page">{% if volume.type == 'Package' %}
+                        package {{ volume.package_name }}{% else %}
+                        volume {{ volume.volume_number }}
+                    {% endif %}</li>
+
                 </ol>
 
                 <nav class="product-pager mr-auto" aria-label="Product">
@@ -91,7 +95,9 @@
                                     <h1 class="product-title force-rtl">{{ volume.product.name }}</h1>
                                     <!-- End .product-title -->
                                     <h3 class="product-title force-rtl product-title-volume">
-                                        Volume {{ volume.volume_number }}</h3><!-- End .product-title -->
+                                        {% if volume.type == 'Package' %} Package {{ volume.package_name }}
+                                        {% else %}Volume {{ volume.volume_number }}
+                                        {% endif %}</h3><!-- End .product-title -->
                                     {% for author,key in volume.product.author.items %}
                                         <h2 class="product-title product-title-volume force-rtl arabic-font"
                                         ><a class="arabic-font" style="font-size: 1.2rem">{{ key }} : {{ author }} </a>
@@ -109,10 +115,6 @@
                                         <p class="arabic-font force-rtl"> القصة : {{ volume.product.synopsis }} </p>
                                     </div><!-- End .product-content -->
 
-                                    <div class="product-price force-rtl"
-                                         style="display: block;direction: ltr;margin-bottom: 1.6rem">
-                                        {{ volume.price.amount }} {{ volume.price.currency }}
-                                    </div><!-- End .product-price -->
                                     <div id="product_form">
                                         {% include 'abstract/product/product_single/product_form.html' %}
                                     </div>

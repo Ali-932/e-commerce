@@ -1,18 +1,30 @@
-        <form
-                hx-post="{% url 'product:view-product' pk=volume.id %}"
-                       hx-indicator="#main_nav"
-                       hx-select-oob="#dropdown_cart"
-                        hx-select="#product_form"
+<form
+        hx-post="{% url 'product:view-product' pk=volume.id %}"
+        hx-indicator="#main_nav"
+        hx-select-oob="#dropdown_cart"
+        hx-select="#product_form"
 
-        >
-            {% csrf_token %}
+>
+    {% csrf_token %}
+    <div class="row" id="product_singe_form">
+        <div class="col-6">
+            <div class="product-price force-rtl"
+                 style="display: flex;margin-bottom: 1.6rem; align-items: center; flex-wrap: nowrap">
+                <span style="margin-left: 0.5rem"> IQD</span>
+                <input type="text"
+                       style="pointer-events: none;"
+                       name="price" id="price_id" value="{{ volume.price.amount }}">
+            </div><!-- End .product-price -->
+        </div>
+    </div>
+
     <div class="row" id="product_singe_form">
         <div class="col-6">
             <div class="details-filter-row details-row-size arabic-font force-rtl">
                 <label for="qty">الكمية : </label>
                 <div class="product-details-quantity mr-2">
                     {{ form.quantity }}
-{#                    <input type="number" id="qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>#}
+                    {#                    <input type="number" id="qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>#}
                 </div><!-- End .product-details-quantity -->
             </div><!-- End .details-filter-row -->
         </div>
@@ -22,7 +34,7 @@
             <div class="details-filter-row details-row-size arabic-font force-rtl">
                 <label for="lang">اللغة : </label>
                 <div class="product-details-quantity mr-2 mt-3 mb-4" dir="ltr">
-                            {{ form.language }}
+                    {{ form.language }}
                 </div><!-- End .product-details-quantity -->
             </div><!-- End .details-filter-row -->
         </div>

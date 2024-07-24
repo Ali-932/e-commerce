@@ -17,8 +17,8 @@
             <figure class="product-media2">
                 {#                                                <span class="product-label label-new">New</span>#}
                 <a style="cursor: pointer"
-                   hx-get={% if menu_num == 3 %}
-                       {% url 'product:view-package' pk=volume.id %}
+                   hx-get={% if volume.type == 'Package' %}
+                       {% url 'product:view-product' pk=volume.id %}
                    {% else %}
                        {% url 'product:view-product' pk=volume.id %}
                    {% endif %}
@@ -30,13 +30,10 @@
                    hx-indicator="#ht-spp, #pagination_pointers, #pagination_pre, #pagination_next"
                 >
                     <img src=
-                                 {% if menu_num == 3 %}
-                                     {{ volume.image.url }}
-                                 {% else %}
-                                     {{ volume.image }}
-                                 {% endif %} alt="Product"
+                                 {{ volume.image }}
+                                 alt="Product"
                          class="product-image"
-                         style="{% if menu_num == 3 %} height: 300px; width: 300px; object-fit: fill; max-width: fit-content{% else %} height: 250px; object-fit: cover; {% endif %}">
+                         style="{% if volume.type == 'Package' %} height: 300px; width: 300px; object-fit: fill; max-width: fit-content{% else %} height: 30rem; object-fit: cover; {% endif %}">
                 </a>
 
                 <div class="product-action-vertical" style="right: 0.5rem">
@@ -59,17 +56,17 @@
                 <div>
                     <h1 class="product-title scrollbar-juicy-peach" style="; overflow: auto;"><a
                             style="font-size: 1.6rem">
-                        {% if menu_num == 3 %}
-                            {{ volume.product.name }} - Package
+                        {% if volume.type == 'Package' %}
+                            {{ volume.product.name }} - {{ volume.package_name }}
                         {% else %}
                             {{ volume.product.name }} - Volume {{ volume.volume_number }}
                         {% endif %}</a>
                     </h1><!-- End .product-title -->
                 </div>
-                {% if menu_num == 3 %}
+                {% if volume.type == 'Package' %}
                     <h2 class="product-title fxs-1 arabic-font" style="direction: rtl;"
                     ><a class="arabic-font" style="font-size: 1.2rem"
-                    >عدد المجلدات : {{ volume.number_of_volumes }}</a></h2>
+                    >عدد المجلدات : {{ volume.volume_count }}</a></h2>
                 {% endif %}
                 <div class="scrollbar-juicy-peach" style="height: 45px; overflow: auto;">
                     {% for author,key in volume.product.author.items %}
@@ -91,7 +88,7 @@
                     <div class="col-6">
                         <div class="row d-flex align-items-center justify-content-center">
                             <div>
-                                <span class="ratings-text text-muted force-rtl arabic-font">{% if menu_num == 3 %}
+                                <span class="ratings-text text-muted force-rtl arabic-font">{% if volume.type == 'Package' %}
                                     المجلدات: {{ volume.start_volume }} - {{ volume.end_volume }}
                                 {% else %}الفصول:
                                     {{ volume.start_chapter }} - {{ volume.end_chapter }} {% endif %}</span>
@@ -122,23 +119,12 @@
                     </div>
                 </div>
                 <div class="product-price">
-                    {% if volume.price.amount is not None %}
-                        <div style="display: flex; align-items: center;">
-                            <input class="" type="text"
-                                   style="pointer-events: none; width: 50px;"
-                                   name="price" id="price_id" value="{{ volume.price.amount }}">
-                            <span>IQD</span>
-                        </div>
-                    {% elif volume.discount_price is not None %}
-                        <div style="display: flex; align-items: center; gap: 0;">
-                            <input type="number"
-                                   style="pointer-events: none; width: 50px;"
-                                   name="price" id="price_id" value="{{ volume.discount_price }}">
-                            <span>IQD</span>
-                        </div>
-                    {% else %}
-                        <span>السعر غير متوفر</span>
-                    {% endif %}
+                    <div style="display: flex; align-items: center;">
+                        <input class="" type="text"
+                               style="pointer-events: none; width: 50px;"
+                               name="price" id="price_id" value="{{ volume.price.amount }}">
+                        <span>IQD</span>
+                    </div>
                 </div><!-- End .product-price -->
             </div><!-- End .product-body -->
         </div><!-- End .product -->
