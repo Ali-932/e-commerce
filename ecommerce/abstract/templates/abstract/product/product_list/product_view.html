@@ -4,7 +4,7 @@
 {% load product_tags %}
 <div id="product_view_dev">
     <form
-            hx-post="?{% query_transform %}"
+            hx-post="{% url 'product:list-products' %}"
             hx-indicator="#ht-spp"
             hx-vars="{'pk': {{ volume.id }}}"
             hx-select="#product_view_dev"
@@ -17,12 +17,8 @@
             <figure class="product-media2">
                 {#                                                <span class="product-label label-new">New</span>#}
                 <a style="cursor: pointer"
-                   hx-get={% if volume.type == 'Package' %}
-                       {% url 'product:view-product' pk=volume.id %}
-                   {% else %}
-                       {% url 'product:view-product' pk=volume.id %}
-                   {% endif %}
-                           hx-target="#main_nav"
+                   hx-get={% url 'product:view-product' pk=volume.id %}
+                   hx-target="#main_nav"
                    hx-push-url="true"
                    hx-swap="innerHTML"
                    hx-select="#main_nav"
@@ -98,18 +94,18 @@
                 </div><!-- End .rating-container -->
                 <div class="row mb-1">
                     <div class="col-sm-7">
-                        {% if volume.language_available is not None %}
+                        {% if volume.type == 'Inventory_Manga' %}
                             <input type="text" name="language" style="pointer-events: none;"
-                                   value="{{ volume.language_available }}"
+                                   value="{{ volume.language }}"
                                    class="form-control disabled" id="id_language">
                         {% else %}
                             {{ form.language }}
                         {% endif %}
                     </div>
                     <div class="col-sm-5">
-                        {% if volume.quantity_available is not None %}
+                        {% if volume.type == 'Inventory_Manga' %}
                             <input class="form-control qty" type="number" id="qty"
-                                   min="1" max="{{ volume.quantity_available }}" step="1" data-decimals="0"
+                                   min="1" max="{{ volume.quantity }}" step="1" data-decimals="0"
                                    name="quantity" value="1"
                             >
                         {% else %}

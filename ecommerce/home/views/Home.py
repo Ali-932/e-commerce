@@ -3,14 +3,15 @@ from django.shortcuts import render
 # Create your views here.
 from django.urls import reverse
 from django.views.generic import RedirectView
+from django_ratelimit.decorators import ratelimit
 
 from ecommerce.abstract.utlites.base_function import common_views
 from ecommerce.abstract.utlites.menu_nums import menu_nums
 from ecommerce.home.models import BModel, AModel, CModel, DModel, VolumeABanner, VolumeBBanner
 from ecommerce.order.models import Order
+from ecommerce.product.froms.main_product_from import ProductForm
 from ecommerce.product.models import Volume, Item
 from ecommerce.settings import LIGHT_REQUESTS_RATE_LIMIT
-from django_ratelimit.decorators import ratelimit
 
 
 class RootUrlView(RedirectView):
@@ -26,6 +27,7 @@ class RootUrlView(RedirectView):
 def index(request):
     models = [AModel, BModel, CModel, DModel, VolumeABanner, VolumeBBanner]
     ads = []
+    form = ProductForm(request.POST or None)
 
     for model in models:
         try:
@@ -41,6 +43,7 @@ def index(request):
         orderitem__order__status=Order.Status_CHOICES.PENDING).annotate(
         times_ordered=Count('orderitem')).order_by('-times_ordered')[:12]
     new_release = Item.objects.order_by('-id')[:12]
+
     context = {
         'pretitle_url': reverse('home:index'),
         'adA': ads[0],
@@ -52,6 +55,7 @@ def index(request):
         'menu_num': menu_num,
         'best_sellers': best_sellers_volumes,
         'new_release': new_release,
+        'form': form,
         **common
     }
 

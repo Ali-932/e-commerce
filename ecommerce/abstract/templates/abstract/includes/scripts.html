@@ -26,212 +26,232 @@
 
 <script>
     function carousel() {
-  return {
-    active: 0,
-    init() {
-      var flkty = new Flickity(this.$refs.carousel, {
-        wrapAround: true
-      });
-      flkty.on('change', i => this.active = i);
+        return {
+            active: 0,
+            init() {
+                var flkty = new Flickity(this.$refs.carousel, {
+                    wrapAround: true
+                });
+                flkty.on('change', i => this.active = i);
+            }
+        }
     }
-  }
-}
 
-function carouselFilter() {
-  return {
-    active: 0,
-    changeActive(i) {
-      this.active = i;
+    function carouselFilter() {
+        return {
+            active: 0,
+            changeActive(i) {
+                this.active = i;
 
-      this.$nextTick(() => {
-        let flkty = Flickity.data( this.$el.querySelectorAll('.carousel')[i] );
-        flkty.resize();
-      });
+                this.$nextTick(() => {
+                    let flkty = Flickity.data(this.$el.querySelectorAll('.carousel')[i]);
+                    flkty.resize();
+                });
+            }
+        }
     }
-  }
-}
 
-document.body.addEventListener('htmx:beforeSwap', function(event){
-  return {
-    active: 0,
-    changeActive(i) {
-      this.active = i;
+    document.body.addEventListener('htmx:beforeSwap', function (event) {
+        return {
+            active: 0,
+            changeActive(i) {
+                this.active = i;
 
-      this.$nextTick(() => {
-        let flkty = Flickity.data( this.$el.querySelectorAll('.carousel')[i] );
-        flkty.resize();
-      });
-    }
-  }
-})
+                this.$nextTick(() => {
+                    let flkty = Flickity.data(this.$el.querySelectorAll('.carousel')[i]);
+                    flkty.resize();
+                });
+            }
+        }
+    })
 
 </script>
 <script>
-document.body.addEventListener('htmx:afterOnLoad', function(event) {
-  setTimeout(function() {
-    var carouselElements = document.querySelectorAll('.carousel');
-    carouselElements.forEach(function(element) {
-      var flkty = Flickity.data(element);
-      if (flkty) {
-        flkty.reloadCells();
-        flkty.resize();
-        flkty.updateDraggable();
-      } else {
-        flkty = new Flickity(element, { wrapAround: true });
-        flkty.on('change', function(index) {
-          xData.carouselFilter.active = index;
-        });
-      }
+    document.body.addEventListener('htmx:afterOnLoad', function (event) {
+        setTimeout(function () {
+            var carouselElements = document.querySelectorAll('.carousel');
+            carouselElements.forEach(function (element) {
+                var flkty = Flickity.data(element);
+                if (flkty) {
+                    flkty.reloadCells();
+                    flkty.resize();
+                    flkty.updateDraggable();
+                } else {
+                    flkty = new Flickity(element, {wrapAround: true});
+                    flkty.on('change', function (index) {
+                        xData.carouselFilter.active = index;
+                    });
+                }
+            });
+        }, 100);
     });
-  }, 100);
-});
 
 </script>
 <script>
-$(document).on('htmx:afterSettle', function(event) {
-$('.input-spinner').remove();
+    $(document).on('htmx:afterSettle', function (event) {
+        $('.input-spinner').remove();
 
-$('.qty').each(function() {
-    $(this).inputSpinner(
-        {
-            decrementButton: '<i class="icon-minus"></i>',
-            incrementButton: '<i class="icon-plus"></i>',
-            groupClass: 'input-spinner',
-            buttonsClass: 'btn-spinner',
-            buttonsWidth: '26px'
-        }
-    );
-});
-});
-$(window).on("popstate", function() {
-  $(document).ready(function() {
-    $(".input-spinner").remove(); // or $(".input-spinner").hide();
-          location.reload(true);
+        $('.qty').each(function () {
+            $(this).inputSpinner(
+                {
+                    decrementButton: '<i class="icon-minus"></i>',
+                    incrementButton: '<i class="icon-plus"></i>',
+                    groupClass: 'input-spinner',
+                    buttonsClass: 'btn-spinner',
+                    buttonsWidth: '26px'
+                }
+            );
+        });
+    });
+    $(window).on("popstate", function () {
+        $(document).ready(function () {
+            $(".input-spinner").remove(); // or $(".input-spinner").hide();
+            location.reload(true);
 
-  });
-});
+        });
+    });
 </script>
 
 <script>
-// Store the Owl Carousel configuration in a variable
-var owlCarouselOptions = {
-  // Add your carousel options here
-  nav: false,
-  dots: true,
-  loop: false,
-  responsive: {
-    0: {
-      items: 1
-    },
-    480: {
-      items: 2
-    },
-    768: {
-      items: 3
-    },
-    992: {
-      items: 4
-    },
-    1200: {
-      items: 4,
-      nav: true,
-      dots: false
-    }
-  }
-};
-var owlCarouselOptions2 = {
-  // Add your carousel options here
-  nav: false,
-  dots: true,
-  loop: false,
-  responsive: {
-    0: {
-      items: 1
-    },
-    480: {
-      items: 2
-    },
-    768: {
-      items: 3
-    },
-    992: {
-      items: 3
-    },
-    1200: {
-      items: 3,
-      nav: true,
-      dots: false
-    }
-  }
-};
-var owlCarouselOptions3 = {
-  // Add your carousel options here
-    nav: false,
-    dots: true,
-    margin: 10,
-    autoplay:true,
-    loop:true,
-    autoplayTimeout:5000,
-    autoplayHoverPause:true,
-      responsive: {
-    0: {
-      items: 1
-    },
-    480: {
-      items: 1
-    },
-    768: {
-      items: 1
-    },
-    992: {
-      items: 1
-    },
-    1200: {
-      items: 1,
-    }
-  }
-
-};
-// Initialize Owl Carousel on page load
-$(document).ready(function() {
-  initOwlCarousel();
-});
-
-// Reinitialize Owl Carousel on htmx afterSwap event
-$(document).on('htmx:afterSettle', function(event) {
-  setTimeout(function() {
-    initOwlCarousel();
-  }, 0);
-});
-
-// Function to initialize or reinitialize Owl Carousel
-function initOwlCarousel() {
-  $('.owl-carousel').each(function() {
-    var $carouselContainer = $(this);
-    // Check if the carousel is already initialized
-    if (typeof $carouselContainer.data('owl.carousel') === 'undefined') {
-      // Initialize the carousel with the stored configuration
-        if (this.id === 'myCarousel') {
-            $carouselContainer.owlCarousel(owlCarouselOptions);
+    // Store the Owl Carousel configuration in a variable
+    var owlCarouselOptions = {
+        // Add your carousel options here
+        nav: false,
+        dots: true,
+        loop: false,
+        responsive: {
+            0: {
+                items: 1
+            },
+            480: {
+                items: 2
+            },
+            768: {
+                items: 3
+            },
+            992: {
+                items: 4
+            },
+            1200: {
+                items: 4,
+                nav: true,
+                dots: false
+            }
         }
-        else if (this.id === 'CarouselLatest') {
-            $carouselContainer.owlCarousel(owlCarouselOptions2);
+    };
+    var owlCarouselOptions2 = {
+        // Add your carousel options here
+        nav: false,
+        dots: true,
+        loop: false,
+        responsive: {
+            0: {
+                items: 1
+            },
+            480: {
+                items: 2
+            },
+            768: {
+                items: 3
+            },
+            992: {
+                items: 3
+            },
+            1200: {
+                items: 3,
+                nav: true,
+                dots: false
+            }
         }
-        else if (this.id === 'CarouselSideLatest') {
-            console.log(this.id)
-            $carouselContainer.owlCarousel(owlCarouselOptions3);
+    };
+    var owlCarouselOptions3 = {
+        // Add your carousel options here
+        nav: false,
+        dots: true,
+        margin: 10,
+        autoplay: true,
+        loop: true,
+        autoplayTimeout: 5000,
+        autoplayHoverPause: true,
+        responsive: {
+            0: {
+                items: 1
+            },
+            480: {
+                items: 1
+            },
+            768: {
+                items: 1
+            },
+            992: {
+                items: 1
+            },
+            1200: {
+                items: 1,
+            }
         }
 
-      // Update Owl Carousel's internal settings to reflect the newly initialized state
-      $carouselContainer.trigger('refresh.owl.carousel');
+    };
+    // Initialize Owl Carousel on page load
+    $(document).ready(function () {
+        initOwlCarousel();
+    });
+
+    // Reinitialize Owl Carousel on htmx afterSwap event
+    $(document).on('htmx:afterSettle', function (event) {
+        setTimeout(function () {
+            initOwlCarousel();
+        }, 0);
+    });
+
+    // Function to initialize or reinitialize Owl Carousel
+    function initOwlCarousel() {
+        $('.owl-carousel').each(function () {
+            var $carouselContainer = $(this);
+            // Check if the carousel is already initialized
+            if (typeof $carouselContainer.data('owl.carousel') === 'undefined') {
+                // Initialize the carousel with the stored configuration
+                if (this.id === 'myCarousel') {
+                    $carouselContainer.owlCarousel(owlCarouselOptions);
+                } else if (this.id === 'CarouselLatest') {
+                    $carouselContainer.owlCarousel(owlCarouselOptions2);
+                } else if (this.id === 'CarouselSideLatest') {
+                    console.log(this.id)
+                    $carouselContainer.owlCarousel(owlCarouselOptions3);
+                }
+
+                // Update Owl Carousel's internal settings to reflect the newly initialized state
+                $carouselContainer.trigger('refresh.owl.carousel');
+            }
+        });
     }
-  });
-}
 </script>
 
 <script>
-function clearAuthorSelection() {
-  $('input[name=author]').prop('checked',false);
+    function clearAuthorSelection() {
+        $('input[name=author]').prop('checked', false);
 
-}
+    }
+</script>
+
+<script>
+    // For confirming button on the checkout page using SweetAlert2
+    document.getElementById('confirmLink').addEventListener('click', function (event) {
+        event.preventDefault();
+
+        Swal.fire({
+            title: 'تأكيد',
+            text: 'هل تريد تثبيت طلبك؟',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'نعم, ثبت الطلب',
+            confirmButtonColor: '#FE5656',
+            cancelButtonText: 'لا',
+            customClass: 'arabic-font p-2 h6'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('ConfirmForm').submit();
+            }
+        });
+    });
 </script>

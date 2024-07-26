@@ -1,2 +1,2 @@
-from .quality_rep import quality_page
-from .Home import index
+from .quality_rep import *
+from .Home import *

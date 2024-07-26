@@ -25,6 +25,7 @@ def get_product_list_context(request, view_page='products'):
             }
             return context, template
         elif not form.is_valid():
+            print(form.errors)
             messages.error(request, 'حدث خطا اثناء اضافة العنصر')
 
     per_page = int(request.GET.get('per_page', 12))
@@ -74,7 +75,6 @@ def get_product_list_context(request, view_page='products'):
             'price_currency',
             'volume_count'
         )
-    print(items.values())
     author = None
     if request.htmx:
         filters = Q()

@@ -26,7 +26,7 @@ def checkout_page(request):
     form = OrderForm(request.POST or None, initial={**initial_data, 'is_active': False})
 
     if request.method == 'POST':
-        template = 'abstract/cart/checkout.html'
+        template = 'abstract/order/orders.html'
         if form.is_valid():
             with transaction.atomic():
                 return order_save_and_modify_address(

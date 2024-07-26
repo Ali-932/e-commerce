@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.db.models import Sum, OuterRef, Subquery
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from djmoney.money import Money
 
 from ecommerce.abstract.utlites.base_function import common_views
@@ -78,9 +78,16 @@ def order_save_and_modify_address(form, request, initial_address, template):
     common = common_views(request)
     items = order.items.all()
     # print(items.values())
-    # send_order_to_sheet(cleaned_data, order, request.user, items)
+    # sheet_sc = send_order_to_sheet(cleaned_data, order, request.user, items)
+    sheet_sc=201
     remove_item_if_special_offer(request, items)
-    return render(request, template, {'form': form, **common})
+    print(sheet_sc)
+    if sheet_sc == 201:
+        messages.success(request, 'تم ارسال الطلب بنجاح')
+        return redirect('orders:view_orders')
+
+    else:
+        messages.error(request, 'حدث خطأ اثناء ارسال الطلب')
 
 
 def send_order_to_sheet(cleaned_data, order, user, items):
@@ -103,11 +110,8 @@ def send_order_to_sheet(cleaned_data, order, user, items):
             'PHONE': f'{cleaned_data["phone"]} \n {cleaned_data["phone2"] or ""}',
             'STATUS': order.status,
             'DATE': str(order.updated_at.date()),
+            'CODE': str(order.uuid)
         }}
     post_to_sheet = requests.post(SPREADSHEET_API, json=order_dict)
 
-    if post_to_sheet.status_code == 200:
-        print('order sent to sheet')
-    else:
-        print('order not sent to sheet')
-        print(post_to_sheet.json())
+    return post_to_sheet.status_code

@@ -36,7 +36,7 @@
                         }'>
                         {% for volume in best_sellers %}
                             <div class="col-11 ml-3">
-                             {% include 'abstract/product/product_list/product_view.html' with volume=volume flexablesize=True %}
+                             {% include 'abstract/product/product_list/product_view.html' with volume=volume form=form %}
                             </div>
                         {% endfor %}
                     </div><!-- End .owl-carousel -->

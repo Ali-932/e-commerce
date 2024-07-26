@@ -143,3 +143,4 @@ media_root
 /node_modules/
 /media/
 /venv/
+/static/

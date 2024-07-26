@@ -23,7 +23,14 @@
             <div class="details-filter-row details-row-size arabic-font force-rtl">
                 <label for="qty">الكمية : </label>
                 <div class="product-details-quantity mr-2">
-                    {{ form.quantity }}
+                    {% if volume.type == 'Inventory_Manga' %}
+                        <input class="form-control qty" type="number" id="qty"
+                               min="1" max="{{ volume.quantity }}" step="1" data-decimals="0"
+                               name="quantity" value="1"
+                        >
+                    {% else %}
+                        {{ form.quantity }}
+                    {% endif %}
                     {#                    <input type="number" id="qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>#}
                 </div><!-- End .product-details-quantity -->
             </div><!-- End .details-filter-row -->
@@ -34,7 +41,13 @@
             <div class="details-filter-row details-row-size arabic-font force-rtl">
                 <label for="lang">اللغة : </label>
                 <div class="product-details-quantity mr-2 mt-3 mb-4" dir="ltr">
-                    {{ form.language }}
+                    {% if volume.type == 'Inventory_Manga' %}
+                        <input type="text" name="language" style="pointer-events: none;"
+                               value="{{ volume.language }}"
+                               class="form-control disabled" id="id_language">
+                    {% else %}
+                        {{ form.language }}
+                    {% endif %}
                 </div><!-- End .product-details-quantity -->
             </div><!-- End .details-filter-row -->
         </div>
