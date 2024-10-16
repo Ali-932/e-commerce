@@ -1,0 +1,148 @@
+{% load compress %}
+{% load static %}
+{#    {% compress css %}#}
+{#    <link rel="stylesheet" href="{% static 'css/tailwind.css' %}">#}
+{#    {% endcompress %}#}
+<main x-data="carouselFilter()" dir="ltr">
+  <div class="container grid grid-cols-1">
+    <div class="flex py-5 justify-center">
+      <a class="px-2 text-lg font-bold hover:text-amber-800 text-current:text-lime-400
+      	 arabic-font text-decoration-none" :class="{ 'text-black': active != 0 }" href="#" @click.prevent="changeActive(0)">الجودة الخارجية</a>
+      <a class="px-2 text-lg font-bold hover:text-amber-800
+      	 arabic-font text-decoration-none" :class="{ 'text-black': active != 1 }" href="#" @click.prevent="changeActive(1)">الجودة الداخلية</a>
+    </div>
+
+    <div class="row-start-2 col-start-1"
+         x-show="active == 0"
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0 transform scale-90"
+         x-transition:enter-end="opacity-100 transform scale-100"
+         x-transition:leave="transition ease-in duration-300"
+         x-transition:leave-start="opacity-100 transform scale-100"
+         x-transition:leave-end="opacity-0 transform scale-90"
+    >
+      <div class="grid grid-cols-1 grid-rows-1" x-data="carousel()" x-init="init()">
+        <div class="col-start-1 row-start-1 relative z-20 flex items-center justify-center pointer-events-none">
+
+          <h1 class="absolute text-5xl font-weight-bold arabic-font stroke-text"
+              x-show="active == 0"
+              x-transition:enter="transition ease-out duration-300"
+              x-transition:enter-start="opacity-0 transform translate-y-12"
+              x-transition:enter-end="opacity-100 transform translate-y-0"
+              x-transition:leave="transition ease-out duration-300"
+              x-transition:leave-start="opacity-100 transform translate-y-0"
+              x-transition:leave-end="opacity-0 transform -translate-y-12"
+          >الغلاف الأمامي</h1>
+          <h1 class="absolute text-5xl font-weight-bold arabic-font stroke-text"
+              x-show="active == 1"
+              x-transition:enter="transition ease-out duration-300"
+              x-transition:enter-start="opacity-0 transform translate-y-12"
+              x-transition:enter-end="opacity-100 transform translate-y-0"
+              x-transition:leave="transition ease-out duration-300"
+              x-transition:leave-start="opacity-100 transform translate-y-0"
+              x-transition:leave-end="opacity-0 transform -translate-y-12"
+          >الغلاف الخلفي</h1>
+          <h1 class="absolute text-5xl font-weight-bold arabic-font stroke-text"
+              x-show="active == 2"
+              x-transition:enter="transition ease-out duration-300"
+              x-transition:enter-start="opacity-0 transform translate-y-12"
+              x-transition:enter-end="opacity-100 transform translate-y-0"
+              x-transition:leave="transition ease-out duration-300"
+              x-transition:leave-start="opacity-100 transform translate-y-0"
+              x-transition:leave-end="opacity-0 transform -translate-y-12"
+          >عمود الكتاب</h1>
+        </div>
+
+
+        <div class="carousel col-start-1 row-start-1" x-ref="carousel">
+          <div class="w-3/5 px-2" name="aaa">
+            <img
+              class="lazy"
+              src={% static 'images/about/IMG_0360 copy.jpg' %}
+              loading="eager">
+          </div>
+          <div class="w-3/5 px-2 ">
+            <img
+              class="lazy"
+              src={% static 'images/about/IMG_0359 copy.jpg' %}
+              loading="eager">
+          </div>
+          <div class="w-3/5 px-2">
+            <img
+              class="lazy"
+              src={% static 'images/about/IMG_0361.jpg' %}
+              loading="eager">
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row-start-2 col-start-1"
+         x-show="active == 1"
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0 transform scale-90"
+         x-transition:enter-end="opacity-100 transform scale-100"
+         x-transition:leave="transition ease-in duration-300"
+         x-transition:leave-start="opacity-100 transform scale-100"
+         x-transition:leave-end="opacity-0 transform scale-90"
+   >
+      <div class="grid grid-cols-1 grid-rows-1" x-data="carousel()" x-init="init()">
+        <div class="col-start-1 row-start-1 relative z-20 flex items-center justify-center pointer-events-none">
+
+          <h1 class="absolute text-5xl font-weight-bold arabic-font stroke-text"
+              x-show="active == 0"
+              x-transition:enter="transition ease-out duration-300"
+              x-transition:enter-start="opacity-0 transform translate-y-12"
+              x-transition:enter-end="opacity-100 transform translate-y-0"
+              x-transition:leave="transition ease-out duration-300"
+              x-transition:leave-start="opacity-100 transform translate-y-0"
+              x-transition:leave-end="opacity-0 transform -translate-y-12"
+          >فن المانجا</h1>
+          <h1 class="absolute text-5xl font-weight-bold arabic-font stroke-text"
+              x-show="active == 1"
+              x-transition:enter="transition ease-out duration-300"
+              x-transition:enter-start="opacity-0 transform translate-y-12"
+              x-transition:enter-end="opacity-100 transform translate-y-0"
+              x-transition:leave="transition ease-out duration-300"
+              x-transition:leave-start="opacity-100 transform translate-y-0"
+              x-transition:leave-end="opacity-0 transform -translate-y-12"
+          >الصفحات المقدمة</h1>
+          <h1 class="absolute text-5xl font-weight-bold arabic-font stroke-text"
+              x-show="active == 2"
+              x-transition:enter="transition ease-out duration-300"
+              x-transition:enter-start="opacity-0 transform translate-y-12"
+              x-transition:enter-end="opacity-100 transform translate-y-0"
+              x-transition:leave="transition ease-out duration-300"
+              x-transition:leave-start="opacity-100 transform translate-y-0"
+              x-transition:leave-end="opacity-0 transform -translate-y-12"
+          >الصفحات الوسطية</h1>
+        </div>
+
+
+        <div class="carousel col-start-1 row-start-1" x-ref="carousel">
+          <div class="w-3/5 px-2">
+            <img
+              class="lazy"
+              src={% static 'images/about/IMG_0362.jpg' %}
+              loading="eager">
+          </div>
+          <div class="w-3/5 px-2">
+            <img
+              class="lazy"
+              src={% static 'images/about/IMG_0363.jpg' %}
+              loading="eager">
+          </div>
+          <div class="w-3/5 px-2">
+            <img
+              src={% static 'images/about/IMG_0364.jpg' %}
+              loading="eager">
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+

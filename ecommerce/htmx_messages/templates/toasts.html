@@ -1,0 +1,31 @@
+<style>
+.toast-body {
+    padding: 1.5rem !important;
+    font-size: 1.5rem !important;
+}
+.success {
+    color:#fff;background-color:#20cb55;
+}
+.error {
+    color:#fff;background-color:#dc3545;
+}
+.info {
+    color:#fff;background-color:#0d6efd
+}
+</style>
+<div data-toast-container class="toast-container position-fixed top-0 end-0 p-3">
+  <div data-toast-template class="toast align-items-center border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div data-toast-body class="toast-body"></div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+  {% for message in messages %}
+  <div class="toast align-items-center border-0 {{ message.tags }}" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div data-toast-body class="toast-body arabic-font">{{ message.message }}</div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+  {% endfor %}
+</div>

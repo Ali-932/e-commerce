@@ -1,0 +1,211 @@
+{% include 'abstract/includes/upper/header.html' %}
+{% load static %}
+{% load humanize %}
+<div class="header-middle">
+    <div class="container">
+        <div class="header-left ">
+            <button class="mobile-menu-toggler">
+                <span class="sr-only">Toggle mobile menu</span>
+                <i class="icon-bars"></i>
+            </button>
+
+            <a href={% url 'home:index' %} class="logo">
+                <div class="ml-5">
+                    <img src={% static "images/logo.png" %} width=110 height=30>
+                </div>
+            </a>
+        </div><!-- End .header-left -->
+
+        <div class="header-right">
+            <div class="header-search header-search-extended header-search-visible header-search-no-radius">
+                <a href="#" class="search-toggle" role="button"><i class="icon-search"></i></a>
+                <form
+                        {#                        x-on:click="nav_bar=$event.target.id.charAt($event.target.id.length -1);"#}
+                        hx-swap="innerHTML"
+                        hx-target="#main_nav"
+                        hx-push-url="true"
+                        hx-get="{% url 'product:list-products' %}"
+                        hx-select="#main_nav"
+                        hx-indicator="#main_nav"
+                        {#                        hx-on:click="clearAuthorSelection()"#}
+                >
+                    <div class="header-search-wrapper search-wrapper-wide">
+                        <label for="q" class="sr-only">Search</label>
+                        <input type="search" class="form-control arabic-font force-rtl" name="q" id="q"
+                               placeholder="ابحث عن منتج" required>
+
+
+                        <button class="btn custom-button" type="submit"><i class="icon-search"></i></button>
+                    </div><!-- End .header-search-wrapper -->
+                </form>
+            </div><!-- End .header-search -->
+
+            <div class="header-dropdown-link ">
+                <div class="dropdown cart-dropdown" id="account_header">
+                    <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static"
+                       title="My account" class="fix_account">
+                        <div class="icon">
+                            <i class="icon-user"></i>
+                        </div>
+                        <p class="arabic-font">الحساب</p>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown"
+                         style="width: 300px">
+                        <div class="d-flex justify-content-center">
+                            {% if user.is_authenticated %}
+                                <p class="arabic-font">اسم المستخدم: {{ request.user.name }} </p>
+                                </div>
+                                <div class="d-flex justify-content-center mt-4">
+                                    <a
+                                            href="#"
+                                            hx-get="{% url 'auth:logout' %}"
+                                            hx-select-oob="#account_header"
+                                            hx-target="#main_nav"
+                                            hx-push-url="true"
+                                            hx-select="#main_nav"
+                                            hx-indicator="#main_nav"
+                                            style="cursor: pointer"
+                                            class="btn btn-outline-primary-2 arabic-font"><span>تسجيل خروج</span><i
+                                            class="icon-long-arrow-right"></i></a>
+                                </div>
+                            {% else %}
+                                <p class="arabic-font"> غير مسجل </p>
+                                </div>
+                                <div class="dropdown-cart-action mt-4">
+                                    <a
+                                            href="#"
+                                            hx-get="{% url 'auth:login' %}"
+                                            hx-target="#main_nav"
+                                            hx-push-url="true"
+                                            hx-select="#main_nav"
+                                            hx-indicator="#main_nav"
+                                            hx-vals='{"sign_up": "true"}'
+                                            style="cursor: pointer"
+                                            class="btn btn-outline-primary-2 arabic-font"><span>انشئ حساب</span><i
+                                            class="bi bi-file-plus"></i></a>
+                                    <a
+                                            href="#"
+                                            hx-get="{% url 'auth:login' %}"
+                                            hx-target="#main_nav"
+                                            hx-push-url="true"
+                                            hx-select="#main_nav"
+                                            hx-indicator="#main_nav"
+                                            hx-vals='{"login": "true"}'
+                                            style="cursor: pointer;"
+                                            class="btn btn-outline-primary-2 arabic-font"><span>تسجيل دخول</span><i
+                                            class="bi bi-door-open"></i></a>
+
+                                </div>
+                            {% endif %}
+                </div>
+
+
+            </div><!-- End .compare-dropdown -->
+
+            <div class="dropdown cart-dropdown" id="dropdown_orders">
+                <a style="cursor: pointer"
+                   hx-get="{% url 'orders:view_orders' %}"
+                   hx-target="#main_nav"
+                   hx-push-url="true"
+                   hx-select="#main_nav"
+                   hx-indicator="#main_nav"
+                   class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
+                   aria-expanded="false" data-display="static">
+                    <div class="icon">
+                        <i class="bi-box-seam-fill" style="font-size: 29px"></i>
+                        <span class="cart-count">{{ order_total_count }}</span>
+                    </div>
+                    <p class="arabic-font">الطلبات</p>
+                </a>
+            </div><!-- End .cart-dropdown -->
+
+            <div class="dropdown cart-dropdown pl-4" id="dropdown_cart">
+                <a style="cursor: pointer"
+                   hx-get="{% url 'orders:cart' %}"
+                   hx-target="#main_nav"
+                   hx-push-url="true"
+                   hx-select="#main_nav"
+                   hx-indicator="#main_nav"
+                   class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
+                   aria-expanded="false" data-display="static">
+                    <div class="icon">
+                        <i class="icon-shopping-cart"></i>
+                        <span class="cart-count">{{ total_count }}</span>
+                    </div>
+                    <p class="arabic-font">سلة المشتريات</p>
+                </a>
+
+                <div class="dropdown-menu dropdown-menu-right scrollbar-juicy-peach"
+                     style="max-height: 400px; overflow-y: auto;">
+                    <div class="dropdown-cart-products hx-disabled">
+                        {% for item in items %}
+                            <div class="product"
+                                 style="overflow: visible"
+                            >
+                                <div class="row">
+                                    <div class="col-4 p-0">
+                                        <img src="{{ item.volume.image }}">
+                                    </div>
+                                    <div class="col-8">
+                                        <h4 class="product-title">
+                                            <a href={% url 'product:view-product' item.volume.pk %}>{{ item.volume.product }}
+                                                Volume {{ item.volume.volume_number }}
+                                                - {{ item.language }}</a>
+                                        </h4>
+
+                                        <span class="cart-product-info arabic-font" dir="ltr">
+                                                    <span class="cart-product-qty"> الكمية :{{ item.quantity }}</span>
+                                                    <br>
+                                                    IQD السعر :{{ item.price.amount|intcomma }}
+                                                </span>
+                                    </div>
+                                </div><!-- End .product-cart-details -->
+
+                                <figure class="product-image-container">
+                                    <a href="product.html" class="product-image">
+                                        {#                                                    <img src="assets/images/products/cart/product-1.jpg" alt="product">#}
+                                    </a>
+                                </figure>
+                                <a style="cursor: pointer"
+                                   class="btn-remove"
+                                   title="Remove Product"
+                                   hx-get='{% url 'orders:delete_order' pk=item.id %}'
+                                   hx-swap='innerHTML'
+                                   hx-target="#dropdown_cart"
+                                   hx-select="#dropdown_cart"
+                                   hx-indicator="#dropdown_cart"><i class="icon-close"
+                                ></i></a>
+                            </div><!-- End .product -->
+                        {% endfor %}
+                    </div><!-- End .cart-product -->
+
+                    <div class="dropdown-cart-total">
+                        <span class="arabic-font">{% if total_price %}السعر الكلي {% endif %}</span>
+
+                        <span class="cart-total-price arabic-font">{{ total_price|default:' لا توجد منتجات في السلة'|intcomma }}
+                            {% if total_price %}IQD{% endif %}</span>
+                    </div><!-- End .dropdown-cart-total -->
+
+                    <div class="dropdown-cart-action">
+                        <a href="#" style="cursor: pointer"
+                           hx-get="{% url 'orders:cart' %}"
+                           hx-target="#main_nav"
+                           hx-push-url="true"
+                           hx-select="#main_nav"
+                           hx-indicator="#main_nav"
+                           class="btn btn-outline-primary-2 arabic-font">سلة المشتريات</a>
+                        <a href="#" style="cursor: pointer"
+                           hx-get="{% url 'orders:checkout' %}"
+                           hx-target="#main_nav"
+                           hx-push-url="true"
+                           hx-select="#main_nav"
+                           hx-indicator="#main_nav"
+                           class="btn btn-outline-primary-2 arabic-font"><span>الدفع</span><i
+                                class="icon-long-arrow-right"></i></a>
+                    </div><!-- End .dropdown-cart-total -->
+                </div><!-- End .dropdown-menu -->
+            </div><!-- End .cart-dropdown -->
+        </div>
+    </div><!-- End .header-right -->
+</div><!-- End .container -->
+</div><!-- End .header-middle -->

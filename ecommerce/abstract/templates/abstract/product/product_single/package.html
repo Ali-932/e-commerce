@@ -1,0 +1,283 @@
+{% extends 'abstract/_base.html' %}
+
+{% load static %}
+{% load product_tags %}
+{% block content %}
+
+    <main class="main" dir="rtl" id="main_single_page">
+        <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+            <div class="container d-flex align-items-center" id="nav_product">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a
+                            hx-get="{% url 'product:list-products' %}"
+                            hx-swap="innerHTML"
+                            hx-target="#main_nav"
+                            hx-push-url="true"
+                            hx-select="#main_nav"
+                            style="cursor: pointer;"
+                            hx-indicator="#main_nav"
+
+                    >{{ volume.product.type }}</a></li>
+                    <li class="breadcrumb-item p-0"><a
+                            hx-get="{% url 'product:list-products' %}"
+                            hx-swap="innerHTML"
+                            hx-target="#main_nav"
+                            hx-push-url="true"
+                            hx-select="#main_nav"
+                            hx-vals='{"q": "{{ volume.product.name }}"}'
+                            hx-indicator="#main_nav"
+                            style="cursor: pointer;"
+                    >{{ volume.product }}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">volume {{ volume.volume_number }}</li>
+                </ol>
+
+                <nav class="product-pager mr-auto" aria-label="Product">
+                    <a class="product-pager-link product-pager-next {% if not next_volume %} custom_disabled {% endif %}"
+                       style="margin-left: 4rem; cursor: pointer;" aria-label="Next" tabindex="-1">
+                        <i class="icon-angle-right"></i>
+                        <span class="arabic-font force-rtl"
+                              hx-get={% url 'product:view-product' pk=next_volume.id|default:1 %}
+                                      hx-swap="outerHTML"
+                              hx-target="#single_product_page"
+                              hx-select="#single_product_page"
+                              hx-push-url="true"
+                              hx-indicator="#main_nav"
+                              hx-select-oob="#nav_product"
+                        >التالي</span>
+                    </a>
+                    <a class="product-pager-link product-pager-prev {% if not prev_volume %} custom_disabled {% endif %}"
+                       style="cursor: pointer" aria-label="Previous" tabindex="-1">
+                            <span class="arabic-font force-rtl"
+                                  hx-get={% url 'product:view-product' pk=prev_volume.id|default:1 %}
+                                          hx-swap="innerHTML"
+                                  hx-target="#single_product_page"
+                                  hx-select="#single_product_page"
+                                  hx-push-url="true"
+                                  hx-indicator="#main_nav"
+                                  hx-select-oob="#nav_product"
+                            >السابق</span>
+                        <i class="icon-angle-left"></i>
+                    </a>
+                </nav><!-- End .pager-nav -->
+            </div><!-- End .container -->
+        </nav><!-- End .breadcrumb-nav -->
+        <div class="page-content">
+            <div class="container">
+                <div id="single_product_page">
+                    <div class="product-details-top">
+                        <div class="row">
+                            <div class="col-1">
+                            </div>
+                            <div class="col-md-4">
+                                <div class="product-gallery product-gallery-vertical">
+                                    <div class="row">
+                                        <figure class="product-main-image" style="
+                                        padding-left: 2.5rem;
+                                        padding-right: 2.5rem;
+                                        flex: none;
+                                        max-width: 100%">
+                                            <img id="product-zoom" src="{{ volume.image.url }}"
+                                                 data-zoom-image="{{ volume.image.url }}" alt="product image"
+                                                 style="size: 30rem">
+                                            <a href="#" id="btn-product-gallery" class="btn-product-gallery">
+                                                <i class="icon-arrows"></i>
+                                            </a>
+                                        </figure><!-- End .product-main-image -->
+                                    </div><!-- End .row -->
+                                </div><!-- End .product-gallery -->
+                            </div><!-- End .col-md-6 -->
+                            <div class="col-md-6">
+                                <div class="product-details">
+                                    <h1 class="product-title force-rtl">{{ volume.product.name }}</h1>
+                                    <!-- End .product-title -->
+                                    <h3 class="product-title force-rtl product-title-volume">
+                                        Package {{ volume.volume_number }}</h3><!-- End .product-title -->
+                                    <!-- End .product-title -->
+                                    <h5 class="product-title force-rtl product-title-volume">
+                                        {{ volume.end_volume }} - {{ volume.start_volume }}</h5><!-- End .product-title -->
+                                    {% for author,key in volume.product.author.items %}
+                                        <h2 class="product-title product-title-volume force-rtl arabic-font"
+                                        ><a class="arabic-font" style="font-size: 1.2rem">{{ key }} : {{ author }} </a>
+                                        </h2>
+                                    {% endfor %}
+                                    <div class="ratings-container mb-0">
+                                        <div>
+                                            <div class="force-rtl arabic-font"
+                                                 style="margin-bottom: 1.2rem;font-size: 1.2rem; padding-right: 1rem; opacity: 0.7;">{% score_filter volume.product.score %}</div>
+                                            <!-- End .ratings-val -->
+                                        </div><!-- End .ratings -->
+                                    </div><!-- End .rating-container -->
+
+                                    <div class="product-content" style="padding-right: 1rem;">
+                                        <p class="arabic-font force-rtl"> القصة : {{ volume.product.synopsis }} </p>
+                                    </div><!-- End .product-content -->
+
+                                    <div class="product-price force-rtl"
+                                         style="display: block;direction: ltr;margin-bottom: 1.6rem">
+                                        {{ volume.price.amount }} {{ volume.price.currency }}
+                                    </div><!-- End .product-price -->
+                                    <div id="product_form">
+                                        {% include 'abstract/product/product_single/product_form.html' %}
+                                    </div>
+                                </div><!-- End .product-details -->
+                            </div><!-- End .col-md-6 -->
+                        </div><!-- End .row -->
+                    </div><!-- End .product-details-top -->
+
+                    <div class="product-details-tab row justify-content-center" style="display: contents">
+                        <ul class="nav nav-pills justify-content-center" role="tablist">
+                            <li class="nav-item col-4 m-0">
+                                <a class="nav-link active" id="product-desc-link" data-toggle="tab"
+                                   href="#product-desc-tab" role="tab" aria-controls="product-desc-tab"
+                                   aria-selected="true">الوصف</a>
+                            </li>
+                            <li class="nav-item col-4 m-0">
+                                <a class="nav-link" id="product-info-link" data-toggle="tab" href="#product-info-tab"
+                                   role="tab" aria-controls="product-info-tab" aria-selected="false">معلومات اضافية</a>
+                            </li>
+                            <li class="nav-item col-4 m-0">
+                                <a class="nav-link" id="product-shipping-link" data-toggle="tab"
+                                   href="#product-shipping-tab" role="tab" aria-controls="product-shipping-tab"
+                                   aria-selected="false">معلومات التوصيل</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active arabic-font force-rtl" id="product-desc-tab"
+                                 role="tabpanel" aria-labelledby="product-desc-link">
+                                <div class="row">
+                                    <div class="col-1"></div>
+                                    <div class="col-10">
+                                        <div class="product-desc-content">
+                                            <h3>الخلفية</h3>
+                                            <p>{{ volume.product.background }}</p>
+                                        </div><!-- End .product-desc-content -->
+                                    </div>
+                                    <div class="col-1"></div>
+                                </div>
+                            </div><!-- .End .tab-pane -->
+                            <div class="tab-pane fade" id="product-info-tab" role="tabpanel"
+                                 aria-labelledby="product-info-link">
+                                <div class="product-desc-content arabic-font">
+                                    <table>
+                                        <tr>
+                                            <th>العنوان بالغة الإنكليزية</th>
+                                            <td>{{ volume.product.title_english|default:"لا يوجد" }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>العنوان بالغة اليابانية</th>
+                                            <td>{{ volume.product.title_japanese|default:"لا يوجد" }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>الفصول</th>
+                                            <td>{{ volume.start_chapter }} - {{ volume.end_chapter }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>عدد المجلدات الكلية</th>
+                                            <td>{{ volume.total_volumes }}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>الفئة العمرية</th>
+                                            <td>{{ volume.product.demographics|remove_brackets|default:"لا يوجد" }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>التصنيف</th>
+                                            <td>{{ volume.product.genres|remove_brackets|default:"لا يوجد" }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>المواضيع</th>
+                                            <td>{{ volume.product.themes|remove_brackets|default:"لا يوجد" }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>موعد الاطلاق</th>
+                                            <td>{{ volume.product.start_date|default:"لا يوجد" }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>موعد الانتهاء</th>
+                                            <td>{{ volume.product.end_date|default:"غير معلوم" }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>التقييم</th>
+                                            <td>{{ volume.product.score|default:"لا يوجد" }}</td>
+                                        </tr>
+
+                                    </table>
+                                </div><!-- End .product-desc-content -->
+                            </div><!-- .End .tab-pane -->
+
+                            <div class="tab-pane fade arabic-font force-rtl" id="product-shipping-tab" role="tabpanel"
+                                 aria-labelledby="product-shipping-link">
+                                <div class="row">
+                                    <div class="col-1">
+                                    </div>
+                                    <div class="col-10">
+                                        <div class="product-desc-content">
+                                            <h3>التوصيل</h3>
+                                            <p class="arabic-font" style="margin-bottom: 1.8rem;">بالنسبة لخدمة التوصيل،
+                                                نقدم لك خدمة التوصيل إلى جميع المناطق والمحافظات.<br> نحن نضمن وصول طلبك
+                                                إليك بأمان وسلامة.
+
+                                                نحرص على حماية محتويات طلبك أثناء عملية الشحن. لذلك، يتم تغليف الطلب
+                                                بمادة خاصة تساعد في حماية المنتجات وتقليل أي خطر على سلامتها. يمكنك
+                                                الاطمئنان إلى أن طلبك سيصل إليك في حالة جيدة ومحمي بشكل جيد.
+
+                                                عندما يتعلق الأمر بالوقت المستغرق للتوصيل، فإن مدة التوصيل تتراوح عادةً
+                                                ما بين 5 إلى 8 أيام عمل. يجب أن تعلم أننا نبذل قصارى جهدنا لتوفير
+                                                التسليم في أسرع وقت ممكن.<br>
+
+                                                أما بالنسبة للتكلفة، فإن تكلفة التوصيل هي 5 آلاف لجميع المحافظات. يجب أن
+                                                تراعي أن هذه التكلفة تشمل تغليف الطلب والشحن والتسليم إلى باب منزلك. نحن
+                                                نسعى دائمًا لتقديم خدمة موثوقة وبأسعار معقولة لجميع عملائنا.
+
+                                            </p>
+                                            <h3>سياسة الاستبدال</h3>
+                                            <p class="arabic-font">
+                                            </p>سياسة الاستبدال تشمل أي خلل في المنتج، سواء في اللغة أو وجود خلل مطبعي.
+                                            بإمكانك مراسلة الصفحة لعمل طلب استبدال. يُفضل أن يتم الاستبدال في فترة زمنية
+                                            محددة مقدارها يومان.
+
+                                        </div><!-- End .product-desc-content -->
+                                    </div>
+                                    <div class="col-1">
+                                    </div>
+                                </div>
+                            </div><!-- .End .tab-pane -->
+                        </div><!-- End .tab-content -->
+                    </div><!-- End .product-details-tab -->
+                </div>
+                <h2 class="title text-center my-5 arabic-font">مجلدات متشابهة</h2><!-- End .title text-center -->
+                <div id="myCarousel" class="owl-carousel owl-simple carousel-with-shadow" data-toggle="owl" dir="ltr"
+                     data-owl-options='{
+                            "nav": false,
+                            "dots": true,
+                            "loop": false,
+                            "responsive": {
+                                "0": {
+                                    "items":1
+                                },
+                                "480": {
+                                    "items":2
+                                },
+                                "768": {
+                                    "items":3
+                                },
+                                "992": {
+                                    "items":4
+                                },
+                                "1200": {
+                                    "items":4,
+                                    "nav": true,
+                                    "dots": false
+                                }
+                            }
+                        }'>
+                    {% for volume in volume_suggestions %}
+                        <div class="col-11 ml-3">
+                            {% include 'abstract/product/product_list/product_view.html' with volume=volume flexablesize=True %}
+                        </div>
+                    {% endfor %}
+                </div><!-- End .owl-carousel -->
+            </div><!-- End .container -->
+        </div><!-- End .page-content -->
+    </main><!-- End .main -->
+{% endblock %}

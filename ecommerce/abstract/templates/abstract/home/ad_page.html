@@ -1,0 +1,75 @@
+
+{% load static %}
+<div class="row">
+            <div class="col-md-12 col-lg-6">
+               <div class="banner banner-big banner-overlay">
+    <a href="#">
+        <img src= {{ adA.image.url }}  alt="Banner">
+
+{#                <img src="{% static 'images/demos/demo-20/banners/banner-1.jpg' %}" alt="Banner">#}
+    </a>
+    <div class="banner-content force-rtl row d-flex justify-content-end">
+        <h4 class="banner-subtitle text-white"><a class="arabic-font force-rtl"  href="#">{{ adA.Title }}</a></h4><!-- End .banner-subtitle -->
+        <h2 class="banner-title text-white force-rtl"><a  class="arabic-font force-rtl" href="#">{{ adA.Description|slice:"20" }} <br>{{ adA.Description|slice:"20:60" }}</a></h2><!-- End .banner-title -->
+        {% if adA.prompt_text %}
+        <a href="#" class="btn btn-outline-white-3 banner-link text-shadow">{{ adA.prompt_text}}<i class="icon-long-arrow-right"></i></a>
+        {% endif %}
+    </div><!-- End .banner-content -->
+</div><!-- End .banner -->
+</div><!-- End .col-lg-6 -->
+
+<div class="col-sm-6 col-lg-3 ">
+    <div class="banner banner-overlay">
+        <a href="#">
+            <img src={{ adB.image.url }} alt="Banner" width="335" height="420">
+        </a>
+
+        <div class="banner-content banner-content-stretch">
+            <h4 class="banner-subtitle text-white"><a class="arabic-font" href="#">{{ adB.Title }}</a></h4><!-- End .banner-subtitle -->
+            <h3 class="banner-title text-white "><a class="arabic-font center-text" href="#">{{ adB.Description}}</a></h3><!-- End .banner-title -->
+            {% if adB.prompt_text %}
+            <a href="#"
+               hx-get={% url 'home:quality_rep' %}
+               hx-target="#main_nav"
+                hx-target="#main_nav"
+                hx-select="#main_nav"
+                hx-indicator="#main_nav"
+
+               class="btn btn-outline-white-3 banner-link text-shadow
+             arabic-font">{{ adB.prompt_text }}<i class="icon-long-arrow-right"></i></a>
+            {% endif %}
+        </div><!-- End .banner-content -->
+    </div><!-- End .banner -->
+</div><!-- End .col-lg-3 -->
+
+<div class="col-sm-6 col-lg-3">
+    <div class="banner banner-small banner-overlay">
+        <a href="#">
+            <img src={{ adC.image.url }} alt="Banner">
+        </a>
+
+        <div class="banner-content">
+            <h4 class="banner-subtitle text-white d-lg-none d-xl-block"><a class="arabic-font" href="#">{{ adC.Title }}</a></h4><!-- End .banner-subtitle -->
+            <h3 class="banner-title text-white"><a class="arabic-font" href="#">{{ adC.Description }}</a></h3><!-- End .banner-title -->
+            {% if adC.prompt_text %}
+            <a href="#" class="btn btn-outline-white-3 banner-link arabic-font">{{ adC.prompt_text }}<i class="icon-long-arrow-right"></i></a>
+            {% endif %}
+        </div><!-- End .banner-content -->
+    </div><!-- End .banner -->
+
+    <div class="banner banner-small banner-overlay">
+        <a>
+            <img src={{ adD.image.url }} alt="Banner">
+        </a>
+
+        <div class="banner-content">
+            <h4 class="banner-subtitle text-white d-lg-none d-xl-block"><a class="arabic-font" href="#">{{ adD.Title }}</a></h4><!-- End .banner-subtitle -->
+            <h3 class="banner-title text-white"><a class="arabic-font" href="#">{{ adD.Description }}</a></h3><!-- End .banner-title -->
+            {% if adD.prompt_text %}
+            <a href="#" class="btn btn-outline-white-3 banner-link arabic-font">{{ adD.prompt_text }}<i class="icon-long-arrow-right"></i></a>
+            {% endif %}
+
+        </div><!-- End .banner-content -->
+    </div><!-- End .banner -->
+</div><!-- End .col-lg-3 -->
+</div><!-- End .row -->

@@ -1,0 +1,113 @@
+
+    {% extends 'abstract/_base.html' %}
+{% load humanize %}
+{% load i18n %}
+
+{% block content %}
+        <main class="main" id="main_nav">
+            <div class="page-content mt-3 mx-5">
+            	<div class="cart">
+	                <div class="container">
+	                	<div class="row">
+	                		<div class="col-lg-12">
+	                			<table class="table table-mobile hx-disabled" id="cart_orders">
+									<thead>
+										<tr class="arabic-font">
+                                            <th></th>
+                                            <th>رقم الطلب</th>
+											<th>رمز الطلب</th>
+											<th>التاريخ</th>
+											<th>الحالة</th>
+											<th>السعر الكلي</th>
+											<th></th>
+										</tr>
+									</thead>
+
+									<tbody>
+                                    {% for order in orders %}
+
+                                        <tbody x-data="{expandable: false}">
+
+										<tr>
+                                            <td class="remove-col right-pointer"><button
+                                                    @click=" expandable = !expandable"
+                                                    x-bind:class="{'right-pointer-rotating': expandable}"
+                                                    class="btn-remove"
+                                                    title="Remove Product"
+                                                   ><i class="bi bi-arrow-right"></i></button></td>
+                                            <td>
+                                                <div>
+													<p class="arabic-font">{{ order.serial }}</p><!-- End .product-title -->
+                                                </div>
+
+                                            </td>
+											<td>
+												<div>
+                                                    <div>
+                                                         <p class="arabic-font">{{ order.uuid }} </p>
+                                                    </div>
+												</div><!-- End .product -->
+											</td>
+                                            {% language 'ar' %}
+											<td class="price-col arabic-font" dir="rtl">{{ order.updated_at|date:'Y/n/d' }}</td>
+                                            {% endlanguage %}
+											<td class="quantity-col arabic-font">
+                                                    <span>{{ order.status }}</span>
+                                            </td>
+											<td class="total-col">{{ order.total_price.amount|intcomma }} IQD</td>
+										</tr>
+                                        {% for item in order.items.all %}
+                                           <tr class="p-0 ml-4">
+                                            <td colspan="2" class="m-0 p-0">
+                                                <div class="align-items-center" x-show="expandable" x-collapse>
+													<p class="arabic-font text-red-900">{{ forloop.counter }}</p><!-- End .product-title -->
+                                                </div>
+                                            </td>
+											<td colspan="3" class="product-col p-0 m-0">
+												<div style="width: 70%;" class="product p-0" x-show="expandable" x-collapse>
+													<figure class="product-media">
+														<a
+                                                        style="cursor: pointer"
+                                                        hx-get={% url 'product:view-product' pk=item.volume.id %}
+                                                        hx-target="#main_nav"
+                                                        hx-push-url="true"
+                                                        hx-swap="innerHTML"
+                                                        hx-select="#main_nav"
+                                                        hx-trigger="click"
+                                                        >
+															<img src={{ item.volume.image }} alt="Product image" >
+														</a>
+													</figure>
+
+													<h3 class="product-title">
+														<a
+                                                        style="cursor: pointer"
+                                                        hx-get={% url 'product:view-product' pk=item.volume.id %}
+                                                        hx-target="#main_nav"
+                                                        hx-push-url="true"
+                                                        hx-swap="innerHTML"
+                                                        hx-select="#main_nav"
+                                                        hx-trigger="click"
+                                                        >
+                                                            {{ item.volume.product }} Volume {{ item.volume.volume_number }}  -  {{ item.get_language_display }}  </a>
+													</h3><!-- End .product-title -->
+												</div><!-- End .product -->
+											</td>
+                                            <td colspan="1" class="m-0 p-0">
+                                                <div class="d-flex justify-content-start" x-show="expandable" x-collapse>
+													<p x-show="expandable" class="arabic-font">x{{ item.quantity }}</p><!-- End .product-title -->
+                                                </div>
+                                            </td>
+                                        {% endfor %}
+                                        </tbody>
+                                    {% endfor %}
+									</tbody>
+								</table><!-- End .table table-wishlist -->
+
+	                		</div><!-- End .col-lg-9 --><!-- End .col-lg-3 -->
+	                	</div><!-- End .row -->
+	                </div><!-- End .container -->
+                </div><!-- End .cart -->
+            </div><!-- End .page-content -->
+        </main><!-- End .main -->
+    {% endblock %}

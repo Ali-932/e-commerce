@@ -1,0 +1,100 @@
+{% load product_tags %}
+
+<nav aria-label="Page navigation" id="paginater" >
+							    <ul class="pagination justify-content-start hx-disabled" id="pagination_pre"
+                                        x-data="{
+                                fromRecordA: '{{pagination.from_record}}',
+                                toRecordA: '{{ pagination.to_record }}',
+                                totalRecordA: '{{ pagination.total_count }}',
+                                hasPreviousA: '{{ pagination.has_previous|yesno:"true,false" }}',
+                                hasNextA: '{{ pagination.has_next|yesno:"true,false" }}',
+                                currentPageA: 1,
+                                pagecountA: '{{ pagination.page_count }}',
+                                perPageA: '{{ pagination.per_page }}',
+                                nextPageA: '{{ pagination.next_page }}',
+                                previousPageA: '{{ pagination.previous_page }}'
+                               }">
+                             <p class="mr-1 text-muted"
+                             >عرض <span x-text="fromRecordA"></span> إلى
+                            <span x-text="toRecordA"></span> من <span x-text="totalRecordA"></span> منتج</p>
+                                        <li class="page-item" :class="{'disabled': !hasPreviousA}">
+							            <a class="page-link page-link-prev" aria-label="Previous" tabindex="-1" aria-disabled="true"
+                                       style="cursor: pointer"
+                                       hx-get=?{% query_transform %}"
+                                       hx-swap="outerHTML"
+                                       hx-target="#products_page"
+                                        :hx-vars="'page: ' + previousPageA"
+                                        @click="
+                                        currentPageA = previousPageA;
+                                              hasPreviousA = currentPageA > 1;
+                                              hasNextA = currentPageA < pagecountA;
+                                              fromRecordA = (currentPageA - 1) * perPageA + 1;
+                                              toRecordA = currentPageA * perPageA;
+                                              nextPageA = currentPageA + 1;
+                                              previousPageA = currentPageA - 1;
+                                              "
+                                       hx-indicator="#ht-spp, #pagination_pointers, #pagination_pre, #pagination_next"
+
+                                        >
+							                <span aria-hidden="true"><i class="icon-long-arrow-left"></i></span>السابق
+							            </a>
+							        </li>
+{#                                    <li class="page-item disabled" x-show="currentPageA - 1 > 1"><a class="page-link">&hellip;</a></li>#}
+                                <template x-for="page in Array.from({ length: pagecountA }, (_, i) => i + 1)"
+                                          :key="page">
+                                    <li class="page-item"
+                                        :class="{'active': currentPageA === page}"
+                                        x-show="currentPageA === page || (currentPageA !== page && page>(currentPageA - 4) && page<(currentPageA + 4))"
+                                   >
+                                        <a class="page-link hx-disabled included"
+                                           style="cursor: pointer"
+                                           id="pagination_pointers"
+                                           name="page"
+                                           @click="currentPageA = page;
+                                            hasPreviousA = currentPageA > 1;
+                                            hasNextA = currentPageA < pagecountA;
+                                            fromRecordA = (currentPageA - 1) * perPageA + 1;
+                                            toRecordA = currentPageA * perPageA;
+                                            nextPageA = currentPageA + 1;
+                                            previousPageA = currentPageA - 1;
+                                            "
+                                           x-text="page"
+                                           hx-get=?{% query_transform %}"
+                                           hx-swap="outerHTML"
+                                           hx-target="#products_page"
+                                           :hx-vars="'page: ' + page"
+                                           hx-vals='{"pag": "true"}'
+                                           hx-indicator="#ht-spp, #pagination_pointers, #pagination_pre, #pagination_next"
+                                           hx-include=".included"
+                                           hx-select="#products_page"
+                                        ></a>
+                                    </li>
+                                </template>
+
+                                    <li class="page-item">
+							            <a class="page-link page-link-next hx-disabled" :class="{'disabled': !hasNextA}"
+                                           style="cursor: pointer"
+                                           id="pagination_next"
+                                           hx-get=?{% query_transform %}"
+                                           hx-swap="outerHTML"
+                                           hx-target="#products_page"
+                                           aria-label="Next"
+                                          :hx-vars="'page: ' + nextPageA"
+                                           @click="currentPageA = nextPageA;
+                                            hasPreviousA = currentPageA > 1;
+                                            hasNextA = currentPageA < pagecountA;
+                                            fromRecordA = (currentPageA - 1) * perPageA + 1;
+                                            toRecordA = currentPageA * perPageA;
+                                            nextPageA = currentPageA + 1;
+                                            previousPageA = currentPageA - 1;
+                                            "
+                                           hx-indicator="#ht-spp, #pagination_pointers, #pagination_pre, #pagination_next"
+
+>
+							                التالي <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
+							            </a>
+							        </li>
+
+							    </ul>
+</nav>
+

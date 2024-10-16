@@ -1,0 +1,257 @@
+{% load static %}
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'js/jquery.hoverIntent.min.js' %}"></script>
+<script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+<script src="{% static 'js/superfish.min.js' %}"></script>
+<script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+<script src={% static "js/nouislider.min.js" %}></script>
+<script src={% static "js/wNumb.js" %}></script>
+<script src={% static "js/bootstrap-input-spinner.js" %}></script>
+<script src="{% static 'js/main.js' %}"></script>
+<script src="{% static 'js/demos/demo-20.js' %}"></script>
+<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+
+<!-- Main JS File -->
+{#<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"></script>#}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+{#<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>#}
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@2.x.x/dist/alpine.js"></script>
+<script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+<script src="https://unpkg.com/htmx.org@1.9.4"></script>
+<script src="{% static 'toasts.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://unpkg.com/hyperscript.org@0.9.11"></script>
+
+<script>
+    function carousel() {
+        return {
+            active: 0,
+            init() {
+                var flkty = new Flickity(this.$refs.carousel, {
+                    wrapAround: true
+                });
+                flkty.on('change', i => this.active = i);
+            }
+        }
+    }
+
+    function carouselFilter() {
+        return {
+            active: 0,
+            changeActive(i) {
+                this.active = i;
+
+                this.$nextTick(() => {
+                    let flkty = Flickity.data(this.$el.querySelectorAll('.carousel')[i]);
+                    flkty.resize();
+                });
+            }
+        }
+    }
+
+    document.body.addEventListener('htmx:beforeSwap', function (event) {
+        return {
+            active: 0,
+            changeActive(i) {
+                this.active = i;
+
+                this.$nextTick(() => {
+                    let flkty = Flickity.data(this.$el.querySelectorAll('.carousel')[i]);
+                    flkty.resize();
+                });
+            }
+        }
+    })
+
+</script>
+<script>
+    document.body.addEventListener('htmx:afterOnLoad', function (event) {
+        setTimeout(function () {
+            var carouselElements = document.querySelectorAll('.carousel');
+            carouselElements.forEach(function (element) {
+                var flkty = Flickity.data(element);
+                if (flkty) {
+                    flkty.reloadCells();
+                    flkty.resize();
+                    flkty.updateDraggable();
+                } else {
+                    flkty = new Flickity(element, {wrapAround: true});
+                    flkty.on('change', function (index) {
+                        xData.carouselFilter.active = index;
+                    });
+                }
+            });
+        }, 100);
+    });
+
+</script>
+<script>
+    $(document).on('htmx:afterSettle', function (event) {
+        $('.input-spinner').remove();
+
+        $('.qty').each(function () {
+            $(this).inputSpinner(
+                {
+                    decrementButton: '<i class="icon-minus"></i>',
+                    incrementButton: '<i class="icon-plus"></i>',
+                    groupClass: 'input-spinner',
+                    buttonsClass: 'btn-spinner',
+                    buttonsWidth: '26px'
+                }
+            );
+        });
+    });
+    $(window).on("popstate", function () {
+        $(document).ready(function () {
+            $(".input-spinner").remove(); // or $(".input-spinner").hide();
+            location.reload(true);
+
+        });
+    });
+</script>
+
+<script>
+    // Store the Owl Carousel configuration in a variable
+    var owlCarouselOptions = {
+        // Add your carousel options here
+        nav: false,
+        dots: true,
+        loop: false,
+        responsive: {
+            0: {
+                items: 1
+            },
+            480: {
+                items: 2
+            },
+            768: {
+                items: 3
+            },
+            992: {
+                items: 4
+            },
+            1200: {
+                items: 4,
+                nav: true,
+                dots: false
+            }
+        }
+    };
+    var owlCarouselOptions2 = {
+        // Add your carousel options here
+        nav: false,
+        dots: true,
+        loop: false,
+        responsive: {
+            0: {
+                items: 1
+            },
+            480: {
+                items: 2
+            },
+            768: {
+                items: 3
+            },
+            992: {
+                items: 3
+            },
+            1200: {
+                items: 3,
+                nav: true,
+                dots: false
+            }
+        }
+    };
+    var owlCarouselOptions3 = {
+        // Add your carousel options here
+        nav: false,
+        dots: true,
+        margin: 10,
+        autoplay: true,
+        loop: true,
+        autoplayTimeout: 5000,
+        autoplayHoverPause: true,
+        responsive: {
+            0: {
+                items: 1
+            },
+            480: {
+                items: 1
+            },
+            768: {
+                items: 1
+            },
+            992: {
+                items: 1
+            },
+            1200: {
+                items: 1,
+            }
+        }
+
+    };
+    // Initialize Owl Carousel on page load
+    $(document).ready(function () {
+        initOwlCarousel();
+    });
+
+    // Reinitialize Owl Carousel on htmx afterSwap event
+    $(document).on('htmx:afterSettle', function (event) {
+        setTimeout(function () {
+            initOwlCarousel();
+        }, 0);
+    });
+
+    // Function to initialize or reinitialize Owl Carousel
+    function initOwlCarousel() {
+        $('.owl-carousel').each(function () {
+            var $carouselContainer = $(this);
+            // Check if the carousel is already initialized
+            if (typeof $carouselContainer.data('owl.carousel') === 'undefined') {
+                // Initialize the carousel with the stored configuration
+                if (this.id === 'myCarousel') {
+                    $carouselContainer.owlCarousel(owlCarouselOptions);
+                } else if (this.id === 'CarouselLatest') {
+                    $carouselContainer.owlCarousel(owlCarouselOptions2);
+                } else if (this.id === 'CarouselSideLatest') {
+                    console.log(this.id)
+                    $carouselContainer.owlCarousel(owlCarouselOptions3);
+                }
+
+                // Update Owl Carousel's internal settings to reflect the newly initialized state
+                $carouselContainer.trigger('refresh.owl.carousel');
+            }
+        });
+    }
+</script>
+
+<script>
+    function clearAuthorSelection() {
+        $('input[name=author]').prop('checked', false);
+
+    }
+</script>
+
+<script>
+    // For confirming button on the checkout page using SweetAlert2
+    document.getElementById('confirmLink').addEventListener('click', function (event) {
+        event.preventDefault();
+
+        Swal.fire({
+            title: 'تأكيد',
+            text: 'هل تريد تثبيت طلبك؟',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'نعم, ثبت الطلب',
+            confirmButtonColor: '#FE5656',
+            cancelButtonText: 'لا',
+            customClass: 'arabic-font p-2 h6'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('ConfirmForm').submit();
+            }
+        });
+    });
+</script>

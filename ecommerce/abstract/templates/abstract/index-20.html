@@ -1,0 +1,16 @@
+    {% extends 'abstract/_base.html' %}
+{% load static %}
+{% block content %}
+<main class="main">
+            <div class="intro-section pt-lg-2">
+                <div class="container">
+                    {% include 'abstract/home/ad_page.html' with adA=adA adB=adB abC=abC adD=adD %}
+</div><!-- End .container -->
+
+{% include 'abstract/home/features.html' %}
+{% include 'abstract/includes/new_relases.html' with new_release=new_release volume_a_banner=volume_a_banner volume_b_banner=volume_b_banner form=form %}
+{% include 'abstract/includes/best_seller.html' with best_sellers=best_sellers form=form %}
+            </div>
+        </main><!-- End .main -->
+    </div>
+{% endblock %}
