@@ -1,0 +1,17 @@
+# Git
+.git
+.gitignore
+
+# Docker
+.docker
+
+# Python
+ecommerce/__pycache__/
+ecommerce/*/__pycache__/
+ecommerce/*/*/__pycache__/
+ecommerce/*/*/*/__pycache__/
+.env/
+.venv/
+venv/
+
+# Custom

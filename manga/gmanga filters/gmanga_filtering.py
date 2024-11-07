@@ -1,6 +1,6 @@
 import pandas as pd
 import json
-with open('manga_data.json','r',encoding='utf-8') as f:
+with open('g-manga_data.json', 'r', encoding='utf-8') as f:
     data = json.loads(f.read())
 #
 converted_data=[]
@@ -38,5 +38,5 @@ for title,  chapters in data.items():
 
 #  Convert  converted_data  to  JSON  string
 json_string  =  json.dumps(converted_data)
-with open('Gmanga_refined.json','w') as f:
+with open('g-manga_structured.json','w') as f:
     json.dump(converted_data,f,indent=4)

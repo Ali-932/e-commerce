@@ -21,7 +21,6 @@ for manga in Gmanga['manga']:
             Gtitles[(manga['title'])] = date
         else:
             Gtitles[(manga['title'])] = 0
-print(Gtitles)
 for title,year in Gtitles.items():
     t=0
     if year == 0:

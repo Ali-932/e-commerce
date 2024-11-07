@@ -174,11 +174,11 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 DATABASES = {
 'default': {
 'ENGINE': 'django.db.backends.postgresql',
-'NAME': 'postgres',
-'USER': 'postgres',
-'PASSWORD': 'postgres',
+'NAME': 'appdatabase',
+'USER': 'appdbuser',
+'PASSWORD': 'secretpassword',
 'HOST': 'localhost',
-'PORT': 5455, #default port you don't need to mention in docker-compose
+'PORT': 5435, #default port you don't need to mention in docker-compose
 }
 }
 
@@ -214,18 +214,13 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
-
+os.mkdir(os.path.join(BASE_DIR, 'static')) if not os.path.exists(os.path.join(BASE_DIR, 'static')) else None
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
-
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
