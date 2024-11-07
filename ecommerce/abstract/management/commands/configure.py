@@ -44,4 +44,4 @@ class Command(BaseCommand):
             prompt_text=None
         )
 
-    call_command('upload_manga')
+    # call_command('upload_manga')

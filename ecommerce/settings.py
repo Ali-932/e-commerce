@@ -13,14 +13,13 @@ import os
 from pathlib import Path
 import os
 import mimetypes
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-envf = os.path.join(BASE_DIR, '.env')
-if os.path.isfile(envf):
-    from dotenv import load_dotenv
-    load_dotenv(envf)
+# envf = os.path.join(BASE_DIR, '.env')
+# load_dotenv()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -28,11 +27,14 @@ if os.path.isfile(envf):
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-a=zj2!)j7o^jfb56m65f@=6zq9n#b!&b0sqd7i)%)5!g07d4)b'
 SPREADSHEET_API = os.getenv('SPREADSHEET_API')
-# SECURITY WARNING: don't run with debug turned on in production!
+DB_NAME = os.getenv('DB_NAME')
+DB_USER = os.getenv('DB_USER')
+DB_PASS = os.getenv('DB_PASS')
+DB_HOST = os.getenv('DB_HOST')
+DB_PORT = os.getenv('DB_PORT')
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -63,7 +65,6 @@ INSTALLED_APPS = [
     'django_filters',
     'crispy_forms',
     "crispy_bootstrap4",
-
 
 ]
 
@@ -101,7 +102,6 @@ RATELIMIT_VIEW = 'ecommerce.abstract.views.beenLimited'
 AUTH_USER_MODEL = 'account.User'
 
 ROOT_URLCONF = 'ecommerce.urls'
-
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -143,8 +143,6 @@ INTERNAL_IPS = [
     "127.0.0.1",
 ]
 
-
-
 SILKY_IGNORE_PATHS = [
     '/admin/jsi18n/'
 ]
@@ -167,21 +165,19 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-'default': {
-'ENGINE': 'django.db.backends.postgresql',
-'NAME': 'appdatabase',
-'USER': 'appdbuser',
-'PASSWORD': 'secretpassword',
-'HOST': 'localhost',
-'PORT': 5435, #default port you don't need to mention in docker-compose
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': DB_NAME,
+        'USER': DB_USER,
+        'PASSWORD': DB_PASS,
+        'HOST': DB_HOST,
+        'PORT': DB_PORT,
+    }
 }
-}
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -201,7 +197,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -213,14 +208,12 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 os.mkdir(os.path.join(BASE_DIR, 'static')) if not os.path.exists(os.path.join(BASE_DIR, 'static')) else None
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

@@ -1,11 +1,11 @@
 #!/bin/sh
 
-until cd /app
-do
-    echo "Waiting for server volume to be ready .."
-done
+#until cd /app
+#do
+#    echo "Waiting for server volume to be ready .."
+#done
 
-cd /app
+#cd /app
 
 export DJANGO_SUPERUSER_USERNAME=a
 export DJANGO_SUPERUSER_EMAIL=a@a.com
@@ -16,6 +16,9 @@ DjangoManage () {
   python manage.py makemigrations
   python manage.py migrate
   python manage.py createsuperuser --noinput 2> /dev/null
+  python manage.py collectstatic --noinput
+  python manage.py configure
+  python manage.py upload_manga
 }
 
 # If not arguments supplied then just run server
