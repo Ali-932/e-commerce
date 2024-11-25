@@ -2,7 +2,7 @@
 {% load static %}
 {% load humanize %}
 <div class="header-middle">
-    <div class="container">
+    <div class="container" style="width: 90%">
         <div class="header-left ">
             <button class="mobile-menu-toggler">
                 <span class="sr-only">Toggle mobile menu</span>
@@ -10,7 +10,7 @@
             </button>
 
             <a href={% url 'home:index' %} class="logo">
-                <div class="ml-5">
+                <div>
                     <img src={% static "images/logo.png" %} width=110 height=30>
                 </div>
             </a>
@@ -33,8 +33,6 @@
                         <label for="q" class="sr-only">Search</label>
                         <input type="search" class="form-control arabic-font force-rtl" name="q" id="q"
                                placeholder="ابحث عن منتج" required>
-
-
                         <button class="btn custom-button" type="submit"><i class="icon-search"></i></button>
                     </div><!-- End .header-search-wrapper -->
                 </form>

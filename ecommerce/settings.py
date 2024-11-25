@@ -18,8 +18,8 @@ from dotenv import load_dotenv
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# envf = os.path.join(BASE_DIR, '.env')
-# load_dotenv()
+envf = os.path.join(BASE_DIR, '.env')
+load_dotenv()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -221,6 +221,9 @@ CURRENCIES = ('USD', 'IQD')
 mimetypes.add_type("text/css", ".css", True)
 
 # light, medium and heavy here to referece the importance of the request(login is heavy while home screen is light)
-LIGHT_REQUESTS_RATE_LIMIT = '25/m'
-MEDIUM_REQUESTS_RATE_LIMIT = '10/m'
-HEAVY_REQUESTS_RATE_LIMIT = '5/m'
+LIGHT_REQUESTS_RATE_LIMIT = '250/m'
+MEDIUM_REQUESTS_RATE_LIMIT = '100/m'
+HEAVY_REQUESTS_RATE_LIMIT = '50/m'
+# LIGHT_REQUESTS_RATE_LIMIT = '25/m'
+# MEDIUM_REQUESTS_RATE_LIMIT = '10/m'
+# HEAVY_REQUESTS_RATE_LIMIT = '5/m'

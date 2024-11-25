@@ -26,7 +26,7 @@
                    hx-indicator="#ht-spp, #pagination_pointers, #pagination_pre, #pagination_next"
                 >
                     <img src=
-                                 {{ volume.image }}
+                                 {{ volume.image.url }}
                                  alt="Product"
                          class="product-image"
                          style="{% if volume.type == 'Package' %} height: 300px; width: 300px; object-fit: fill; max-width: fit-content{% else %} height: 30rem; object-fit: cover; {% endif %}">

@@ -54,7 +54,7 @@ class Item(VolumesPackageMixins, VolumeMixins, InventoryProductMixins):
 
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, blank=True, related_name='volume')
     price = MoneyField(max_digits=14, decimal_places=0, default_currency='IQD', default=8000)
-    image = models.URLField(max_length=300, null=True, blank=True)
+    image = models.ImageField(max_length=300, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     type = models.CharField(max_length=50, default='Volume', choices=Type_CHOICES.choices)

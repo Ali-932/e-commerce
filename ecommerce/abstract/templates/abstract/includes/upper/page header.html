@@ -3,96 +3,106 @@
 <style>
 
 
-input[type="radio"] {
-    visibility:hidden;
-}
-label[for="author"] {
-    cursor: pointer;
-}
+    input[type="radio"] {
+        visibility: hidden;
+    }
+
+    label[for="author"] {
+        cursor: pointer;
+    }
 </style>
 
 <header class="header header-12">
     <div>
-    {% include 'abstract/includes/upper/lower_header.html' with items=items %}<!-- End .header-middle -->
-</div>
+        {% include 'abstract/includes/upper/lower_header.html' with items=items %}<!-- End .header-middle -->
+    </div>
     <div class="header-bottom sticky-header">
         <!-- <div class="container"> -->
         <div style="background-color: #333; display: flex; width: 100%;" x-data="{nav_bar : '{{ menu_num }}' }">
-    <div class="header-left">
-                            <div class="dropdown category-dropdown">
-                                <a href="#" class="dropdown-toggle arabic-font" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static" title="Browse Categories">
-                                    اشهر المانغاكا
-                                </a>
+            <div class="header-left">
+                <div class="dropdown category-dropdown">
+                    <a href="#" class="dropdown-toggle arabic-font" role="button" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false" data-display="static" title="Browse Categories">
+                        اشهر المانغاكا
+                    </a>
 
-                                <div class="dropdown-menu" id="radio_author">
-                                    <nav class="side-nav">
-                                        <ul class="menu-vertical sf-arrows mb-2 mt-1">
-                                            {% for author in authors %}
-                                                <li>
-                                                <div class="radio-container force-rtl p-3">
+                    <div class="dropdown-menu" id="radio_author">
+                        <nav class="side-nav">
+                            <ul class="menu-vertical sf-arrows mb-2 mt-1">
+                                {% for author in authors %}
+                                    <li>
+                                        <div class="radio-container force-rtl p-3">
                                             <input
-                                                type="radio"
-                                                hx-get="{% url 'product:list-products' %}"
-                                                hx-swap="innerHTML"
-                                                hx-target="#main_nav"
-                                                hx-select="#main_nav"
-                                                hx-indicator="#products_page"
-                                                hx-push-url="true"
-                                                hx-trigger="change"
-                                                class="included"
-                                                name="author"
-                                                value="{{ author }}"
-                                                id="{{ author }}"
-                                                @click="nav_bar='1'"
+                                                    type="radio"
+                                                    hx-get="{% url 'product:list-products' %}"
+                                                    hx-swap="innerHTML"
+                                                    hx-target="#main_nav"
+                                                    hx-select="#main_nav"
+                                                    hx-indicator="#products_page"
+                                                    hx-push-url="true"
+                                                    hx-trigger="change"
+                                                    class="included"
+                                                    name="author"
+                                                    value="{{ author }}"
+                                                    id="{{ author }}"
+                                                    @click="nav_bar='1'"
                                             >
-                                                <label class="arabic-font force-rtl mr-4" style="cursor: pointer" for="{{ author }}">{{ author }}</label>
-                                                </div></li>
-                                            {% endfor %}
+                                            <label class="arabic-font force-rtl mr-4" style="cursor: pointer"
+                                                   for="{{ author }}">{{ author }}</label>
+                                        </div>
+                                    </li>
+                                {% endfor %}
 
-                                        </ul><!-- End .menu-vertical -->
-                                    </nav><!-- End .side-nav -->
-                                </div><!-- End .dropdown-menu -->
-                            </div><!-- End .category-dropdown -->
-                        </div><!-- End .header-left -->
-         <div class="header-center">
-                            <nav class="main-nav">
-                                {% generate_menu %}
-                                <ul class="menu">
-                                    {% for item in menus.onesight %}
-                                    <li id="head_icon{{ item.num }}" name="page_header_icons" x-bind:class="{'active' : '{{ item.num }}' === nav_bar }">
-                                        <a id="a{{ item.num }}"
-                                           {% if item.children %} class="sf-with-ul arabic-font" {% else %}
-                                            class="arabic-font" {% endif %}
-                                           x-on:click="nav_bar=$event.target.id.charAt($event.target.id.length -1);"
-                                           hx-swap="innerHTML"
-                                           hx-target="#main_nav"
-                                           hx-push-url="true"
-                                           hx-get="{{ item.url }}"
-                                           hx-select="#main_nav"
-                                           hx-indicator="#main_nav"
-                                           hx-on:click="clearAuthorSelection()"
-                                        >{{ item.title }}</a>
-                                        {% if item.children %}
-                                        <div class="megamenu megamenu-md" style="width: 400px; height: 290px;">
+                            </ul><!-- End .menu-vertical -->
+                        </nav><!-- End .side-nav -->
+                    </div><!-- End .dropdown-menu -->
+                </div><!-- End .category-dropdown -->
+            </div><!-- End .header-left -->
+            <div class="header-center">
+                <nav class="main-nav">
+                    {% generate_menu %}
+                    <ul class="menu">
+                        {% for item in menus.onesight %}
+                            <li id="head_icon{{ item.num }}" name="page_header_icons"
+                                x-bind:class="{'active' : '{{ item.num }}' === nav_bar }">
+                                <a id="a{{ item.num }}"
+                                        {% if item.children %} class="sf-with-ul arabic-font" {% else %}
+                                   class="arabic-font" {% endif %}
+                                   x-on:click="nav_bar=$event.target.id.charAt($event.target.id.length -1);"
+                                   hx-swap="innerHTML"
+                                   hx-target="#main_nav"
+                                   hx-push-url="true"
+                                   hx-get="{{ item.url }}"
+                                   hx-select="#main_nav"
+                                   hx-indicator="#main_nav"
+                                   hx-on:click="clearAuthorSelection()"
+                                >{{ item.title }}</a>
+                                {% if item.children %}
+                                    <div class="megamenu megamenu-md" style="width: 400px; height: 290px;">
                                         <div class="row no-gutters">
                                             <div class="col-md-6">
                                                 <div class="menu-col">
                                                     <div class="row d-flex justify-content-center align-items-center">
                                                         {% for column in item.columns %}
-                                                        <div class="col-md-8">
-                                                            {% if column == 1 %}
-                                                            <div class="menu-title arabic-font force-rtl font-weight-bold">المنتجات المطبوعة</div><!-- End .menu-title -->
-                                                            {% else %}
-{#                                                            <div class="menu-title arabic-font force-rtl font-weight-bold">التصنيف حسب النوع</div><!-- End .menu-title -->#}
-                                                            {% endif %}
-                                                            <ul>
-                                                                 {% for child in item.children %}
-                                                                     {% if child.column == column %}
-                                                                <li><a class="arabic-font force-rtl" style="font-size: 1.4rem" href={{ child.url }}>{{ child.title}}</a></li>
+                                                            <div class="col-md-8">
+                                                                {% if column == 1 %}
+                                                                    <div class="menu-title arabic-font force-rtl font-weight-bold">
+                                                                        المنتجات المطبوعة
+                                                                    </div><!-- End .menu-title -->
+                                                                {% else %}
+                                                                    {#                                                            <div class="menu-title arabic-font force-rtl font-weight-bold">التصنيف حسب النوع</div><!-- End .menu-title -->#}
+                                                                {% endif %}
+                                                                <ul>
+                                                                    {% for child in item.children %}
+                                                                        {% if child.column == column %}
+                                                                            <li><a class="arabic-font force-rtl"
+                                                                                   style="font-size: 1.4rem"
+                                                                                   href={{ child.url }}>{{ child.title }}</a>
+                                                                            </li>
                                                                         {% endif %}
-                                                                {% endfor %}
-                                                            </ul>
-                                                        </div><!-- End .col-md-6 -->
+                                                                    {% endfor %}
+                                                                </ul>
+                                                            </div><!-- End .col-md-6 -->
                                                         {% endfor %}
                                                     </div><!-- End .row -->
                                                 </div><!-- End .menu-col -->
@@ -103,8 +113,12 @@ label[for="author"] {
                                                     <a class="banner banner-menu">
                                                         <img src={% static "images/menu/banner-1.jpg" %} alt="Banner">
 
-                                                        <div class="banner-content banner-content-top-custom force-rtl" dir="rtl">
-                                                            <div class="banner-title text-white arabic-font force-rtl">استمتع <br>بالمغامرة<br><span><strong>الجديدة</strong></span></div><!-- End .banner-title -->
+                                                        <div class="banner-content banner-content-top-custom force-rtl"
+                                                             dir="rtl">
+                                                            <div class="banner-title text-white arabic-font force-rtl">
+                                                                استمتع
+                                                                <br>بالمغامرة<br><span><strong>الجديدة</strong></span>
+                                                            </div><!-- End .banner-title -->
                                                         </div><!-- End .banner-content -->
                                                     </a>
                                                 </div><!-- End .banner banner-overlay -->
@@ -112,17 +126,18 @@ label[for="author"] {
                                         </div><!-- End .row -->
                                     </div><!-- End .megamenu megamenu-md -->
                                     </li>
-                                    {% endif %}
-                                    {% endfor %}
+                                {% endif %}
+                        {% endfor %}
 
-                                </ul><!-- End .menu -->
-                            </nav><!-- End .main-nav -->
-                        </div>
+                    </ul><!-- End .menu -->
+                </nav><!-- End .main-nav -->
+            </div>
 
-             <div class="header-right">
-                            <i class="{{ nav_ad.icon }} ml-5"></i><p class="arabic-font">{{ nav_ad.char }}</p>
-                        </div><!-- End .header-right -->
+            <div class="header-right">
+                <i class="{{ nav_ad.icon }} ml-5"></i>
+                <p class="arabic-font">{{ nav_ad.char }}</p>
+            </div><!-- End .header-right -->
 
-    </div><!-- End .header-bottom -->
+        </div><!-- End .header-bottom -->
     </div>
 </header><!-- End .header -->
