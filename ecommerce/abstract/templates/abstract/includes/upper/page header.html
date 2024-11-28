@@ -12,7 +12,7 @@
     }
 </style>
 
-<header class="header header-12">
+<header class="header header-12" dir="rtl">
     <div>
         {% include 'abstract/includes/upper/lower_header.html' with items=items %}<!-- End .header-middle -->
     </div>
@@ -63,7 +63,7 @@
                     {% generate_menu %}
                     <ul class="menu">
                         {% for item in menus.onesight %}
-                            <li id="head_icon{{ item.num }}" name="page_header_icons"
+                            <li id="head_icon{{ item.num }}" name="page_header_icons" class="header-main-nav"
                                 x-bind:class="{'active' : '{{ item.num }}' === nav_bar }">
                                 <a id="a{{ item.num }}"
                                         {% if item.children %} class="sf-with-ul arabic-font" {% else %}
@@ -134,8 +134,9 @@
             </div>
 
             <div class="header-right">
-                <i class="{{ nav_ad.icon }} ml-5"></i>
                 <p class="arabic-font">{{ nav_ad.char }}</p>
+
+                <i class="{{ nav_ad.icon }} ml-5"></i>
             </div><!-- End .header-right -->
 
         </div><!-- End .header-bottom -->

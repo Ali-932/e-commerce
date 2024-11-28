@@ -92,6 +92,11 @@ class VolumesPackage(Item):
 
     objects = VolumesPackageManager()
 
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        self.type = 'Package'
+        super().save(force_insert, force_update, using, update_fields)
+
 
 class InventoryProductManager(models.Manager):
     def get_queryset(self):

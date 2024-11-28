@@ -99,12 +99,12 @@ def get_product_list_context(request, view_page='products'):
             items = items[offset:limit]
 
     common = {} if request.htmx else common_views(request)
-    # if view_page == 'products':
-    menu_num = menu_nums.get('products', 1)
-    # elif view_page == 'special-offer':
-    #     menu_num = menu_nums.get('special-offers', 2)
-    # elif view_page == 'packages':
-    #     menu_num = menu_nums.get('packages', 3)
+    if view_page == 'products':
+        menu_num = menu_nums.get('products', 1)
+    elif view_page == 'special-offer':
+        menu_num = menu_nums.get('special-offers', 2)
+    elif view_page == 'packages':
+        menu_num = menu_nums.get('packages', 3)
     paginator = CustomPaginator(items, per_page)
     objs = paginator.page(page)
 
@@ -119,7 +119,7 @@ def get_product_list_context(request, view_page='products'):
     elif view_page == 'special-offer':
         title = 'عروض خاصة'
     elif view_page == 'packages':
-        title = 'البكجات'
+        title = 'حزمة المجلدات'
     context = {
         'title': title,
         'volumes': objs,

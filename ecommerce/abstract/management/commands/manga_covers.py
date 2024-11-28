@@ -21,7 +21,6 @@ class Command(BaseCommand):
         items = Volume.objects.filter(image__icontains='mangadex').values('id')
         for item in items:
             cover_path = find_cover_path(item['id'])
-            print(cover_path)
             if cover_path:
                 volume = Volume.objects.get(id=item['id'])
                 volume.image = cover_path
