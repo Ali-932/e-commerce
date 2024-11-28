@@ -57,7 +57,7 @@
                                     <a
                                             href="#"
                                             hx-get="{% url 'auth:logout' %}"
-                                            hx-select-oob="#account_header"
+                                            hx-select-oob="#account_header, #account-widget"
                                             hx-target="#main_nav"
                                             hx-push-url="true"
                                             hx-select="#main_nav"
@@ -77,7 +77,6 @@
                                             hx-push-url="true"
                                             hx-select="#main_nav"
                                             hx-indicator="#main_nav"
-                                            hx-vals='{"sign_up": "true"}'
                                             style="cursor: pointer"
                                             class="btn btn-outline-primary-2 arabic-font"><span>انشئ حساب</span><i
                                             class="bi bi-file-plus"></i></a>
@@ -88,7 +87,6 @@
                                             hx-push-url="true"
                                             hx-select="#main_nav"
                                             hx-indicator="#main_nav"
-                                            hx-vals='{"login": "true"}'
                                             style="cursor: pointer;"
                                             class="btn btn-outline-primary-2 arabic-font"><span>تسجيل دخول</span><i
                                             class="bi bi-door-open"></i></a>
@@ -142,7 +140,7 @@
                             >
                                 <div class="row">
                                     <div class="col-4 p-0">
-                                        <img src="{{ item.volume.image }}">
+                                        <img src="{{ item.volume.image.url }}">
                                     </div>
                                     <div class="col-8">
                                         <h4 class="product-title">

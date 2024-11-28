@@ -3,10 +3,11 @@ from django.core.management import call_command
 from ecommerce.product.models import *
 from django.db.models import Q
 
+
 class Command(BaseCommand):
     def handle(self, *args, **options):
         VolumesPackage.objects.filter(Q(package_name="باكج فوجا بوند") | Q(package_name="باكج جنة الجحيم")).delete()
-        vp1 = VolumesPackage.objects.create(
+        vp1, created = VolumesPackage.objects.get_or_create(
             package_name="باكج فوجا بوند",
             start_volume=17,
             end_volume=22,
@@ -17,7 +18,7 @@ class Command(BaseCommand):
         )
         volumes = Volume.objects.filter(id__in=[4836, 4837, 4838, 4839, 4840, 4841])
         vp1.volumes.add(*volumes)
-        vp2 = VolumesPackage.objects.create(
+        vp2, created = VolumesPackage.objects.get_or_create(
             package_name="باكج جنة الجحيم",
             start_volume=5,
             end_volume=12,
@@ -31,17 +32,16 @@ class Command(BaseCommand):
 
         ### Inventory Products
 
-        ip = InventoryProduct.objects.create(
-            volume_id = 8219,
-            language = 'AR',
-            quantity = 1,
-            is_available = True
+        InventoryProduct.objects.get_or_create(
+            volume_id=8219,
+            language='AR',
+            quantity=1,
+            is_available=True
         )
 
-        ip2 = InventoryProduct.objects.create(
-            volume_id = 8220,
-            language = 'AR',
-            quantity = 1,
-            is_available = True
+        InventoryProduct.objects.get_or_create(
+            volume_id=8220,
+            language='AR',
+            quantity=1,
+            is_available=True
         )
-

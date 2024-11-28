@@ -1,12 +1,17 @@
 from django.core.management.base import BaseCommand
 from django.core.management import call_command
+from django.db.models.functions import Reverse
+from django.urls import reverse
+
 from ecommerce.home.models import *
+from ecommerce.product.models import VolumesPackage
+from ecommerce.product.views import package
 
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
         AdModel.objects.all().delete()
-
+        call_command('packages_inventory')
         nav_ad.objects.get_or_create(char='تمتع  بلقرائة مع القهوة', icon='bi bi-cup-hot', active=True)
 
         AModel.objects.get_or_create(
@@ -21,16 +26,18 @@ class Command(BaseCommand):
             image='images/ad/1056_copy_3.jpg',
             type=ADTypeChoices.B,
             active=True,
-            link=None,
+            link=reverse('home:quality_rep'),
             prompt_text='جودة العمل'
         )
+
+        package_pk = VolumesPackage.objects.get(package_name="باكج جنة الجحيم").pk
         CModel.objects.get_or_create(
             Title='باكج جديد!',
             Description='باكج جحيم الجنة الجديد',
             image='images/ad/banner-3_copy_AuITbPl.jpg',
             type=ADTypeChoices.C,
             active=True,
-            link=None,
+            link=reverse('product:view-product', kwargs={'pk': package_pk}),
             prompt_text='اعرض الباكج'
         )
 
@@ -42,6 +49,21 @@ class Command(BaseCommand):
             active=True,
             link=None,
             prompt_text=None
+        )
+
+        VolumeABanner.objects.get_or_create(
+            Title='قصة رعب جديد!',
+            image='images/ad/ito banner copy.jpg',
+            volume_id=4812,
+            active=True,
+        )
+
+        VolumeBBanner.objects.get_or_create(
+            Title='جوجوتسو بمجلد اخير!',
+            image='images/ad/jujutsu_banner.jpg',
+            volume_id=88,
+            active=True,
+
         )
 
     # call_command('upload_manga')

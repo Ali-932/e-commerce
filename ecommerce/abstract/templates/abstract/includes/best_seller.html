@@ -1,19 +1,20 @@
-  {% load static %}
-    <div class="bestseller-products bg-light pt-5 pb-5 mb-5 mt-5">
-<div class="block">
-    <div class="block-wrapper ">
-        <div class="container">
-            <div class="heading heading-flex" dir="rtl">
-                <div class="heading-left mr-3">
-                    <h2 class="title arabic-font">الافضل مبيعاً</h2><!-- End .title -->
-                </div><!-- End .heading-left -->
-            </div><!-- End .header-flex -->
+{% load static %}
+<div class="bestseller-products bg-light pt-5 pb-5 mb-5 mt-5">
+    <div class="block">
+        <div class="block-wrapper ">
+            <div class="container">
+                <div class="heading heading-flex" dir="rtl">
+                    <div class="heading-left mr-3">
+                        <h2 class="title arabic-font">الافضل مبيعاً</h2><!-- End .title -->
+                    </div><!-- End .heading-left -->
+                </div><!-- End .header-flex -->
 
-                    <div id="myCarousel" class="owl-carousel owl-simple carousel-with-shadow" data-toggle="owl" dir="ltr"
-                        data-owl-options='{
+                <div id="myCarousel" class="owl-carousel owl-simple carousel-with-shadow" data-toggle="owl" dir="ltr"
+                     data-owl-options='{
                             "nav": true,
                             "dots": true,
                             "loop": true,
+                            "autoWidth": true,
                             "responsive": {
                                 "0": {
                                     "items":1
@@ -25,22 +26,22 @@
                                     "items":3
                                 },
                                 "992": {
-                                    "items":4
+                                    "items":5
                                 },
                                 "1200": {
-                                    "items":4,
+                                    "items":5,
                                     "nav": true,
                                     "dots": true
                                 }
                             }
                         }'>
-                        {% for volume in best_sellers %}
-                            <div class="col-11 ml-3">
-                             {% include 'abstract/product/product_list/product_view.html' with volume=volume form=form %}
-                            </div>
-                        {% endfor %}
-                    </div><!-- End .owl-carousel -->
-                        </div><!-- End .container -->
-                    </div><!-- End .block-wrapper -->
-                </div><!-- End .block -->
-            </div><!-- End .bg-light pt-4 pb-4 -->
+                    {% for volume in best_sellers %}
+                        <div style="width: 250px; margin: 0 10px; box-sizing: border-box;">
+                            {% include 'abstract/product/product_list/product_view.html' with volume=volume form=form %}
+                        </div>
+                    {% endfor %}
+                </div><!-- End .owl-carousel -->
+            </div><!-- End .container -->
+        </div><!-- End .block-wrapper -->
+    </div><!-- End .block -->
+</div><!-- End .bg-light pt-4 pb-4 -->

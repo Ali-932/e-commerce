@@ -1,16 +1,17 @@
 {% load humanize %}
 {% load static %}
-            <div class="container mt-5">
-                <div class="heading heading-flex" dir="rtl">
-                    <div class="heading-left mr-3">
-                        <h2 class="title arabic-font">الاصدارات الجديدة</h2><!-- End .title -->
-                    </div><!-- End .heading-left -->
-                </div><!-- End .header-flex -->
+<div class="container mt-5">
+    <div class="heading heading-flex" dir="rtl">
+        <div class="heading-left mr-3">
+            <h2 class="title arabic-font">الاصدارات الجديدة</h2><!-- End .title -->
+        </div><!-- End .heading-left -->
+    </div><!-- End .header-flex -->
 
-                <div class="row">
-                    <div class="col-xl-4">
-                        <div id="CarouselSideLatest" class="owl-carousel carousel-equal-height owl-simple" data-toggle="owl" dir="ltr"
-                            data-owl-options='{
+    <div class="row">
+        <div class="col-xl-4">
+            <div id="CarouselSideLatest" class="owl-carousel carousel-equal-height owl-simple" data-toggle="owl"
+                 dir="ltr"
+                 data-owl-options='{
                                 "nav": false,
                                 "dots": true,
                                 "margin": 10,
@@ -19,69 +20,91 @@
                                 "autoplayTimeout":5000,
                                 "autoplayHoverPause":true
                             }'>
-                            <div class="product-big">
-                                <img src= {{ volume_a_banner.image.url }} alt="product bg img">
+                <div class="product-big">
+                    <img src={{ volume_a_banner.image.url }} alt="product bg img">
 
-                                <div class="product-wrap">
-                                    <figure class="product-media">
-                                        <a href="product.html">
-                                            <img src= "{{ volume_a_banner.volume.image }}"  alt="Product image" class="product-image">
-                                        </a>
-                                    </figure><!-- End .product-media -->
+                    <div class="product-wrap">
+                        <figure class="product-media">
+                            <a href="product.html">
+                                <img src="{{ volume_a_banner.volume.image.url }}" alt="Product image"
+                                     class="product-image">
+                            </a>
+                        </figure><!-- End .product-media -->
 
-                                    <div class="product-body">
-                                        <div class="product-cat">
-                                            <span class="arabic-font force-rtl d-flex justify-content-start">{{ volume_a_banner.Title }}</span>
-                                        </div><!-- End .product-cat -->
-                                        <h3 class="product-title"><a href="product.html">{{ volume_a_banner.volume.product }} Volume {{ volume_a_banner.volume.volume_number }}</a></h3><!-- End .product-title -->
-                                        <div class="product-price">
-                                            {{ volume_a_banner.volume.price.amount|intcomma }} IQD
-                                        </div><!-- End .product-price -->
+                        <div class="product-body">
+                            <div class="product-cat">
+                                <span class="arabic-font force-rtl d-flex justify-content-start">{{ volume_a_banner.Title }}</span>
+                            </div><!-- End .product-cat -->
+                            <h3 class="product-title"><a href="product.html">{{ volume_a_banner.volume.product }}
+                                Volume {{ volume_a_banner.volume.volume_number }}</a></h3><!-- End .product-title -->
+                            <div class="product-price">
+                                {{ volume_a_banner.volume.price.amount|intcomma }} IQD
+                            </div><!-- End .product-price -->
 
-                                        <div class="product-action">
-                                            <a href="#" class="btn-product btn-cart volume-button-banner arabic-font"><span>اضف الى السلة</span></a>
-                                        </div><!-- End .product-action -->
-                                    </div><!-- End .product-body -->
-                                </div><!-- End .product-wrap -->
-                            </div><!-- End .product-big -->
+                            <div class="product-action">
+                                <a
+                                        hx-get={% url 'product:view-product' pk=volume_a_banner.volume.id %}
+                                                hx-target="#main_nav"
+                                        hx-push-url="true"
+                                        hx-swap="innerHTML"
+                                        hx-select="#main_nav"
+                                        hx-trigger="click"
+                                        hx-indicator="#ht-spp, #pagination_pointers, #pagination_pre, #pagination_next"
+                                        class="btn-product btn-cart volume-button-banner arabic-font"><span>شاهد المنتج</span></a>
+                            </div><!-- End .product-action -->
+                        </div><!-- End .product-body -->
+                    </div><!-- End .product-wrap -->
+                </div><!-- End .product-big -->
 
-                            <div class="product-big">
-                                <img src= {{ volume_b_banner.image.url }} alt="product bg img">
+                <div class="product-big">
+                    <img src={{ volume_b_banner.image.url }}>
 
-                                <div class="product-wrap">
-                                    <figure class="product-media">
-                                        <a href="product.html">
-                                            <img src= "{{ volume_b_banner.volume.image }}"  alt="Product image" class="product-image">
-                                        </a>
-                                    </figure><!-- End .product-media -->
+                    <div class="product-wrap">
+                        <figure class="product-media">
+                            <a>
+                                <img src="{{ volume_b_banner.volume.image.url }}" alt="Product image"
+                                     class="product-image">
+                            </a>
+                        </figure><!-- End .product-media -->
 
-                                    <div class="product-body">
-                                        <div class="product-cat">
-                                            <span class="arabic-font force-rtl d-flex justify-content-start">{{ volume_b_banner.Title }}</span>
-                                        </div><!-- End .product-cat -->
-                                        <h3 class="product-title"><a href="product.html">{{ volume_b_banner.volume.product }} Volume {{ volume_b_banner.volume.volume_number }}</a></h3><!-- End .product-title -->
-                                        <div class="product-price">
-                                            {{ volume_b_banner.volume.price.amount|intcomma }} IQD
-                                        </div><!-- End .product-price -->
+                        <div class="product-body">
+                            <div class="product-cat">
+                                <span class="arabic-font force-rtl d-flex justify-content-start">{{ volume_b_banner.Title }}</span>
+                            </div><!-- End .product-cat -->
+                            <h3 class="product-title"><a href="product.html">{{ volume_b_banner.volume.product }}
+                                Volume {{ volume_b_banner.volume.volume_number }}</a></h3><!-- End .product-title -->
+                            <div class="product-price">
+                                {{ volume_b_banner.volume.price.amount|intcomma }} IQD
+                            </div><!-- End .product-price -->
 
-                                        <div class="product-action">
-                                            <a href="#" class="btn-product btn-cart volume-button-banner arabic-font"><span>اضف الى السلة</span></a>
-                                        </div><!-- End .product-action -->
-                                    </div><!-- End .product-body -->
-                                </div><!-- End .product-wrap -->
-                            </div><!-- End .product-big -->
-                        </div><!-- End .owl-carousel -->
+                            <div class="product-action">
+                                <a
+                                        hx-get={% url 'product:view-product' pk=volume_b_banner.volume.id %}
+                                                hx-target="#main_nav"
+                                        hx-push-url="true"
+                                        hx-swap="innerHTML"
+                                        hx-select="#main_nav"
+                                        hx-trigger="click"
+                                        hx-indicator="#ht-spp, #pagination_pointers, #pagination_pre, #pagination_next"
+                                        class="btn-product btn-cart volume-button-banner arabic-font"><span>شاهد المنتج</span></a>
+                            </div><!-- End .product-action -->
+                        </div><!-- End .product-body -->
+                    </div><!-- End .product-wrap -->
+                </div><!-- End .product-big -->
+            </div><!-- End .owl-carousel -->
 
-                        <div class="mb-3 d-xl-none"></div><!-- End .mb-3 d-none -->
-                    </div><!-- End .col-lg-4 -->
+            <div class="mb-3 d-xl-none"></div><!-- End .mb-3 d-none -->
+        </div><!-- End .col-lg-4 -->
 
-                    <div class="col-xl-8">
-                        <div class="block-wrapper ">
-                    <div id="CarouselLatest" class="owl-carousel owl-simple carousel-with-shadow" data-toggle="owl" dir="ltr"
-                        data-owl-options='{
+        <div class="col-xl-8">
+            <div class="block-wrapper ">
+                <div id="CarouselLatest" class="owl-carousel owl-simple carousel-with-shadow" data-toggle="owl"
+                     dir="ltr"
+                     data-owl-options='{
                             "nav": true,
                             "dots": true,
                             "loop": true,
+                            "autoWidth": true,
                             "responsive": {
                                 "0": {
                                     "items":1
@@ -102,13 +125,13 @@
                                 }
                             }
                         }'>
-                        {% for volume in new_release %}
-                            <div class="col-11 ml-3">
-                             {% include 'abstract/product/product_list/product_view.html' with volume=volume form=form %}
-                            </div>
-                        {% endfor %}
-                    </div><!-- End .owl-carousel -->
-                        </div><!-- End .block-wrapper -->
-                    </div><!-- End .col-lg-8 -->
-                </div><!-- End .row -->
-            </div><!-- End .container -->
+                    {% for volume in new_release %}
+                        <div style="width: 250px; margin: 0 10px; box-sizing: border-box;">
+                            {% include 'abstract/product/product_list/product_view.html' with volume=volume form=form %}
+                        </div>
+                    {% endfor %}
+                </div><!-- End .owl-carousel -->
+            </div><!-- End .block-wrapper -->
+        </div><!-- End .col-lg-8 -->
+    </div><!-- End .row -->
+</div><!-- End .container -->
