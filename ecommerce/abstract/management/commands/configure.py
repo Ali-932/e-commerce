@@ -1,11 +1,9 @@
-from django.core.management.base import BaseCommand
 from django.core.management import call_command
-from django.db.models.functions import Reverse
+from django.core.management.base import BaseCommand
 from django.urls import reverse
 
 from ecommerce.home.models import *
 from ecommerce.product.models import VolumesPackage
-from ecommerce.product.views import package
 
 
 class Command(BaseCommand):
@@ -60,7 +58,7 @@ class Command(BaseCommand):
 
         VolumeBBanner.objects.get_or_create(
             Title='جوجوتسو بمجلد اخير!',
-            image='images/ad/jujutsu_banner.jpg',
+            image='images/ad/photo_2023-10-01_18-59-56REÀí_tezCbXL.png',
             volume_id=88,
             active=True,
 
