@@ -68,13 +68,9 @@
                                                 hx-indicator="#main_nav"
                                         >إنشاء حساب</a></li>
                                     {% else %}
-                                        <li><a hx-get="{% url 'auth:logout' %}"
-                                               hx-target="#main_nav"
-                                               hx-push-url="true"
-                                               hx-select="#main_nav"
-                                               hx-indicator="#main_nav"
-                                               style="cursor: pointer"
-                                               hx-select-oob="#account_header, #account-widget"
+                                        <li><a
+                                                href="{% url 'auth:logout' %}"
+                                                style="cursor: pointer"
 
                                         >تسجيل خروج</a></li>
                                     {% endif %}

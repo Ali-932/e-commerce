@@ -55,13 +55,7 @@
                                 </div>
                                 <div class="d-flex justify-content-center mt-4">
                                     <a
-                                            href="#"
-                                            hx-get="{% url 'auth:logout' %}"
-                                            hx-select-oob="#account_header, #account-widget"
-                                            hx-target="#main_nav"
-                                            hx-push-url="true"
-                                            hx-select="#main_nav"
-                                            hx-indicator="#main_nav"
+                                            href="{% url 'auth:logout' %}"
                                             style="cursor: pointer"
                                             class="btn btn-outline-primary-2 arabic-font"><span>تسجيل خروج</span><i
                                             class="icon-long-arrow-right"></i></a>
@@ -140,12 +134,12 @@
                             >
                                 <div class="row">
                                     <div class="col-4 p-0">
-                                        <img src="{{ item.volume.image.url }}">
+                                        <img src="{{ item.item.image.url }}">
                                     </div>
                                     <div class="col-8">
                                         <h4 class="product-title">
-                                            <a href={% url 'product:view-product' item.volume.pk %}>{{ item.volume.product }}
-                                                Volume {{ item.volume.volume_number }}
+                                            <a href={% url 'product:view-product' item.item.pk %}>{{ item.item.product }}
+                                                Volume {{ item.item.volume_number }}
                                                 - {{ item.language }}</a>
                                         </h4>
 

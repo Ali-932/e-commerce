@@ -17,7 +17,7 @@ def remove_item_if_special_offer(request, items):
     # Assuming items is a queryset
 
     for item in items:
-        sop = InventoryProduct.objects.filter(volume=item.volume, is_available=True, language=item.language)
+        sop = InventoryProduct.objects.filter(volume=item.item, is_available=True, language=item.language)
         if sop.exists():
             sop = sop.first()
             if sop.quantity <= 0:
@@ -63,6 +63,7 @@ def order_save_and_modify_address(form, request, initial_address, template):
     order.active = False
     order.total_price = Money(order.items.aggregate(total_price=Sum('price'))['total_price'],
                               'IQD') + Global.get_instance().delivery_price
+    order.total_quantity = order.items.aggregate(total_quantity=Sum('quantity'))['total_quantity']
     order.save()
     # if the address form is changed and default address is checked then the old address is deactivated
     if form.has_changed():

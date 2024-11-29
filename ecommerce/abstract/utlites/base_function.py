@@ -44,7 +44,7 @@ def common_views(request):
         for item in authors
     ]
     if request.user.is_authenticated:
-        items = OrderItem.objects.select_related('volume', 'order').filter(order__user=request.user, order__active=True)
+        items = OrderItem.objects.select_related('item', 'order').filter(order__user=request.user, order__active=True)
         items_total_info = items.aggregate(sum=Sum('price'), count=Count('id'))
         orders = Order.objects.filter(user=request.user, active=False).annotate(serial=Window(
             expression=RowNumber(),

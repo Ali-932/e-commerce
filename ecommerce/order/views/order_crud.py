@@ -15,7 +15,7 @@ def delete_order(request, pk: int):
         return permission_check(request)
     template = 'abstract/cart/cart.html'
     OrderItem.objects.get(pk=pk).delete()
-    items = OrderItem.objects.select_related('volume', 'order').filter(order__user=request.user, order__active=True)
+    items = OrderItem.objects.select_related('item', 'order').filter(order__user=request.user, order__active=True)
     items_total_info = items.aggregate(sum=Sum('price'), count=Count('id'))
     messages.error(request, 'تم ازالة المجلد من الطلبية')
     common = common_views(request)

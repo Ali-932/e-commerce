@@ -22,15 +22,8 @@
                         <div class="tab-pane fade force-rtl arabic-font show active" dir="rtl" id="signin-2"
                              role="tabpanel" aria-labelledby="signin-tab-2">
                             <form
-                                    hx-post="{% url 'auth:login' %}"
-                                    hx-target="#main_nav"
-                                    hx-swap="innerHTML"
-                                    hx-trigger="submit"
-                                    hx-indicator="#main_nav"
-                                    hx-select="#main_nav"
-                                    hx-select-oob="#account_header, #account-widget"
-                                    {#                                    action="{% url 'auth:login' %}"#}
-                                    {#                                    method="post"#}
+                                    href="{% url 'auth:login' %}"
+                                    method="post"
                             >
                                 {% crispy log_in_form %}
                             </form>
@@ -38,12 +31,8 @@
                         <div class="tab-pane fade arabic-font force-rtl" id="register-2" role="tabpanel"
                              aria-labelledby="register-tab-2" dir="rtl">
                             <form
-                                    hx-post="{% url 'auth:login' %}"
-                                    hx-target="#main_nav"
-                                    hx-swap="innerHTML"
-                                    hx-trigger="submit"
-                                    hx-indicator="#main_nav"
-                                    hx-select="#main_nav"
+                                    href="{% url 'auth:login' %}"
+                                    method="post"
                             >
                                 {% crispy sign_up_form %}
                             </form>

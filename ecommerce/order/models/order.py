@@ -8,7 +8,7 @@ from shortuuid.django_fields import ShortUUIDField
 
 from ecommerce.abstract.models.choices import ProvinceChoices
 from ecommerce.account.models import User
-from ecommerce.product.models import Volume
+from ecommerce.product.models import Volume, Item
 
 
 class Order(models.Model):
@@ -40,7 +40,7 @@ class OrderItem(models.Model):
         AR = 'AR', 'عربي'
         EN = 'EN', 'انكليزي'
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
-    volume = models.ForeignKey(Volume, on_delete=models.SET_NULL, null=True, blank=True) #it should be forginkey to have multuple same volume in different lagnuges
+    item = models.ForeignKey(Item, on_delete=models.SET_NULL, null=True, blank=True) #this should be pointing to named item not volume
     quantity = models.IntegerField(default=0)
     single_piece_price = MoneyField(max_digits=14, decimal_places=0, default_currency='IQD', default=8000)
     price = MoneyField(max_digits=14, decimal_places=0, default_currency='IQD', default=8000)
@@ -64,7 +64,7 @@ class ShippingAddress(models.Model):
     address=models.TextField()
     phone=models.CharField(max_length=100)
     phone2=models.CharField(max_length=100,blank=True,null=True)
-    order=models.OneToOneField(Order,on_delete=models.CASCADE,null=True,blank=True)
+    order=models.OneToOneField(Order,on_delete=models.CASCADE,null=True,blank=True, related_name='order_shipping_address')
     email=models.EmailField(blank=True,null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

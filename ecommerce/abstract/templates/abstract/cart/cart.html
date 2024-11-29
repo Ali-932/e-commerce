@@ -26,28 +26,28 @@
                                                 <figure class="product-media">
                                                     <a
                                                             style="cursor: pointer"
-                                                            hx-get={% url 'product:view-product' pk=item.volume.id %}
+                                                            hx-get={% url 'product:view-product' pk=item.item.id %}
                                                                     hx-target="#main_nav"
                                                             hx-push-url="true"
                                                             hx-swap="innerHTML"
                                                             hx-select="#main_nav"
                                                             hx-trigger="click"
                                                     >
-                                                        <img src={{ item.volume.image.url }} alt="Product image" >
+                                                        <img src={{ item.item.image.url }} alt="Product image" >
                                                     </a>
                                                 </figure>
 
                                                 <h3 class="product-title">
                                                     <a
                                                             style="cursor: pointer"
-                                                            hx-get={% url 'product:view-product' pk=item.volume.id %}
+                                                            hx-get={% url 'product:view-product' pk=item.item.id %}
                                                                     hx-target="#main_nav"
                                                             hx-push-url="true"
                                                             hx-swap="innerHTML"
                                                             hx-select="#main_nav"
                                                             hx-trigger="click"
                                                     >
-                                                        {{ item.volume.product }} Volume {{ item.volume.volume_number }}
+                                                        {{ item.item.product }} Volume {{ item.item.volume_number }}
                                                         - {{ item.get_language_display }}  </a>
                                                 </h3><!-- End .product-title -->
                                             </div><!-- End .product -->

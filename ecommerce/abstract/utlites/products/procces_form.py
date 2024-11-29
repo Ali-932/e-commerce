@@ -48,7 +48,7 @@ def process_form(request, form, pk=None, form_temp=None, alternative_temp=None):
         return None, template
 
     order_item, created = OrderItem.objects.get_or_create(
-        volume_id=pk,
+        item_id=pk,
         language=cleaned_data['language'],
         price=price,
         order=order
