@@ -8,7 +8,6 @@ ENV PYTHONUNBUFFERED=1
 COPY ecommerce /app/
 COPY manage.py /app/
 COPY requirements.txt /app/
-COPY media/ /app/
 COPY static/ /app/
 WORKDIR /app
 

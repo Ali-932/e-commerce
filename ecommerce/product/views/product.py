@@ -55,7 +55,6 @@ def product(request, pk: int):
     ).exclude(pk=volume.pk).select_related('product').order_by('?')[:4]
     common = {} if request.htmx else common_views(request)
     menu_num = menu_nums.get('product', 1)
-
     context = {
         'volume': volume,
         'next_volume': next_volume,

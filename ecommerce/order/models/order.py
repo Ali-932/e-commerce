@@ -15,6 +15,7 @@ class Order(models.Model):
     class Status_CHOICES(models.TextChoices):
         PENDING = 'قيد الانتظار', 'pending'
         CONFIRMED = 'تم التأكيد من قبل الزبون', 'confirmed'
+        PLACED_ON_SHEET = 'تم الكتابه في الكوكل شيت', 'placed_on_sheet'
         ON_WORK = 'قيد العمل', 'on_work'
         CANCELED = 'ملغي', 'canceled'
         DELIVERED = 'تم التوصيل', 'delivered'

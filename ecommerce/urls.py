@@ -19,6 +19,8 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+from ecommerce.order.api import api
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("reload/", include("django_browser_reload.urls")),
@@ -26,6 +28,7 @@ urlpatterns = [
     path('', include('ecommerce.product.urls')),
     path('', include('ecommerce.order.urls')),
     path('', include('ecommerce.account.urls')),
+    path('api/', api.urls)
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += [path('silk/', include('silk.urls', namespace='silk'))]

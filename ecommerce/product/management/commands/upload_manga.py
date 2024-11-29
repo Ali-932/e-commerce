@@ -20,6 +20,8 @@ class Command(BaseCommand):
         pass
 
     def handle(self, *args, **options):
+        if Product.objects.count() > 0:
+            return
         with open('ecommerce/product/management/commands/fixtures/Anime1Gmanga0.json','r',encoding='utf-8') as f:
             jsonf= json.load(f)
         self.handel_authers(jsonf)

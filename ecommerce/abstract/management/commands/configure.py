@@ -3,7 +3,7 @@ from django.core.management.base import BaseCommand
 from django.urls import reverse
 
 from ecommerce.home.models import *
-from ecommerce.product.models import VolumesPackage
+from ecommerce.product.models import VolumesPackage, Product, Volume
 
 
 class Command(BaseCommand):
@@ -49,17 +49,22 @@ class Command(BaseCommand):
             prompt_text=None
         )
 
+        uzumaki_product = Product.objects.get(name='Uzumaki').pk
+        uzumaki_vol1 = Volume.objects.get(product_id=uzumaki_product, volume_number=1).pk
+
         VolumeABanner.objects.get_or_create(
             Title='قصة رعب جديد!',
             image='images/ad/ito banner copy.jpg',
-            volume_id=4812,
+            volume_id=uzumaki_vol1,
             active=True,
         )
 
+        jujutsu_product = Product.objects.get(name='Jujutsu Kaisen').pk
+        jujutsu_vollast = Volume.objects.filter(product_id=jujutsu_product).last().pk
         VolumeBBanner.objects.get_or_create(
             Title='جوجوتسو بمجلد اخير!',
             image='images/ad/photo_2023-10-01_18-59-56REÀí_tezCbXL.png',
-            volume_id=88,
+            volume_id=jujutsu_vollast,
             active=True,
 
         )

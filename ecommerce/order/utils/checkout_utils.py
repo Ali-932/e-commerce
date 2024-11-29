@@ -75,13 +75,11 @@ def order_save_and_modify_address(form, request, initial_address, template):
         Address.order = order
         Address.user = request.user
         Address.save()
-    common = common_views(request)
     items = order.items.all()
     # print(items.values())
     # sheet_sc = send_order_to_sheet(cleaned_data, order, request.user, items)
-    sheet_sc=201
+    sheet_sc = 201
     remove_item_if_special_offer(request, items)
-    print(sheet_sc)
     if sheet_sc == 201:
         messages.success(request, 'تم ارسال الطلب بنجاح')
         return redirect('orders:view_orders')
