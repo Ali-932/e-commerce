@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['*']
 
 # Application definition
 
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -51,6 +52,7 @@ INSTALLED_APPS = [
     'ecommerce.htmx_messages',
     'ecommerce.home',
     # 3d party apps
+    'sorl.thumbnail',
     'simple_menu',
     'django_sass',
     "django_htmx",
@@ -63,7 +65,6 @@ INSTALLED_APPS = [
     'storages',
     'dbbackup',
 ]
-
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
@@ -240,8 +241,6 @@ if USE_S3:
     CORS_ALLOW_ALL_ORIGINS = True
     AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
     AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
-    print(AWS_ACCESS_KEY_ID)
-    print(AWS_SECRET_ACCESS_KEY)
     AWS_DEFAULT_ACL = 'public-read'
     AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
     AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
@@ -253,14 +252,28 @@ if USE_S3:
     STATICFILES_STORAGE = 'ecommerce.storage_backends.StaticStorage'
     STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/'
     DEFAULT_FILE_STORAGE = 'ecommerce.storage_backends.PublicMediaStorage'
+    STORAGES = {
+        "default": {
+            "BACKEND": "ecommerce.storage_backends.PublicMediaStorage",
+        },
+        "staticfiles": {
+            "BACKEND": "ecommerce.storage_backends.StaticStorage",
+        },
+    }
 
 else:
     DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
     STATIC_URL = '/static/'
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    STORAGES = {
+        "default": {
+            "BACKEND": "django.core.files.storage.FileSystemStorage",
+        },
+    }
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
+
 
 
 
@@ -268,3 +281,5 @@ DBBACKUP_STORAGE = 'django.core.files.storage.FileSystemStorage'
 DBBACKUP_STORAGE_OPTIONS = {'location': 'db_backup/'}
 DBBACKUP_POSTGRESQL_OPTIONS = '--no-owner'
 DBBACKUP_POSTGRESQL_PGDUMP_OPTIONS = '--no-owner'
+
+

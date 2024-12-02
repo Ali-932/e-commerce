@@ -1,4 +1,5 @@
 {% load humanize %}
+{% load thumbnail %}
 
 
 {% load product_tags %}
@@ -17,7 +18,7 @@
             <figure class="product-media2">
                 <a style="cursor: pointer"
                    hx-get={% url 'product:view-product' pk=volume.id %}
-                   hx-target="#main_nav"
+                           hx-target="#main_nav"
                    hx-push-url="true"
                    hx-swap="innerHTML"
                    hx-select="#main_nav"
@@ -26,11 +27,12 @@
                                                 and it causing problems when clicking on the product pasge#}
                    hx-indicator="#ht-spp, #pagination_pointers, #pagination_pre, #pagination_next"
                 >
-                    <img src=
-                                 {{ volume.image.url }}
-                                 alt="Product"
-                         class="product-image"
+
+                    {% thumbnail volume.image "300x300" quality=85 as thumb %}
+                        <img src="{{ thumb.url }}" width="{{ thumb.width }}" height="{{ thumb.height }}"
                          style="{% if volume.type == 'Package' %} height: 300px; width: 300px; object-fit: fill; max-width: fit-content{% else %} height: 30rem; object-fit: cover; {% endif %}">
+                    {% endthumbnail %}
+
                 </a>
 
 
