@@ -27,11 +27,6 @@ load_dotenv()
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-a=zj2!)j7o^jfb56m65f@=6zq9n#b!&b0sqd7i)%)5!g07d4)b'
 SPREADSHEET_API = os.getenv('SPREADSHEET_API')
-DB_NAME = os.getenv('DB_NAME')
-DB_USER = os.getenv('DB_USER')
-DB_PASS = os.getenv('DB_PASS')
-DB_HOST = os.getenv('DB_HOST')
-DB_PORT = os.getenv('DB_PORT')
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
@@ -65,7 +60,8 @@ INSTALLED_APPS = [
     'django_filters',
     'crispy_forms',
     "crispy_bootstrap4",
-
+    'storages',
+    'dbbackup',
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
@@ -105,7 +101,8 @@ ROOT_URLCONF = 'ecommerce.urls'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+# commented out for now since we are using s3 buckets
+#
 
 LOGGING = {
     "version": 1,
@@ -168,6 +165,21 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+USE_RDS = bool(int(os.getenv('USE_RDS', False)))
+if USE_RDS:
+    DB_NAME = os.getenv('RDB_NAME')
+    DB_USER = os.getenv('RDB_USER')
+    DB_PASS = os.getenv('RDB_PASS')
+    DB_HOST = os.getenv('RDB_HOST')
+    DB_PORT = os.getenv('RDB_PORT')
+
+else:
+    DB_NAME = os.getenv('DB_NAME')
+    DB_USER = os.getenv('DB_USER')
+    DB_PASS = os.getenv('DB_PASS')
+    DB_HOST = os.getenv('DB_HOST')
+    DB_PORT = os.getenv('DB_PORT')
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -209,11 +221,6 @@ USE_I18N = True
 USE_TZ = True
 
 os.mkdir(os.path.join(BASE_DIR, 'static')) if not os.path.exists(os.path.join(BASE_DIR, 'static')) else None
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -227,3 +234,37 @@ HEAVY_REQUESTS_RATE_LIMIT = '50/m'
 # LIGHT_REQUESTS_RATE_LIMIT = '25/m'
 # MEDIUM_REQUESTS_RATE_LIMIT = '10/m'
 # HEAVY_REQUESTS_RATE_LIMIT = '5/m'
+
+USE_S3 = bool(int(os.getenv('USE_S3', False)))
+if USE_S3:
+    CORS_ALLOW_ALL_ORIGINS = True
+    AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+    print(AWS_ACCESS_KEY_ID)
+    print(AWS_SECRET_ACCESS_KEY)
+    AWS_DEFAULT_ACL = 'public-read'
+    AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
+    AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+    AWS_S3_OBJECT_PARAMETERS = {
+        'CacheControl': 'max-age=86400',
+    }
+    AWS_LOCATION = 'static'
+
+    STATICFILES_STORAGE = 'ecommerce.storage_backends.StaticStorage'
+    STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/'
+    DEFAULT_FILE_STORAGE = 'ecommerce.storage_backends.PublicMediaStorage'
+
+else:
+    DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+    STATIC_URL = '/static/'
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+
+
+DBBACKUP_STORAGE = 'django.core.files.storage.FileSystemStorage'
+DBBACKUP_STORAGE_OPTIONS = {'location': 'db_backup/'}
+DBBACKUP_POSTGRESQL_OPTIONS = '--no-owner'
+DBBACKUP_POSTGRESQL_PGDUMP_OPTIONS = '--no-owner'

@@ -35,5 +35,14 @@ services:
       - DB_USER=${DB_USER}
       - DB_PASS=${DB_PASS}
       - DB_PORT=${DB_PORT}
+      - RDB_HOST=${RDB_HOST}
+      - RDB_NAME=${RDB_NAME}
+      - RDB_USER=${RDB_USER}
+      - RDB_PASS=${RDB_PASS}
+      - RDB_PORT=${RDB_PORT}
+      - USE_S3=${USE_S3}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_STORAGE_BUCKET_NAME=${AWS_STORAGE_BUCKET_NAME}
     depends_on:
       - postgres_db
