@@ -11,7 +11,7 @@ def find_cover_path(file_name):
     for filename in os.listdir(cover_root):
         name, ext = os.path.splitext(filename)
         sanitized_new_file_name = sanitize_filename(file_name)
-        if name == str(sanitized_new_file_name):
+        if name == str(sanitized_new_file_name) or name == str(file_name):
             file_path = os.path.join(cover_root, filename)
             print(f"Found file: {file_path}")
             file_path = os.path.join('/home/james/PycharmProjects/e-commerce/media/images/covers', filename)
@@ -33,8 +33,16 @@ class Command(BaseCommand):
             except FileNotFoundError:
                 print(f"File not found: {item.image}")
                 cover_path = find_cover_path(f'{item.product.name} - {item.volume_number}')
-                image_file = Image.open(cover_path)
-                item.image.save(item.image.name, image_file, save=False)
+                print(cover_path)
+                if cover_path is None:
+                    raise ValueError(f"File not found: {item.product.name} - {item.volume_number}")
+                real_path = os.path.relpath(cover_path, "/home/james/PycharmProjects/e-commerce/media")
+                with Image.open(cover_path) as img:
+                    image_io = BytesIO()
+                    img.save(image_io, format=img.format)
+                    item.image.save(real_path, File(image_io), save=True)
+                    image = Image.open(item.image)
+
             image = image.convert('RGB')
             # Define the size
             size = (300, 300)
