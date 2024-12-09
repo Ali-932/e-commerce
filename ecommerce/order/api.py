@@ -1,5 +1,7 @@
 from ninja import NinjaAPI
 
+from ecommerce.abstract.models.choices import ProvinceChoices
+from ecommerce.home.models import Global
 from ecommerce.order.models import Order, ShippingAddress
 from ecommerce.order.schema import OrderSchema
 from typing import List
@@ -25,11 +27,14 @@ def google_sheets_pull(request):
                 'quantity': item.quantity
             })
         shipping_address = ShippingAddress.objects.filter(user=order.user).order_by('-created_at').first()
-
+        delivery_price = Global.get_instance().delivery_price
+        if shipping_address.province != ProvinceChoices.BAGHDAD:
+            delivery_price = Global.get_instance().delivery_price_outside_baghdad
         order_data.append({
             'id': order.id,
             'user': order.user,
             'total_price': order.total_price.amount,
+            'delivery_price': delivery_price.amount,
             'total_quantity': order.total_quantity,
             'status': order.status,
             'uuid': order.uuid,

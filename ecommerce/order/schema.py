@@ -22,6 +22,7 @@ class OrderSchema(Schema):
     shipping_address: ShippingAddressSchema
     id: int
     total_price: float
+    delivery_price: float
     total_quantity: int
     status: str
     uuid: str
