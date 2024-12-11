@@ -5,7 +5,7 @@
             <a {% if adA.link %}href="{{ adA.link }}"{% endif %}>
                 <img src={{ adA.image.url }}  alt="Banner">
             </a>
-            <div class="banner-content force-rtl row d-flex justify-content-end">
+            <div class="banner-content force-rtl row d-flex justify-content-center">
                 <h4 class="banner-subtitle text-white"><a class="arabic-font force-rtl">{{ adA.Title }}</a>
                 </h4><!-- End .banner-subtitle -->
                 <h2 class="banner-title text-white force-rtl"><a class="arabic-font force-rtl" >
@@ -19,13 +19,13 @@
         </div><!-- End .banner -->
     </div><!-- End .col-lg-6 -->
 
-    <div class="col-sm-6 col-lg-3 ">
+    <div class="col-sm-5 col-lg-3 ">
         <div class="banner banner-overlay">
             <a>
                 <img src={{ adB.image.url }} alt="Banner" width="335" height="420">
             </a>
 
-            <div class="banner-content banner-content-stretch">
+            <div class="banner-content banner-content-stretch align-content-center">
                 <h4 class="banner-subtitle text-white"><a class="arabic-font">{{ adB.Title }}</a></h4>
                 <!-- End .banner-subtitle -->
                 <h3 class="banner-title text-white "><a class="arabic-font center-text"

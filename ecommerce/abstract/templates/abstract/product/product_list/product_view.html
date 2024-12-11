@@ -1,5 +1,4 @@
 {% load humanize %}
-{% load thumbnail %}
 
 
 {% load product_tags %}
@@ -11,7 +10,6 @@
             hx-select="#product_view_dev"
             hx-select-oob="#dropdown_cart"
             hx-swap="afterbegin"
-
     >
         {% csrf_token %}
         <div class="hx-disabled product product-7 text-center" id="ht-spp">
@@ -28,10 +26,19 @@
                    hx-indicator="#ht-spp, #pagination_pointers, #pagination_pre, #pagination_next"
                 >
                     <img src=
-                         {{ volume.thumbnail.url }}
-                         alt="Product"
+                                 {{ volume.image.url }}
+                                 alt="Product"
                          class="product-image"
-                         style="{% if volume.type == 'Package' %} height: 300px; width: 300px; object-fit: fill; max-width: fit-content{% else %} height: 30rem; object-fit: cover; {% endif %}">
+                         style="{% if volume.type == 'Package' %}
+                             {#height: 300px;#}
+                             {#width: 300px;#}
+                             aspect-ratio: 4/5;
+                             object-fit: fill;
+                             max-width: fit-content{% else %}
+                             aspect-ratio: 9/13;
+                             {#height: 30rem;#}
+                             object-fit: cover;
+                         {% endif %}">
                 </a>
 
 
@@ -108,7 +115,6 @@
                         {% else %}
                             {{ form.quantity }}
                         {% endif %}
-
                     </div>
                 </div>
                 <div class="product-price">

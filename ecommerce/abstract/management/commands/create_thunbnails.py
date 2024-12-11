@@ -24,7 +24,8 @@ def sanitize_filename(filename):
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        items = Volume.objects.filter(thumbnail__isnull=True)
+        items = Item.objects.filter(thumbnail__isnull=True)
+        print(items)
         for item in items:
             try:
                 print(item.image)

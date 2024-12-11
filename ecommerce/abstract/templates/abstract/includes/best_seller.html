@@ -14,10 +14,9 @@
                             "nav": true,
                             "dots": true,
                             "loop": true,
-                            "autoWidth": true,
                             "responsive": {
                                 "0": {
-                                    "items":1
+                                    "items":1.5
                                 },
                                 "480": {
                                     "items":2
@@ -26,17 +25,17 @@
                                     "items":3
                                 },
                                 "992": {
-                                    "items":5
+                                    "items":4
                                 },
                                 "1200": {
-                                    "items":5,
+                                    "items":4,
                                     "nav": true,
                                     "dots": true
                                 }
                             }
                         }'>
                     {% for volume in best_sellers %}
-                        <div style="width: 250px; margin: 0 10px; box-sizing: border-box;">
+                        <div style="margin: 0 5px; box-sizing: border-box;">
                             {% include 'abstract/product/product_list/product_view.html' with volume=volume form=form %}
                         </div>
                     {% endfor %}

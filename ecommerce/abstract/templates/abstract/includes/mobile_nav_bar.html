@@ -1,0 +1,22 @@
+  {% load simple_menu %}
+
+    <div class="bottom-nav" x-data="{nav_bar : '{{ menu_num }}' }">
+        {% generate_menu %}
+        {% for item in menus.onesight %}
+            <a href="#"
+               x-bind:class="{'active' : '{{ item.num }}' === nav_bar }"
+               id="a{{ item.num }}"
+               class="nav-item"
+               @click.prevent="nav_bar = '{{ item.num }}'"
+               hx-get="{{ item.url }}"
+               hx-target="#main_nav"
+               hx-swap="innerHTML"
+               hx-push-url="true"
+               hx-indicator="#main_nav"
+               hx-on:click="clearAuthorSelection()"
+               hx-select="#main_nav">
+                <i class="{{ item.icon }}" aria-hidden="true"></i>
+                <span>{{ item.title }}</span>
+            </a>
+        {% endfor %}
+    </div>

@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 {% load static %}
-{% load simple_menu %}
-<!-- molla/index-20.html  22 Nov 2019 10:01:15 GMT -->
-
 <div>
     {% include 'abstract/includes/upper/header.html' %}
 
     <body>
-    <div class="page-wrapper">
+    {% include 'abstract/includes/upper/header.html' %}
 
+    <div class="page-wrapper">
         {% include 'abstract/includes/upper/page header.html' with nav_ad=nav_ad nav_num=menu_num items=items authors=authors %}
         <div id="main_nav" class="hx-disabled">
             {% block content %}
@@ -17,59 +15,11 @@
         </div>
         {% include 'abstract/includes/footer.html' %}
     </div><!-- End .page-wrapper -->
+
     <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
 
-    <!-- Mobile Menu -->
-    <div class="mobile-menu-overlay"></div><!-- End .mobil-menu-overlay -->
-
-    <div class="mobile-menu-container">
-        <div class="mobile-menu-wrapper">
-            <span class="mobile-menu-close"><i class="icon-close"></i></span>
-
-            <form hx-swap="innerHTML"
-                  hx-target="#main_nav"
-                  hx-push-url="true"
-                  hx-get="{% url 'product:list-products' %}"
-                  hx-select="#main_nav"
-                  hx-indicator="#main_nav"
-                  class="mobile-search">
-                <label for="mobile-search" class="sr-only">Search</label>
-                <input type="search" class="form-control" name="q" id="q"
-                       placeholder="Search in..." required>
-                <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
-            </form>
-
-            <ul class="nav nav-pills-mobile" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" id="mobile-menu-link" data-toggle="tab"
-                       role="tab" aria-controls="mobile-menu-tab" aria-selected="true">Menu</a>
-                    {% generate_menu %}
-                        {% for item in menus.onesight %}
-<a id="a{{ item.num }}"
-                                        {% if item.children %} class="sf-with-ul arabic-font nav-link" {% else %}
-                                   class="arabic-font nav-link" {% endif %}
-                                    href="#"
-                                   x-on:click="nav_bar=$event.target.id.charAt($event.target.id.length -1);"
-                                   hx-swap="innerHTML"
-                                   hx-target="#main_nav"
-                                   hx-push-url="true"
-                                   hx-get="{{ item.url }}"
-                                   hx-select="#main_nav"
-                                   hx-indicator="#main_nav"
-                                   hx-on:click="clearAuthorSelection()"
-                                >{{ item.title }}</a>
-                            {% endfor %}
-                </li>
-            </ul>
-
-
-            <div class="social-icons">
-                <a href="#" class="social-icon" target="_blank" title="Facebook"><i class="icon-facebook-f"></i></a>
-                <a href="#" class="social-icon" target="_blank" title="Instagram"><i class="icon-instagram"></i></a>
-            </div><!-- End .social-icons -->
-        </div><!-- End .mobile-menu-wrapper -->
-    </div><!-- End .mobile-menu-container -->
-
+    <!-- Bottom Navigation Bar -->
+    {% include 'abstract/includes/mobile_nav_bar.html' with menu_num=menu_num %}
     </body>
     {% include 'abstract/includes/scripts.html' %}
     {% include 'toasts.html' %}
