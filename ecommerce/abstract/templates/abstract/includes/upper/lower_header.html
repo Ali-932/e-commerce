@@ -4,10 +4,10 @@
 <div class="header-middle" dir="ltr">
     <div class="container" style="width: 90%">
         <div class="header-left ">
-{#            <button class="mobile-menu-toggler">#}
-{#                <span class="sr-only">Toggle mobile menu</span>#}
-{#                <i class="icon-bars"></i>#}
-{#            </button>#}
+            {#            <button class="mobile-menu-toggler">#}
+            {#                <span class="sr-only">Toggle mobile menu</span>#}
+            {#                <i class="icon-bars"></i>#}
+            {#            </button>#}
 
             <a href={% url 'home:index' %} class="logo">
                 <div>
@@ -37,16 +37,39 @@
                     </div><!-- End .header-search-wrapper -->
                 </form>
             </div><!-- End .header-search -->
-
             <div class="header-dropdown-link ">
-                <div class="dropdown cart-dropdown" id="account_header">
+{#            here we have 2 account header element, one for desktop and the other for mobile#}
+                <div class="d-block d-md-none dropdown cart-dropdown" id="account_header_mobile">
+                    <a
+                            href="{% url 'auth:login' %}"
+                            title="My account"
+                            class="fix_account"
+                    >
+                        <div class="icon">
+                            <i class="icon-user"></i>
+                        </div>
+                        <p class="arabic-font">
+                            {% if user.is_authenticated %}
+                                {{ request.user.name }}
+                            {% else %}
+                                الحساب
+                            {% endif %}
+                        </p>
+                    </a>
+                </div>
+                <div class="dropdown cart-dropdown d-none d-md-block" id="account_header">
                     <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static"
                        title="My account" class="fix_account">
                         <div class="icon">
                             <i class="icon-user"></i>
                         </div>
-                        <p class="arabic-font">الحساب</p>
-                    </a>
+                        <p class="arabic-font">
+                            {% if user.is_authenticated %}
+                                {{ request.user.name }}
+                            {% else %}
+                                الحساب
+                            {% endif %}
+                        </p></a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown"
                          style="width: 300px">
                         <div class="d-flex justify-content-center">
@@ -88,7 +111,6 @@
                                 </div>
                             {% endif %}
                 </div>
-
 
             </div><!-- End .compare-dropdown -->
 

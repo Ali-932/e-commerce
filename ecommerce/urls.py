@@ -18,18 +18,19 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-
 from ecommerce.order.api import api
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path("reload/", include("django_browser_reload.urls")),
-    path('', include('ecommerce.home.urls')),
-    path('', include('ecommerce.product.urls')),
-    path('', include('ecommerce.order.urls')),
-    path('', include('ecommerce.account.urls')),
-    path('api/', api.urls)
+      path('admin/', admin.site.urls),
+      path("reload/", include("django_browser_reload.urls")),
+      path('', include('ecommerce.home.urls')),
+      path('', include('ecommerce.product.urls')),
+      path('', include('ecommerce.order.urls')),
+      path('', include('ecommerce.account.urls')),
+      path('api/', api.urls),
+      path('', include('pwa.urls')),  # You MUST use an empty string as the URL prefix
 
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += [path('silk/', include('silk.urls', namespace='silk'))]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+# urlpatterns+= [path('', include('pwa.urls'))]
