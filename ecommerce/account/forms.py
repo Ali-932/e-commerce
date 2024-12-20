@@ -4,15 +4,22 @@ from django import forms
 from django.contrib.auth.hashers import make_password
 from django.core.validators import RegexValidator
 from django.urls import reverse_lazy
-
+from django_password_eye.fields import PasswordEye
 from ecommerce.abstract.models.choices import ProvinceChoices
 from ecommerce.account.models import User
+from crispy_forms.bootstrap import FieldWithButtons, StrictButton
+
+english_username_validator = RegexValidator(
+    regex=r'^[a-zA-Z0-9_]+$',
+    message="اسم المستخدم يجب ان يكون بالانجليزي",
+)
+
 
 class DateInput(forms.DateInput):
     input_type = 'date'
 
-class RegisterForm(forms.ModelForm):
 
+class RegisterForm(forms.ModelForm):
     class Meta:
         model = User
         fields = '__all__'
@@ -21,16 +28,26 @@ class RegisterForm(forms.ModelForm):
     starts_with_07 = RegexValidator(r'^07', 'Field must start with "07".')
     digits_only = RegexValidator(r'^\d{11}$', 'Field must be exactly 11 digits.')
 
-    name=forms.CharField(max_length=100,widget=forms.TextInput(attrs={'class':'form-control'}), label="الاسم")
-    username = forms.CharField(max_length=255, widget=forms.TextInput(attrs={'class': 'form-control'}),label="اسم المستخدم")
-    province = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control'}), choices=ProvinceChoices.choices,label="المحافظة")
-    address1=forms.CharField(max_length=100,widget=forms.TextInput(attrs={'class':'form-control'}),label="العنوان")
-    phone_number_1=forms.CharField(max_length=11,widget=forms.TextInput(attrs={'class':'form-control'}),validators=[digits_only,starts_with_07],label="رقم الهاتف الاول")
-    phone_number_2=forms.CharField(max_length=11,widget=forms.TextInput(attrs={'class':'form-control'}),validators=[digits_only,starts_with_07],required=False,label="رقم الهاتف الثاني")
-    email=forms.EmailField(max_length=100,widget=forms.EmailInput(attrs={'class':'form-control'}),required=False,label="البريد الالكتروني")
-    dob=forms.DateField(widget=DateInput(attrs={'class':'form-control'}),label="تاريخ الميلاد")
-    password=forms.CharField(max_length=100,widget=forms.PasswordInput(attrs={'class':'form-control'}),label="كلمة المرور")
-    confirm_password=forms.CharField(max_length=100,widget=forms.PasswordInput(attrs={'class':'form-control'}),label="تأكيد كلمة المرور")
+    name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}), label="الاسم")
+    username = forms.CharField(max_length=255, widget=forms.TextInput(attrs={'class': 'form-control'}),
+                               label="اسم المستخدم", validators=[english_username_validator])
+    province = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control'}), choices=ProvinceChoices.choices,
+                                 label="المحافظة")
+    address1 = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}), label="العنوان")
+    phone_number_1 = forms.CharField(max_length=11, widget=forms.TextInput(attrs={'class': 'form-control'}),
+                                     validators=[digits_only, starts_with_07], label="رقم الهاتف الاول")
+    phone_number_2 = forms.CharField(max_length=11, widget=forms.TextInput(attrs={'class': 'form-control'}),
+                                     validators=[digits_only, starts_with_07], required=False,
+                                     label="رقم الهاتف الثاني")
+    email = forms.EmailField(max_length=100, widget=forms.EmailInput(attrs={'class': 'form-control'}), required=False,
+                             label="البريد الالكتروني")
+    dob = forms.DateField(widget=DateInput(attrs={'class': 'form-control'}), label="تاريخ الميلاد")
+    password = forms.CharField(max_length=100,
+                               widget=forms.PasswordInput(attrs={'class': 'form-control', 'id': 'id_password1'}),
+                               label="كلمة المرور")
+    confirm_password = forms.CharField(max_length=100, widget=forms.PasswordInput(
+        attrs={'class': 'form-control', 'id': 'id_password2'}), label="تأكيد كلمة المرور")
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -39,8 +56,14 @@ class RegisterForm(forms.ModelForm):
                 Column(
                     'name',
                     'username',
-                    'password',
-                    'confirm_password',
+                    Div(FieldWithButtons('password', StrictButton(content='<i class="bi bi-eye"></i>', type='button',
+                                                                  css_class='btn btn-outline-secondary',
+                                                                  id='password1Button')),
+                        ),
+                    Div(FieldWithButtons('confirm_password', StrictButton(content='<i class="bi bi-eye"></i>', type='button',
+                                                                  css_class='btn btn-outline-secondary',
+                                                                  id='password2Button')),
+                        ),
                     'province',
                     'dob',
                     'address1',
@@ -52,6 +75,7 @@ class RegisterForm(forms.ModelForm):
                 ),
             ),
         )
+
     def clean(self):
         cleaned_data = super().clean()
         password = cleaned_data.get("password")
@@ -71,13 +95,13 @@ class RegisterForm(forms.ModelForm):
 
 
 class LoginForm(forms.Form):
-
     starts_with_07 = RegexValidator(r'^07', 'Field must start with "07".')
     digits_only = RegexValidator(r'^\d{11}$', 'Field must be exactly 11 digits.')
 
-    username = forms.CharField(max_length=255, widget=forms.TextInput(attrs={'class': 'form-control'}),label="اسم المستخدم")
-    password = forms.CharField(max_length=100, widget=forms.PasswordInput(attrs={'class': 'form-control'}),label="كلمة المرور")
-
+    username = forms.CharField(max_length=255, widget=forms.TextInput(attrs={'class': 'form-control'}),
+                               label="اسم المستخدم")
+    password = forms.CharField(max_length=100, widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+                               label="كلمة المرور")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -91,4 +115,3 @@ class LoginForm(forms.Form):
                 ),
             ),
         )
-
