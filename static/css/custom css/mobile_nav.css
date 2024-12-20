@@ -1,0 +1,39 @@
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px; /* Adjust as needed */
+    background-color: #fff;
+    display: flex;
+    border-top: 1px solid #ccc;
+    z-index: 1000;
+}
+
+.bottom-nav .nav-item {
+    flex: 1;
+    text-align: center;
+    padding: 5px 0;
+    color: #333;
+    text-decoration: none;
+}
+
+.bottom-nav .nav-item i {
+    display: block;
+    font-size: 24px; /* Adjust icon size */
+}
+
+.bottom-nav .nav-item span {
+    font-size: 12px; /* Adjust text size */
+}
+
+.bottom-nav .nav-item.active {
+    color: #fe5353;
+}
+
+/* Hide the bottom nav on wider screens */
+@media (min-width: 768px) {
+    .bottom-nav {
+        display: none;
+    }
+}
