@@ -3,45 +3,57 @@
 {% load static %}
 {% block content %}
 
-    <div class="container">
+    <div class="container" style="width: 100%">
         <div class="login-page bg-image pt-8 pb-8 pt-md-12 pb-md-12 pt-lg-17 pb-lg-17"
              style="background-image: url({% static 'images/backgrounds/3127537.jpg' %})">
-            <div class="form-box">
+            <div class="form-box hx-disabled" id="form-box">
                 <div class="form-tab">
                     <ul class="nav nav-pills nav-fill" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active arabic-font" id="signin-tab-2" data-toggle="tab" href="#signin-2"
+                        <li class="nav-item" id="login_tab">
+                            <a class="nav-link arabic-font{% if action == 'login' %} active {% endif %}"
+                               id="signin-tab-2"
+                               style="cursor: pointer"
+                               hx-get="{% url 'auth:login' %}"
+                               hx-trigger="click"
+                               hx-target="#tab-content"
+                               hx-select="#tab-content"
+                               hx-swap="innerHTML"
+                               hx-select-oob="#register_tab, #login_tab"
+                               hx-indicator="#form-box"
+                               hx-push-url="true"
                                role="tab" aria-controls="signin-2" aria-selected="false">تسجيل دخول</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link arabic-font" id="register-tab-2" data-toggle="tab" href="#register-2"
+                        <li class="nav-item" id="register_tab">
+                            <a class="nav-link arabic-font {% if action == 'register' %} active {% endif %}"
+                               id="register-tab-2"
+                               style="cursor: pointer;"
+                               hx-get="{% url 'auth:register' %}"
+                               hx-trigger="click"
+                               hx-target="#tab-content"
+                               hx-select="#tab-content"
+                               hx-swap="outerHTML"
+                               hx-select-oob="#register_tab, #login_tab"
+                               hx-indicator="#form-box"
+                               hx-push-url="true"
                                role="tab" aria-controls="register-2" aria-selected="true">انشاء حساب</a>
                         </li>
                     </ul>
                     <div class="tab-content">
-                        <div class="tab-pane fade force-rtl arabic-font show active" dir="rtl" id="signin-2"
-                             role="tabpanel" aria-labelledby="signin-tab-2">
+                        <div class="tab-pane fade force-rtl arabic-font show active"
+                             id="tab-content" dir="rtl">
                             <form
-                                    href="{% url 'auth:login' %}"
+                                    href="{% url url %}"
                                     method="post"
                             >
-                                {% crispy log_in_form %}
+                                {% crispy form %}
                             </form>
-                        </div><!-- .End .tab-pane -->
-                        <div class="tab-pane fade arabic-font force-rtl" id="register-2" role="tabpanel"
-                             aria-labelledby="register-tab-2" dir="rtl">
-                            <form
-                                    href="{% url 'auth:login' %}"
-                                    method="post"
-                            >
-                                {% crispy sign_up_form %}
-                            </form>
-                        </div><!-- .End .tab-pane -->
-                    </div><!-- End .tab-content -->
-                </div><!-- End .form-tab -->
-            </div><!-- End .form-box -->
-        </div><!-- End .container -->
-    </div><!-- End .login-page section-bg -->
+                        </div>
+                    </div>
+                    <!-- .End .tab-pane -->
+                </div><!-- End .tab-content -->
+            </div><!-- End .form-tab -->
+        </div><!-- End .form-box -->
+    </div><!-- End .container -->
     <main class="main" id="main_nav">
     </main><!-- End .main -->
 

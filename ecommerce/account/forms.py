@@ -2,6 +2,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Row, Column, Submit, Field, Div, HTML
 from django import forms
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth.password_validation import validate_password
 from django.core.validators import RegexValidator
 from django.urls import reverse_lazy
 from django_password_eye.fields import PasswordEye
@@ -9,24 +10,24 @@ from ecommerce.abstract.models.choices import ProvinceChoices
 from ecommerce.account.models import User
 from crispy_forms.bootstrap import FieldWithButtons, StrictButton
 
-english_username_validator = RegexValidator(
-    regex=r'^[a-zA-Z0-9_]+$',
-    message="اسم المستخدم يجب ان يكون بالانجليزي",
-)
-
 
 class DateInput(forms.DateInput):
     input_type = 'date'
 
 
 class RegisterForm(forms.ModelForm):
+    english_username_validator = RegexValidator(
+        regex=r'^[a-zA-Z0-9_]+$',
+        message="اسم المستخدم يجب أن يكون بالأحرف الإنجليزية والأرقام فقط."
+    )
+
     class Meta:
         model = User
         fields = '__all__'
         exclude = ['is_superuser', 'is_staff', 'is_active', 'groups', 'user_permissions', 'last_login', 'date_joined']
 
-    starts_with_07 = RegexValidator(r'^07', 'Field must start with "07".')
-    digits_only = RegexValidator(r'^\d{11}$', 'Field must be exactly 11 digits.')
+    starts_with_07 = RegexValidator(r'^07', 'يجب أن يبدأ الحقل بـ 07.')
+    digits_only = RegexValidator(r'^\d{11}$', 'يجب أن يحتوي رقم الهاتف على 11 رقم.')
 
     name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}), label="الاسم")
     username = forms.CharField(max_length=255, widget=forms.TextInput(attrs={'class': 'form-control'}),
@@ -60,9 +61,10 @@ class RegisterForm(forms.ModelForm):
                                                                   css_class='btn btn-outline-secondary',
                                                                   id='password1Button')),
                         ),
-                    Div(FieldWithButtons('confirm_password', StrictButton(content='<i class="bi bi-eye"></i>', type='button',
-                                                                  css_class='btn btn-outline-secondary',
-                                                                  id='password2Button')),
+                    Div(FieldWithButtons('confirm_password',
+                                         StrictButton(content='<i class="bi bi-eye"></i>', type='button',
+                                                      css_class='btn btn-outline-secondary',
+                                                      id='password2Button')),
                         ),
                     'province',
                     'dob',
@@ -82,8 +84,8 @@ class RegisterForm(forms.ModelForm):
         confirm_password = cleaned_data.get("confirm_password")
 
         if password and confirm_password and password != confirm_password:
-            raise forms.ValidationError("Passwords do not match.")
-
+            raise forms.ValidationError("كلمتا المرور غير متطابقتين.")
+        validate_password(password)
         return cleaned_data
 
     def save(self, commit=True):
@@ -100,7 +102,8 @@ class LoginForm(forms.Form):
 
     username = forms.CharField(max_length=255, widget=forms.TextInput(attrs={'class': 'form-control'}),
                                label="اسم المستخدم")
-    password = forms.CharField(max_length=100, widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+    password = forms.CharField(max_length=100,
+                               widget=forms.PasswordInput(attrs={'class': 'form-control', 'id': 'id_password3'}),
                                label="كلمة المرور")
 
     def __init__(self, *args, **kwargs):
@@ -110,8 +113,9 @@ class LoginForm(forms.Form):
             Row(
                 Column(
                     'username',
-                    'password',
-                    Submit('submit', 'تسجيل دخول', css_class='btn btn-primary login-button'),
-                ),
-            ),
-        )
+                    Div(FieldWithButtons('password', StrictButton(content='<i class="bi bi-eye"></i>', type='button',
+                                                                  css_class='btn btn-outline-secondary',
+                                                                  id='password3Button')),
+                        Submit('submit', 'تسجيل دخول', css_class='btn btn-primary login-button'),
+                        ),
+                )))

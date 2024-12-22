@@ -69,9 +69,10 @@
                                         {% if item.children %} class="sf-with-ul arabic-font" {% else %}
                                    class="arabic-font" {% endif %}
                                    @click.prevent="nav_bar = '{{ item.num }}'"
-{#                                   if the above line continue to work, then clear here#}
+                                        {#                                   if the above line continue to work, then clear here#}
                                         {#                                   x-on:click="nav_bar=$event.target.id.charAt($event.target.id.length -1);"#}
                                    hx-swap="innerHTML"
+                                   style="cursor: pointer;"
                                    hx-target="#main_nav"
                                    hx-push-url="true"
                                    hx-get="{{ item.url }}"

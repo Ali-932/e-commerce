@@ -84,6 +84,7 @@ STATICFILES_FINDERS = (
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -200,6 +201,7 @@ DATABASES = {
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
@@ -337,3 +339,15 @@ PWA_APP_LANG = 'en-US'
 # PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'static/js/custom_js', 'serviceworker.js')
 
 
+LANGUAGE_CODE = 'ar'
+USE_I18N = True
+USE_L10N = True
+USE_TZ = True
+
+LANGUAGES = [
+    ('ar', ('Arabic')),
+]
+
+LOCALE_PATHS = (
+    BASE_DIR / 'locale',
+)
