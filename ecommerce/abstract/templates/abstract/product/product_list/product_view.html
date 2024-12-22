@@ -10,6 +10,7 @@
             hx-select="#product_view_dev"
             hx-select-oob="#dropdown_cart"
             hx-swap="afterbegin"
+            style="height: 100%"
     >
         {% csrf_token %}
         <div class="hx-disabled product product-7 text-center" id="ht-spp">
@@ -53,7 +54,7 @@
             </figure><!-- End .product-media -->
 
             <div class="product-body">
-                <div>
+                <div style="height: 70px; overflow: auto">
                     <h1 class="product-title scrollbar-juicy-peach" style="; overflow: auto;"><a
                             style="font-size: 1.6rem">
                         {% if volume.type == 'Package' %}
