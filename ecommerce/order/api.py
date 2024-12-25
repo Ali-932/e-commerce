@@ -5,7 +5,7 @@ from ninja import NinjaAPI
 from ecommerce.abstract.models.choices import ProvinceChoices
 from ecommerce.home.models import Global
 from ecommerce.order.models import Order, ShippingAddress
-from ecommerce.order.schema import OrderSchema, OrderIds
+from ecommerce.order.schema import OrderSchema
 from typing import List
 
 api = NinjaAPI()
@@ -55,7 +55,7 @@ def google_sheets_pull(request):
     return order_data
 
 
-@api.post("/posted_placed_orders", response=List[OrderIds])
+@api.post("/posted_placed_orders",)
 def post_placed_orders(request):
     data = request.body.decode('utf-8')
     json_data = json.loads(data)
@@ -64,9 +64,9 @@ def post_placed_orders(request):
     ids = json_data.get('ids', [])
 
     # Update the status of the orders with the provided ids
-    Order.objects.filter(id__in=ids).update(status=Order.Status_CHOICES.PLACED_ON_SHEET)
+    Order.objects.filter(id__in=ids).update(status=Order.Status_CHOICES.ON_WORK)
 
-    return {"ids": ids}
+    return {"message": "Orders updated successfully."}
 # def google_sheets_pull(request):
     # orders = Order.objects.filter(status=Order.Status_CHOICES.CONFIRMED)
     # order_data = []

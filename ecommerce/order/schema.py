@@ -28,8 +28,6 @@ class OrderSchema(Schema):
     uuid: str
 
 
-class OrderIds(Schema):
-    id: int
 # class OrderSchema(ModelSchema):
 #     items: List[OrderItemSchema] = []
 #     class Meta:
