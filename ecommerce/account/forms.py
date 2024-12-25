@@ -5,7 +5,6 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth.password_validation import validate_password
 from django.core.validators import RegexValidator
 from django.urls import reverse_lazy
-from django_password_eye.fields import PasswordEye
 from ecommerce.abstract.models.choices import ProvinceChoices
 from ecommerce.account.models import User
 from crispy_forms.bootstrap import FieldWithButtons, StrictButton
