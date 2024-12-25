@@ -6,28 +6,22 @@ from ecommerce.abstract.utlites.menu_nums import menu_nums, CategoryChoices
 manga_children = [
     MenuItem(
         "المانجا",
-        url=reverse('product:list-products'),
+        url=reverse('product:list-products-manga'),
         icon='people-line',
         column=1,
     ),
     MenuItem(
         "المانهوا",
-        url='',
+        url=reverse('product:list-products-manhwa'),
         icon='cart-arrow-up',
         column=1,
     ),
     MenuItem(
         "الكوميك",
-        url='',
+        url=reverse('product:list-products-comic'),
         icon='file-invoice',
         column=1,
-    ),
-MenuItem(
-        "البكجات",
-        url='',
-        icon='file-invoice',
-        column=1,
-    ),
+    )
 
 ]
 

@@ -4,14 +4,6 @@
 {% load static %}
 {% load product_tags %}
 {% block content %}
-    <style>
-        .banner-css {
-            background-color: #e5e5f7;
-            opacity: 0.8;
-            background-image: radial-gradient(circle at center center, #a00000, #e5e5f7), repeating-radial-gradient(circle at center center, #a00000, #a00000, 10px, transparent 20px, transparent 10px);
-            background-blend-mode: multiply;
-        }
-    </style>
     <main class="main" id="main_nav_products">
         <div class="container mb-5 banner-css"
              style="position: relative; width: 100%; height: 13rem; align-content: center;">
@@ -51,7 +43,7 @@
                                     <form style="display: flex inline;">
                                         <input
                                                 dir="rtl"
-                                                class="form-control bg-white force-rtl input-custom included"
+                                                class="form-control bg-white force-rtl input-custom included text-dark"
                                                 placeholder="ابحث عن منتج .."
                                                 hx-get=?{% query_transform %}"
                                                 hx-swap="innerHTML"
@@ -90,7 +82,11 @@
                                 </div><!-- End .toolbox-sort -->
                             </div><!-- End .toolbox-right -->
                         </div><!-- End .toolbox -->
+                    {% if volumes|length != 0 %}
                         {% include 'abstract/product/product_list/product_list_pag.html' %}
+                    {% else %}
+                    {% include 'abstract/product/product_list/empty_products.html' %}
+                    {% endif %}
                     </div><!-- End .col-lg-9 -->
                     <aside class="col-lg-3 order-lg-first">
                         <div class="sidebar sidebar-shop">

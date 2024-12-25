@@ -76,18 +76,18 @@
                         >{{ key }} : {{ author }}</a></h2>
                     {% endfor %}
                 </div>
-                <div class="product-cat my-2 scrollbar-juicy-peach" style="height: 50px; overflow: auto;">
-                    <a>{{ volume.product.demographics|remove_brackets }} | {{ volume.product.themes|remove_brackets }} |
-                        {{ volume.product.genres|remove_brackets }}</a>
+                <div class="product-cat my-2 scrollbar-juicy-peach text-muted" style="height: 50px; overflow: auto; opacity: 90%">
+                    <a>{% if volume.product.demographics %}{{ volume.product.demographics|remove_brackets }} | {% endif %}
+                        {% if volume.product.themes %}{{ volume.product.themes|remove_brackets }} | {% endif %} 
+                        {% if volume.product.genres %}{{ volume.product.genres|remove_brackets }}{% endif %}</a>
                 </div><!-- End .product-cat -->
-
-                <div class="ratings-container row align-items-center justify-content-center">
+                <div class="ratings-container ratings-container-sm row align-items-center justify-content-center">
 
                     <div class="col-6">
                         <div>{% score_filter volume.product.score %}</div><!-- End .ratings-val -->
                     </div><!-- End .ratings -->
                     <div class="col-6">
-                        <div class="row d-flex align-items-center justify-content-center">
+                        <div>
                             <div>
                                 <span class="ratings-text text-muted force-rtl arabic-font">{% if volume.type == 'Package' %}
                                     المجلدات: {{ volume.start_volume }} - {{ volume.end_volume }}
@@ -120,9 +120,10 @@
                 </div>
                 <div class="product-price">
                     <div style="display: flex; align-items: center;">
-                        <input class="" type="text"
+                        <input type="hidden" name="price" id="price_id" value="{{ volume.price.amount }}">
+                        <input type="text"
                                style="pointer-events: none; width: 50px;"
-                               name="price" id="price_id" value="{{ volume.price.amount }}">
+                               value="{{ volume.price.amount | intcomma  }}">
                         <span>IQD</span>
                     </div>
                 </div><!-- End .product-price -->

@@ -24,7 +24,7 @@
 <script src="https://kit.fontawesome.com/00f67b7830.js" crossorigin="anonymous"></script>
 
 <!-- Custom js -->
-<script src="{% static 'js/custom_js/install.js' %}"></script>  
+<script src="{% static 'js/custom_js/install.js' %}"></script>
 
 <script>
     function carousel() {
@@ -239,47 +239,58 @@
 
 <script>
     // For confirming button on the checkout page using SweetAlert2
-    document.getElementById('confirmLink').addEventListener('click', function (event) {
-        event.preventDefault();
+    for (eve of ['htmx:afterSwap', 'DOMContentLoaded']) {
 
-        Swal.fire({
-            title: 'تأكيد',
-            text: 'هل تريد تثبيت طلبك؟',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'نعم, ثبت الطلب',
-            confirmButtonColor: '#FE5656',
-            cancelButtonText: 'لا',
-            customClass: 'arabic-font p-2 h6'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                document.getElementById('ConfirmForm').submit();
-            }
+        document.addEventListener(eve, function () {
+            
+        document.getElementById('confirmLink').addEventListener('click', function (event) {
+            event.preventDefault();
+
+            Swal.fire({
+                title: 'تأكيد',
+                text: 'هل تريد تثبيت طلبك؟',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'نعم, ثبت الطلب',
+                confirmButtonColor: '#FE5656',
+                cancelButtonText: 'لا',
+                customClass: 'arabic-font p-2 h6'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('ConfirmForm').submit();
+                }
+            });
         });
-    });
+        });
+    }
 </script>
 
 
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    for (i of [1, 2, 3]) {
-      const togglePassword = document.querySelector(`#password${i}Button`);
-      const password = document.querySelector(`#id_password${i}`);
+    for (eve of ['htmx:afterSwap']) {
 
-      togglePassword.addEventListener('click', function (e) {
+        document.addEventListener(eve, function () {
+            for (i of [1, 2, 3]) {
+                console.log(i)
+                const togglePassword = document.querySelector(`#password${i}Button`);
+                const password = document.querySelector(`#id_password${i}`);
+                console.log(password)
+                if (togglePassword) {
+                    togglePassword.addEventListener('click', function (e) {
 
-        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-        password.setAttribute('type', type);
+                        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+                        password.setAttribute('type', type);
 
-        if (this.firstChild.classList.contains('bi-eye-slash')) {
-          this.firstChild.classList.remove('bi-eye-slash')
-          this.firstChild.classList.add('bi-eye');
-        }
-        else {
-          this.firstChild.classList.remove('bi-eye');
-          this.firstChild.classList.add('bi-eye-slash');
-        }
-      });
+                        if (this.firstChild.classList.contains('bi-eye-slash')) {
+                            this.firstChild.classList.remove('bi-eye-slash')
+                            this.firstChild.classList.add('bi-eye');
+                        } else {
+                            this.firstChild.classList.remove('bi-eye');
+                            this.firstChild.classList.add('bi-eye-slash');
+                        }
+                    });
+                }
+            }
+        });
     }
-  });
 </script>

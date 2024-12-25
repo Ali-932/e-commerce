@@ -1,7 +1,7 @@
 {% load product_tags %}
 
 <nav aria-label="Page navigation" id="paginater">
-    <ul class="pagination justify-content-start hx-disabled" id="pagination_pre"
+    <ul class="pagination justify-content-center hx-disabled" id="pagination_pre"
         x-data="{
                                 fromRecordA: {{ pagination.from_record }},
                                 toRecordA: {{ pagination.to_record }},
@@ -73,8 +73,8 @@
             </li>
         </template>
 
-        <li class="page-item">
-            <a class="page-link page-link-next hx-disabled" :class="{'disabled': !hasNextA}"
+        <li class="page-item" :class="{'disabled': !hasNextA}">
+            <a class="page-link page-link-next hx-disabled"
                style="cursor: pointer"
                id="pagination_next"
                hx-get=?{% query_transform %}"

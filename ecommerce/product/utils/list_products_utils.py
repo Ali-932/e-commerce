@@ -11,7 +11,7 @@ from ecommerce.product.froms.main_product_from import ProductForm
 from ecommerce.product.models import Volume, ProductBanner, InventoryProduct, VolumesPackage
 
 
-def get_product_list_context(request, view_page='products'):
+def get_product_list_context(request, view_page='products', category=None):
     form = ProductForm(request.POST or None)
     if request.method == 'POST':
         if form.is_valid():
@@ -31,9 +31,9 @@ def get_product_list_context(request, view_page='products'):
     per_page = int(request.GET.get('per_page', 12))
     page = int(request.GET.get('page', 1))
     pag = request.GET.get('pag', False)
-    template = 'abstract/product/product_list/products_page.html'
     product_banner = ProductBanner.objects.filter(active=True).first()
     # items = Volume.objects.none()
+
     if view_page == 'products':
         items = Volume.objects.select_related('product').only('product__name',
                                                               'product__genres',
@@ -46,8 +46,15 @@ def get_product_list_context(request, view_page='products'):
                                                               'end_chapter',
                                                               'price_currency',
                                                               )
+        title = 'جميع المنتجات'
+
+        if category:
+            title = category[1]
+            items = items.filter(product__type=category[0])
         # items = Volume.objects.all()
     elif view_page == 'special-offer':
+        title = 'عروض خاصة'
+
         # sop_ids = InventoryProduct.objects.filter(is_available=True).values('id')
         items = InventoryProduct.objects.filter(is_available=True).select_related('product').only(
             'product__name',
@@ -62,6 +69,7 @@ def get_product_list_context(request, view_page='products'):
             'price_currency',
         )
     elif view_page == 'packages':
+        title = 'حزمة المجلدات'
         items = VolumesPackage.objects.select_related('product').only(
             'product__name',
             'product__genres',
@@ -112,14 +120,9 @@ def get_product_list_context(request, view_page='products'):
                     DemographicChoices.choices}  # we are using dict so we can get the database value and the display value
     themes = {theme[0]: theme[1] for theme in ThemeChoices.choices}
     genres = {genre[0]: genre[1] for genre in GenresChoices.choices}
-    if items.__len__() == 0:
+    template = 'abstract/product/product_list/products_page.html'
+    if items.__len__() == 0 and request.htmx:
         template = 'abstract/product/product_list/empty_products.html'
-    if view_page == 'products':
-        title = 'جميع المنتجات'
-    elif view_page == 'special-offer':
-        title = 'عروض خاصة'
-    elif view_page == 'packages':
-        title = 'حزمة المجلدات'
     context = {
         'title': title,
         'volumes': objs,

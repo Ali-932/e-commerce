@@ -1,3 +1,4 @@
+{% load humanize %}
 <form
         hx-post="{% url 'product:view-product' pk=volume.id %}"
         hx-indicator="#main_nav"
@@ -11,9 +12,10 @@
             <div class="product-price force-rtl"
                  style="display: flex;margin-bottom: 1.6rem; align-items: center; flex-wrap: nowrap">
                 <span style="margin-left: 0.5rem"> IQD</span>
+                <input type="hidden" name="price" id="price_id" value="{{ volume.price.amount }}">
                 <input type="text"
                        style="pointer-events: none;"
-                       name="price" id="price_id" value="{{ volume.price.amount }}">
+                       value="{{ volume.price.amount | intcomma }}">
             </div><!-- End .product-price -->
         </div>
     </div>

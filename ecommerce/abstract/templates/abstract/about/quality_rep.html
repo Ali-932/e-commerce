@@ -1,152 +1,161 @@
-    {% extends 'abstract/_base.html' %}
+{% extends 'abstract/_base.html' %}
 {% load compress %}
 {% load static %}
 {% block content %}
     <div dir="rtl">
-{#    {% compress css %}#}
-{#    <link rel="stylesheet" href="{% static 'css/tailwind.css' %}">#}
-{#    {% endcompress %}#}
- <div class="container p-0" style="width: 100%">
-	        	<div class="page-header page-header-big" style="background-image: url({% static 'images/about-header-bg copy.jpg' %})">
-                    <div class="text-center arabic-font">
-        			<h1 class="page-title text-white arabic-font ">شنو الي يخلي منتجاتنة<h3 class="text-white arabic-font mt-2">هيه الافضل بلسوك</h3></h1>
-                        </div>
-	        	</div><!-- End .page-header -->
+        {#    {% compress css %}#}
+        {#    <link rel="stylesheet" href="{% static 'css/tailwind.css' %}">#}
+        {#    {% endcompress %}#}
+        <div class="container p-0" style="width: 100%">
+            <div class="page-header page-header-big"
+                 style="background-image: url({% static 'images/about-header-bg copy.jpg' %})">
+                <div class="text-center arabic-font">
+                    <h1 class="page-title text-white arabic-font ">شنو الي يخلي منتجاتنة<h3
+                            class="text-white arabic-font mt-2">هيه الافضل بلسوك</h3></h1>
+                </div>
+            </div><!-- End .page-header -->
+        </div><!-- End .container -->
+
+        <div class="page-content pb-0">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2 col-lg-2 col-sm-2"></div>
+
+                    <div class="col-lg-3 mb-3 mb-lg-0 col-sm-3 col-md-3">
+                        <h2 class="title force-center arabic-font mb-1">خبرة اكثر من 7 سنين !</h2><!-- End .title -->
+                        <p class="text-wrap force-rtl arabic-font">لدينا خبرة تزيد عن 7 سنوات في مجال إنتاج المانجا، مما
+                            يمنحنا فهمًا
+                            ممتازًا لتحقيق جودة عالية ودقة في منتجاتنا, مع الحرص على الاهتمام بجميع الجوانب التي تجعل
+                            منتجاتنا
+                            دقيقة وسهلة الحمل والقراءة. قد بذلنا قصارى جهدنا في هذه السنين لتقديم منتجاتنا كأفضل
+                            خيار.</p>
+                    </div><!-- End .col-lg-6 -->
+                    <div class="col-md-2 col-lg-2 col-sm-2"></div>
+                    <div class="col-lg-3 col-md-3 col-sm-3">
+                        <h2 class="title arabic-font force-center mb-1">سعر مقابل جودة</h2><!-- End .title -->
+                        <p class="arabic-font force-rtl">نحن نقدم مجموعة واسعة من المنتجات المطبوعة بأفضل الأسعار
+                            الممكنة.
+                            نحرص على تحسين جودة منتجاتنا باستمرار، مع الحفاظ على تكاليف معقولة ومناسبة لعملائنا الكرام.
+                            نحن نسعى لتلبية احتياجاتكم المختلفة ونوفر خدماتنا لمجموعة واسعة من الزبائن، بدءًا من المكاتب
+                            والصفحات الصغيرة وصولاً إلى الأفراد.
+                        </p>
+                    </div><!-- End .col-lg-6 -->
+                    <div class="col-md-2 col-md-lg-2 col-sm-2"></div>
+
+                </div><!-- End .row -->
+
+                <div class="mb-5"></div><!-- End .mb-5 -->
             </div><!-- End .container -->
-
-            <div class="page-content pb-0">
-                <div class="container">
+            <div class="bg-light-2 pt-3 pb-5 mb-5 mb-lg-8 my-5">
+                <div class="container my-5">
                     <div class="row">
-                        <div class="col-md-2 col-lg-2 col-sm-2"></div>
+                        <div class="col-md-1"></div>
+                        <div class="col-lg-3 mb-3 mb-lg-0 mt-5 d-flex flex-column justify-content-center align-items-center">
+                            <h2 class="title arabic-font force-center">جودة منتجاتنا</h2><!-- End .title -->
+                            <p class="lead text-primary mb-1 arabic-font force-center">الجودة الخارقة</p>
+                            <!-- End .lead text-primary -->
+                            <p class="arabic-font force-rtl">نعمل جاهدين وبشكل مستمر لتوفير أفضل جودة لمطبوعاتنا.
+                                نحرص على الاهتمام بالمنتج من خلال التركيز على تصميم واجهة المجلد بدقة، مع اختيار خلفية
+                                مناسبة للكتاب،
+                                واختيار أجود أنواع الورق لتسهيل عملية القراءة .
+                                يتم طباعة المنتج باستخدام جهاز ذو دقة عالية لإظهار أجمل تفاصيل الرسم. </p>
+                        </div><!-- End .col-lg-5 -->
+                        <div class="col-md-1"></div>
 
-                        <div class="col-lg-3 mb-3 mb-lg-0 col-sm-3 col-md-3">
-                            <h2 class="title force-center arabic-font mb-1">خبرة اكثر من 7 سنين !</h2><!-- End .title -->
-                            <p class="text-wrap force-rtl arabic-font">لدينا خبرة تزيد عن 7 سنوات في مجال إنتاج المانجا، مما يمنحنا فهمًا
-                                ممتازًا لتحقيق جودة عالية ودقة في منتجاتنا, مع الحرص على الاهتمام بجميع الجوانب التي تجعل منتجاتنا
-                                دقيقة وسهلة الحمل والقراءة. قد بذلنا قصارى جهدنا في هذه السنين لتقديم منتجاتنا كأفضل خيار.</p>
-                        </div><!-- End .col-lg-6 -->
-                        <div class="col-md-2 col-lg-2 col-sm-2"></div>
-                        <div class="col-lg-3 col-md-3 col-sm-3">
-                            <h2 class="title arabic-font force-center mb-1">سعر مقابل جودة</h2><!-- End .title -->
-                            <p class="arabic-font force-rtl">نحن نقدم مجموعة واسعة من المنتجات المطبوعة بأفضل الأسعار الممكنة.
-                                نحرص على تحسين جودة منتجاتنا باستمرار، مع الحفاظ على تكاليف معقولة ومناسبة لعملائنا الكرام.
-                                نحن نسعى لتلبية احتياجاتكم المختلفة ونوفر خدماتنا لمجموعة واسعة من الزبائن، بدءًا من المكاتب والصفحات الصغيرة وصولاً إلى الأفراد.
-                            </p>
-                        </div><!-- End .col-lg-6 -->
-                        <div class="col-md-2 col-md-lg-2 col-sm-2"></div>
+                        <div class="col-lg-7 ">
 
-                    </div><!-- End .row -->
-
-                    <div class="mb-5"></div><!-- End .mb-5 -->
-                </div><!-- End .container -->
-                <div class="bg-light-2 pt-3 pb-5 mb-5 mb-lg-8 my-5">
-                    <div class="container my-5">
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-lg-3 mb-3 mb-lg-0 mt-5 d-flex flex-column justify-content-center align-items-center">
-                                <h2 class="title arabic-font force-center">جودة منتجاتنا</h2><!-- End .title -->
-                                <p class="lead text-primary mb-1 arabic-font force-center">الجودة الخارقة</p><!-- End .lead text-primary -->
-                                <p class="arabic-font force-rtl">نعمل جاهدين وبشكل مستمر لتوفير أفضل جودة لمطبوعاتنا.
-                                    نحرص على الاهتمام بالمنتج من خلال التركيز على تصميم واجهة المجلد بدقة، مع اختيار خلفية مناسبة للكتاب،
-                                    واختيار أجود أنواع الورق لتسهيل عملية القراءة .
-                                    يتم طباعة المنتج باستخدام جهاز ذو دقة عالية لإظهار أجمل تفاصيل الرسم. </p>
-                            </div><!-- End .col-lg-5 -->
-                            <div class="col-md-1"></div>
-
-                            <div class="col-lg-7 ">
-
-                                <div>
+                            <div>
                                 {% include 'abstract/includes/image slider.html' %}
 
-{#                                    <img src=  {% static "images/about/img-1 copy.jpg" %} alt=""  style="width: 396px; height: 290px">#}
-{#                                    <img src={% static "images/about/img-2 copy.jpg" %} alt=""  style="width: 276px; height: 320px">#}
-                                </div><!-- End .about-images -->
-                            </div><!-- End .col-lg-6 -->
-                        </div><!-- End .row -->
-                    </div><!-- End .container -->
-                </div><!-- End .bg-light-2 pt-6 pb-6 -->
-
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-1"></div>
-                        <div class="col-lg-3">
-                            <div class="brands-text">
-                                <h2 class="title arabic-font force-center mb-1">عناويين منوعة !</h2><!-- End .title -->
-                                <p class="arabic-font force-rtl ">متجرنا الإلكتروني يُقدم مجموعة متنوعة وشاملة من المانجا والمانهوا
-                                    والقصص المصورة. نحن نوفر مجموعة واسعة من العناوين المختلفة التي تشمل مختلف الأنواع
-                                    والتصنيفات. سواء كنت تفضل المانجا الشهيرة أو تبحث عن أحدث الإصدارات أو
-                                    حتى العناوين النادرة، فإننا نضمن توفير مجموعة متنوعة لتلبية رغبات جميع القرّاء.</p>
-                            </div><!-- End .brands-text -->
-                        </div><!-- End .col-lg-5 -->
-                        <div class="col-lg-1"></div>
-
-                        <div class="col-lg-7">
-                            <div class="brands-display">
-                                <div class="row justify-content-center">
-                                    <div class="col-6 col-sm-4">
-                                        <a class="brand">
-                                            <img src={% static 'images/brands/1 copy.png' %} alt="Brand Name" >
-                                        </a>
-                                    </div><!-- End .col-sm-4 -->
-
-                                    <div class="col-6 col-sm-4">
-                                        <a  class="brand">
-                                            <img src={% static 'images/brands/2 copy.png' %} alt="Brand Name" >
-                                        </a>
-                                    </div><!-- End .col-sm-4 -->
-
-                                    <div class="col-6 col-sm-4">
-                                        <a class="brand">
-                                            <img src={% static 'images/brands/3 copy.png' %} alt="Brand Name" >
-                                        </a>
-                                    </div><!-- End .col-sm-4 -->
-
-                                    <div class="col-6 col-sm-4">
-                                        <a  class="brand">
-                                            <img src={% static 'images/brands/4 copy.png' %} alt="Brand Name" >
-                                        </a>
-                                    </div><!-- End .col-sm-4 -->
-
-                                    <div class="col-6 col-sm-4">
-                                        <a class="brand">
-                                            <img src={% static 'images/brands/5 copy.png' %} alt="Brand Name" >
-                                        </a>
-                                    </div><!-- End .col-sm-4 -->
-
-                                    <div class="col-6 col-sm-4">
-                                        <a class="brand">
-                                            <img src={% static 'images/brands/6 copy.png' %} alt="Brand Name" >
-                                        </a>
-                                    </div><!-- End .col-sm-4 -->
-
-                                    <div class="col-6 col-sm-4">
-                                        <a class="brand">
-                                            <img src={% static 'images/brands/7 copy.png' %} alt="Brand Name" >
-                                        </a>
-                                    </div><!-- End .col-sm-4 -->
-
-                                    <div class="col-6 col-sm-4">
-                                        <a class="brand">
-                                            <img src={% static 'images/brands/8 copy.png' %} alt="Brand Name" >
-                                        </a>
-                                    </div><!-- End .col-sm-4 -->
-
-                                    <div class="col-6 col-sm-4">
-                                        <a class="brand">
-                                            <img src={% static 'images/brands/9 copy.png' %} alt="Brand Name" >
-                                        </a>
-                                    </div><!-- End .col-sm-4 -->
-                                </div><!-- End .row -->
-                            </div><!-- End .brands-display -->
-                        </div><!-- End .col-lg-7 -->
+                                {#                                    <img src=  {% static "images/about/img-1 copy.jpg" %} alt=""  style="width: 396px; height: 290px">#}
+                                {#                                    <img src={% static "images/about/img-2 copy.jpg" %} alt=""  style="width: 276px; height: 320px">#}
+                            </div><!-- End .about-images -->
+                        </div><!-- End .col-lg-6 -->
                     </div><!-- End .row -->
-
-
-
                 </div><!-- End .container -->
+            </div><!-- End .bg-light-2 pt-6 pb-6 -->
+
+            <div class="container mb-5">
+                <div class="row">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-3">
+                        <div class="brands-text">
+                            <h2 class="title arabic-font force-center mb-1">عناويين منوعة !</h2><!-- End .title -->
+                            <p class="arabic-font force-rtl ">متجرنا الإلكتروني يُقدم مجموعة متنوعة وشاملة من المانجا
+                                والمانهوا
+                                والقصص المصورة. نحن نوفر مجموعة واسعة من العناوين المختلفة التي تشمل مختلف الأنواع
+                                والتصنيفات. سواء كنت تفضل المانجا الشهيرة أو تبحث عن أحدث الإصدارات أو
+                                حتى العناوين النادرة، فإننا نضمن توفير مجموعة متنوعة لتلبية رغبات جميع القرّاء.</p>
+                        </div><!-- End .brands-text -->
+                    </div><!-- End .col-lg-5 -->
+                    <div class="col-lg-1"></div>
+
+                    <div class="col-lg-7">
+                        <div class="brands-display">
+                            <div class="row justify-content-center">
+                                <div class="col-6 col-sm-4">
+                                    <a class="brand">
+                                        <img src={% static 'images/brands/1 copy.png' %} alt="Brand Name" >
+                                    </a>
+                                </div><!-- End .col-sm-4 -->
+
+                                <div class="col-6 col-sm-4">
+                                    <a class="brand">
+                                        <img src={% static 'images/brands/2 copy.png' %} alt="Brand Name" >
+                                    </a>
+                                </div><!-- End .col-sm-4 -->
+
+                                <div class="col-6 col-sm-4">
+                                    <a class="brand">
+                                        <img src={% static 'images/brands/3 copy.png' %} alt="Brand Name" >
+                                    </a>
+                                </div><!-- End .col-sm-4 -->
+
+                                <div class="col-6 col-sm-4">
+                                    <a class="brand">
+                                        <img src={% static 'images/brands/4 copy.png' %} alt="Brand Name" >
+                                    </a>
+                                </div><!-- End .col-sm-4 -->
+
+                                <div class="col-6 col-sm-4">
+                                    <a class="brand">
+                                        <img src={% static 'images/brands/5 copy.png' %} alt="Brand Name" >
+                                    </a>
+                                </div><!-- End .col-sm-4 -->
+
+                                <div class="col-6 col-sm-4">
+                                    <a class="brand">
+                                        <img src={% static 'images/brands/6 copy.png' %} alt="Brand Name" >
+                                    </a>
+                                </div><!-- End .col-sm-4 -->
+
+                                <div class="col-6 col-sm-4">
+                                    <a class="brand">
+                                        <img src={% static 'images/brands/7 copy.png' %} alt="Brand Name" >
+                                    </a>
+                                </div><!-- End .col-sm-4 -->
+
+                                <div class="col-6 col-sm-4">
+                                    <a class="brand">
+                                        <img src={% static 'images/brands/8 copy.png' %} alt="Brand Name" >
+                                    </a>
+                                </div><!-- End .col-sm-4 -->
+
+                                <div class="col-6 col-sm-4">
+                                    <a class="brand">
+                                        <img src={% static 'images/brands/9 copy.png' %} alt="Brand Name" >
+                                    </a>
+                                </div><!-- End .col-sm-4 -->
+                            </div><!-- End .row -->
+                        </div><!-- End .brands-display -->
+                    </div><!-- End .col-lg-7 -->
+                </div><!-- End .row -->
 
 
-            </div><!-- End .page-content -->
+            </div><!-- End .container -->
+
+
+        </div><!-- End .page-content -->
         </main><!-- End .main -->
-</div>
+    </div>
 {% endblock %}

@@ -1,4 +1,6 @@
+
 from django.shortcuts import render
+from django.urls import reverse
 from django_ratelimit.decorators import ratelimit
 
 from ecommerce.product.utils.list_products_utils import get_product_list_context
@@ -8,7 +10,14 @@ from ecommerce.settings import MEDIUM_REQUESTS_RATE_LIMIT, HEAVY_REQUESTS_RATE_L
 @ratelimit(key='ip', method='POST', rate=LIGHT_REQUESTS_RATE_LIMIT, block=True)
 @ratelimit(key='ip', method='GET', rate=MEDIUM_REQUESTS_RATE_LIMIT, block=True)
 def list_products(request):
-    context, template = get_product_list_context(request, 'products')
+    path_to_category = {
+        reverse('product:list-products-manga'): ('Manga', 'المانجا'),
+        reverse('product:list-products-manhwa'): ('Manhwa', "المانهوا"),
+        reverse('product:list-products-comic'): ('Comic', "الكوميك")
+    }
+
+    category = path_to_category.get(request.path, None)
+    context, template = get_product_list_context(request, 'products', category)
 
     return render(request, template, context)
 

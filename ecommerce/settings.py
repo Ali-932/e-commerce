@@ -35,6 +35,13 @@ ALLOWED_HOSTS = ['*']
 
 
 INSTALLED_APPS = [
+    'unfold',
+    "unfold.contrib.filters",
+    "unfold.contrib.forms",
+    "unfold.contrib.inlines",  # optional, if special inlines are needed
+    "unfold.contrib.import_export",  # optional, if django-import-export package is used
+    "unfold.contrib.guardian",  # optional, if django-guardian package is used
+    "unfold.contrib.simple_history",  # optional, if django-simple-history package is used
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -278,15 +285,10 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
-
-
-
 DBBACKUP_STORAGE = 'django.core.files.storage.FileSystemStorage'
 DBBACKUP_STORAGE_OPTIONS = {'location': 'db_backup/'}
 DBBACKUP_POSTGRESQL_OPTIONS = '--no-owner'
 DBBACKUP_POSTGRESQL_PGDUMP_OPTIONS = '--no-owner'
-
-
 
 # PWA settings
 
@@ -345,6 +347,7 @@ USE_L10N = True
 USE_TZ = True
 
 LANGUAGES = [
+    ('en', ('English')),
     ('ar', ('Arabic')),
 ]
 

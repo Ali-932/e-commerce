@@ -12,7 +12,7 @@ from django.core.files import File
 class VolumesPackageMixins(models.Model):
     # product = models.OneToOneField(Product, on_delete=models.PROTECT, related_name='package')
     price = MoneyField(max_digits=14, decimal_places=0, default_currency='IQD', default=-1)
-    volumes = models.ManyToManyField('self', related_name='package', symmetrical=False)
+    volumes = models.ManyToManyField('Volume', related_name='package', symmetrical=False)
     start_volume = models.IntegerField(null=True, blank=True)
     end_volume = models.IntegerField(null=True, blank=True)
     volume_count = models.IntegerField(null=True, blank=True)
@@ -44,7 +44,7 @@ class InventoryProductMixins(models.Model):
     # price = MoneyField(max_digits=14, decimal_places=0, default_currency='IQD', default=5000)
     # created_at = models.DateTimeField(auto_now_add=True)
     is_available = models.BooleanField(default=False, editable=False)
-    volume = models.ForeignKey('self', on_delete=models.CASCADE, related_name='inventory_product', null=True, blank=True)
+    volume = models.ForeignKey('Volume', on_delete=models.CASCADE, related_name='inventory_product', null=True, blank=True)
 
     class Meta:
         abstract = True
@@ -67,7 +67,7 @@ class Item(VolumesPackageMixins, VolumeMixins, InventoryProductMixins):
 
     def make_thumbnail(self):
         image = Image.open(self.image)
-        image.convert('RGB')
+        image = image.convert('RGB')
 
         # Define the size
         size = (300, 300)
@@ -80,6 +80,9 @@ class Item(VolumesPackageMixins, VolumeMixins, InventoryProductMixins):
         thumbnail = File(thumb_io, name=os.path.basename(self.image.name))
         self.thumbnail.save(thumbnail.name, thumbnail, save=False)
         return True
+
+    # def __str__(self):
+    #     return f'{self.product.name} - {self.volume_number}'
 
 class VolumeManger(models.Manager):
     def get_queryset(self):

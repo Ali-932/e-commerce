@@ -25,6 +25,7 @@ def process_form(request, form, pk=None, form_temp=None, alternative_temp=None):
 
     cleaned_data = form.cleaned_data
     template = alternative_temp if request.POST.get('pk') else form_temp
+    print(request.POST.get('pk'))
     pk = request.POST.get('pk') or pk
 
     order = Order.objects.filter(user=request.user, active=True).first()
@@ -46,15 +47,15 @@ def process_form(request, form, pk=None, form_temp=None, alternative_temp=None):
     if cleaned_data['language'] not in ('AR', 'EN'):
         messages.error(request, 'حدثت مشكله اثناء معالجة الطلب')
         return None, template
-
+    print(f'item id is {pk} and language is {cleaned_data["language"]} and price is {price} and the order is {order}')
     order_item, created = OrderItem.objects.get_or_create(
         item_id=pk,
         language=cleaned_data['language'],
-        price=price,
         order=order
     )
+    print(created)
     order_item.quantity = quantity
-
+    order_item.price = price
     if created:
         messages.success(request, 'تم اضافه الطلب بنجاح')
     else:

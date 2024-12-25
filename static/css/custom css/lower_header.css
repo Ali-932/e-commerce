@@ -1,17 +1,27 @@
 .custom-button {
     background-color: #FE5353;
     color: #ffffff;
-  }
-.custom-button:hover {
-  background-color: #ff0000;
-  color: #ffffff;
 }
 
-.logo-size{
-   margin-right: 200px;}
+.custom-button:hover {
+    background-color: #ff0000;
+    color: #ffffff;
+}
+
+.logo-size {
+    margin-right: 200px;
+}
 
 
-.header-main-nav{
+.header-main-nav {
     margin-left: 2.8rem;
     margin-right: 2.8rem;
+}
+
+input[type="radio"] {
+    visibility: hidden;
+}
+
+label[for="author"] {
+    cursor: pointer;
 }
