@@ -1,5 +1,7 @@
 from django import template
 import re
+
+from django.contrib.humanize.templatetags.humanize import intcomma
 from django.utils.safestring import mark_safe
 
 register = template.Library()
@@ -36,3 +38,12 @@ def score_filter(value):
         return mark_safe(f'<span style="color: #8B8000;">التقييم :{value}</span>')
     else:
         return mark_safe(f'<span style="color: red;">التقييم :{value}</span>')
+
+
+@register.filter
+def arabic_intcomma(value):
+    """
+    Applies intcomma and replaces standard commas with Arabic commas.
+    """
+    value_with_commas = intcomma(value, use_l10n=False)
+    return value_with_commas.replace(",", "،")

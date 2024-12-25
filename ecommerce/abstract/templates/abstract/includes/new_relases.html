@@ -1,3 +1,4 @@
+{% load product_tags %}
 {% load humanize %}
 {% load static %}
 <div class="container mt-5">
@@ -37,7 +38,7 @@
                             <h3 class="product-title"><a href="product.html">{{ volume_a_banner.volume.product }}
                                 Volume {{ volume_a_banner.volume.volume_number }}</a></h3><!-- End .product-title -->
                             <div class="product-price">
-                                {{ volume_a_banner.volume.price.amount|intcomma }} IQD
+                                {{ volume_a_banner.volume.price.amount|arabic_intcomma }} IQD
                             </div><!-- End .product-price -->
 
                             <div class="product-action">
@@ -73,7 +74,7 @@
                             <h3 class="product-title"><a href="product.html">{{ volume_b_banner.volume.product }}
                                 Volume {{ volume_b_banner.volume.volume_number }}</a></h3><!-- End .product-title -->
                             <div class="product-price">
-                                {{ volume_b_banner.volume.price.amount|intcomma }} IQD
+                                {{ volume_b_banner.volume.price.amount|arabic_intcomma }} IQD
                             </div><!-- End .product-price -->
 
                             <div class="product-action">

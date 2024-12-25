@@ -1,5 +1,6 @@
 
     {% extends 'abstract/_base.html' %}
+{% load product_tags %}
 {% load humanize %}
 {% load i18n %}
 
@@ -54,7 +55,7 @@
 											<td class="quantity-col arabic-font">
                                                     <span>{{ order.status }}</span>
                                             </td>
-											<td class="total-col">{{ order.total_price.amount|intcomma }} IQD</td>
+											<td class="total-col">{{ order.total_price.amount|arabic_intcomma }} IQD</td>
 										</tr>
                                         {% for item in order.items.all %}
                                            <tr class="p-0 ml-4">

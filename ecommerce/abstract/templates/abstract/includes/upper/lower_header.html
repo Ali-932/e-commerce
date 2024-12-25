@@ -1,5 +1,6 @@
 {% include 'abstract/includes/upper/header.html' %}
 {% load static %}
+{% load product_tags %}
 {% load humanize %}
 <div class="header-middle" dir="ltr">
     <div class="container" style="width: 90%">
@@ -168,7 +169,7 @@
                                         <span class="cart-product-info arabic-font" dir="ltr">
                                                     <span class="cart-product-qty"> الكمية :{{ item.quantity }}</span>
                                                     <br>
-                                                    IQD السعر :{{ item.price.amount|intcomma }}
+                                                    IQD السعر :{{ item.price.amount|arabic_intcomma }}
                                                 </span>
                                     </div>
                                 </div><!-- End .product-cart-details -->
@@ -194,7 +195,7 @@
                     <div class="dropdown-cart-total">
                         <span class="arabic-font">{% if total_price %}السعر الكلي {% endif %}</span>
 
-                        <span class="cart-total-price arabic-font">{{ total_price|default:' لا توجد منتجات في السلة'|intcomma }}
+                        <span class="cart-total-price arabic-font">{{ total_price|default:' لا توجد منتجات في السلة'|arabic_intcomma }}
                             {% if total_price %}IQD{% endif %}</span>
                     </div><!-- End .dropdown-cart-total -->
 
