@@ -219,7 +219,6 @@
                 } else if (this.id === 'CarouselLatest') {
                     $carouselContainer.owlCarousel(owlCarouselOptions);
                 } else if (this.id === 'CarouselSideLatest') {
-                    console.log(this.id)
                     $carouselContainer.owlCarousel(owlCarouselOptionsSide);
                 }
 
@@ -242,39 +241,37 @@
     for (eve of ['htmx:afterSwap', 'DOMContentLoaded']) {
 
         document.addEventListener(eve, function () {
-            
-        document.getElementById('confirmLink').addEventListener('click', function (event) {
-            event.preventDefault();
 
-            Swal.fire({
-                title: 'تأكيد',
-                text: 'هل تريد تثبيت طلبك؟',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'نعم, ثبت الطلب',
-                confirmButtonColor: '#FE5656',
-                cancelButtonText: 'لا',
-                customClass: 'arabic-font p-2 h6'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    document.getElementById('ConfirmForm').submit();
-                }
+            document.getElementById('confirmLink').addEventListener('click', function (event) {
+                event.preventDefault();
+
+                Swal.fire({
+                    title: 'تأكيد',
+                    text: 'هل تريد تثبيت طلبك؟',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'نعم, ثبت الطلب',
+                    confirmButtonColor: '#FE5656',
+                    cancelButtonText: 'لا',
+                    customClass: 'arabic-font p-2 h6'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById('ConfirmForm').submit();
+                    }
+                });
             });
-        });
         });
     }
 </script>
 
 
 <script>
-    for (eve of ['htmx:afterSwap']) {
+    for (eve of ['htmx:afterSwap', 'DOMContentLoaded']) {
 
         document.addEventListener(eve, function () {
             for (i of [1, 2, 3]) {
-                console.log(i)
                 const togglePassword = document.querySelector(`#password${i}Button`);
                 const password = document.querySelector(`#id_password${i}`);
-                console.log(password)
                 if (togglePassword) {
                     togglePassword.addEventListener('click', function (e) {
 
@@ -293,4 +290,101 @@
             }
         });
     }
+</script>
+
+<script>
+    // Function to handle validation logic
+    function setupPasswordValidation() {
+        // Select the primary password and confirmation password fields
+        const password1 = document.querySelector('#id_password1');
+        const password2 = document.querySelector('#id_password2');
+
+        if (password1) {
+            // Add input event listener for the primary password field
+            password1.addEventListener('input', function () {
+                validatePassword1();
+                // Also validate confirmation password in case it was already filled
+                if (password2.value.length > 0) {
+                    validatePassword2();
+                }
+            });
+        }
+
+        if (password2) {
+            // Add input event listener for the confirmation password field
+            password2.addEventListener('input', validatePassword2);
+        }
+
+        // Function to validate the primary password
+        function validatePassword1() {
+            const messageContainer = getErrorElement(password1);
+            const passwordLength = password1.value.length;
+            let message = '';
+
+            if (passwordLength < 8) {
+                message = 'لابد ان يكون الرمز السري عل اقل 8 احرف.';
+            }
+            if (message) {
+                displayError(password1, message);
+            } else {
+                removeError(password1);
+            }
+        }
+
+        // Function to validate the confirmation password
+        function validatePassword2() {
+            const messageContainer = getErrorElement(password2);
+            let message = '';
+
+            if (password2.value !== password1.value && password2.value.length !== 0) {
+                message = 'الرمز السري لا يتطابق.';
+            }
+
+            if (message) {
+                displayError(password2, message);
+            } else {
+                removeError(password2);
+            }
+        }
+
+        // Utility function to create or retrieve the error message element
+        function getErrorElement(input) {
+            const parent = input.parentElement;
+            let errorElem = parent.querySelector('.invalid-feedback');
+
+            if (!errorElem) {
+                errorElem = document.createElement('div');
+                errorElem.className = 'invalid-feedback';
+                parent.appendChild(errorElem);
+            }
+
+            return errorElem;
+        }
+
+        // Utility function to display error messages
+        function displayError(input, message) {
+            const errorElem = getErrorElement(input);
+            errorElem.innerText = message;
+            input.classList.add('is-invalid');
+            input.classList.remove('is-valid');
+        }
+
+        // Utility function to remove error messages
+        function removeError(input) {
+            const parent = input.parentElement;
+            const errorElem = parent.querySelector('.invalid-feedback');
+
+            if (errorElem) {
+                errorElem.remove();
+            }
+
+            input.classList.remove('is-invalid');
+            input.classList.add('is-valid');
+        }
+    }
+
+    // Attach the validation setup to both 'DOMContentLoaded' and 'htmx:afterSwap' events
+    ['htmx:afterSwap', 'DOMContentLoaded'].forEach(function(eventName) {
+        document.addEventListener(eventName, setupPasswordValidation);
+    });
 </script>

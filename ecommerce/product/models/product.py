@@ -35,6 +35,7 @@ class Product(models.Model):
     score = models.FloatField(null=True, blank=True)
     title_japanese = models.CharField(max_length=200, null=True, blank=True)
     title_english = models.CharField(max_length=200, null=True, blank=True)
+    title_arabic = models.CharField(max_length=200, null=True, blank=True)
     title_synonyms = ArrayField(
         models.CharField(max_length=100, null=True, blank=True),
         default=list,

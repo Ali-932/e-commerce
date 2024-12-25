@@ -58,8 +58,6 @@ class VolumesPackageAdmin(admin.ModelAdmin):
 
     @transaction.atomic
     def save_model(self, request, obj, form, change):
-        print("Request POST:", request.POST)
-        print("Request FILES:", request.FILES)
 
         if form.is_valid():
             # Handle image upload
@@ -75,12 +73,9 @@ class VolumesPackageAdmin(admin.ModelAdmin):
             if not obj.id:
                 super().save_model(request, obj, form, change)
 
-            print('here')
             # Now we can access the many-to-many relationship
             if volumes := form.cleaned_data.get('volumes'):
                 volumes_qs = Volume.objects.filter(id__in=volumes)
-                print('exist')
-                print(obj.volumes.values_list('product', flat=True).distinct())
                 if volumes.values_list('product', flat=True).distinct().count() > 1:
                     raise ValueError('All volumes must belong to the same product')
 

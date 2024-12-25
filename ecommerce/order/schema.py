@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from ninja import Schema
 
@@ -14,8 +14,8 @@ class ShippingAddressSchema(Schema):
     address: str
     province: str
     phone: str
-    phone2: str
-    instagram_username: str
+    phone2: Optional[str] = None
+    instagram_username: Optional[str] = None
 
 class OrderSchema(Schema):
     items: List[OrderItemSchema] = []
@@ -26,6 +26,10 @@ class OrderSchema(Schema):
     total_quantity: int
     status: str
     uuid: str
+
+
+class OrderIds(Schema):
+    id: int
 # class OrderSchema(ModelSchema):
 #     items: List[OrderItemSchema] = []
 #     class Meta:

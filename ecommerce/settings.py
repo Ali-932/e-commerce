@@ -93,6 +93,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'ecommerce.abstract.middleware.AdminEnglishMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'silk.middleware.SilkyMiddleware',
@@ -347,7 +348,7 @@ USE_L10N = True
 USE_TZ = True
 
 LANGUAGES = [
-    ('en', ('English')),
+    # ('en', ('English')),
     ('ar', ('Arabic')),
 ]
 
