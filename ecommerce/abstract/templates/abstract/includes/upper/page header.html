@@ -2,7 +2,6 @@
 {% load simple_menu %}
 
 
-
 <header class="header header-12" dir="rtl">
     <div>
         {% include 'abstract/includes/upper/lower_header.html' with items=items %}<!-- End .header-middle -->
@@ -69,7 +68,8 @@
                                    hx-get="{{ item.url }}"
                                    hx-select="#main_nav"
                                    hx-indicator="#main_nav"
-                                   hx-on:click="clearAuthorSelection()"
+                                   hx-on::after-request="scrollToTop();"
+                                   hx-on:click="clearAuthorSelection();"
                                 >{{ item.title }}</a>
                                 {% if item.children %}
                                     <div class="megamenu megamenu-md" style="width: 400px; height: 290px;">
