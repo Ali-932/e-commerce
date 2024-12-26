@@ -25,3 +25,28 @@ input[type="radio"] {
 label[for="author"] {
     cursor: pointer;
 }
+
+
+.fix_account.disabled {
+    cursor: not-allowed; /* Changes cursor to indicate non-clickable */
+    opacity: 0.6; /* Makes the element look disabled */
+    pointer-events: none; /* Prevents any mouse interactions */
+    color: #000; /* Ensures the color remains consistent */
+}
+
+/* Override hover effects for disabled elements, if necessary */
+.fix_account.disabled:hover {
+    color: #000; /* Maintains the same color on hover */
+}
+
+.cart-dropdown.disabled {
+    cursor: not-allowed; /* Changes cursor to indicate non-clickable */
+    opacity: 0.6; /* Makes the element look disabled */
+    pointer-events: none; /* Prevents any mouse interactions */
+    color: #000; /* Ensures the color remains consistent */
+
+}
+
+.cart-dropdown.disabled:hover {
+    color: #000; /* Maintains the same color on hover */
+}

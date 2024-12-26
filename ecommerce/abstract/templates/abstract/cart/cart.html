@@ -69,7 +69,7 @@
                                                     hx-swap='innerHTML'
                                                     hx-target="#cart_orders"
                                                     hx-select="#cart_orders"
-                                                    hx-select-oob="#dropdown_cart, #summery_cart"
+                                                    hx-select-oob="#dropdown_cart, #summery_cart, #move_to_payment_btn"
                                                     hx-indicator="#cart_orders"
                                             ><i class="icon-close"></i></button>
                                         </td>
@@ -109,8 +109,9 @@
                                    hx-push-url="true"
                                    hx-select="#main_nav"
                                    hx-indicator="#main_nav"
-                                   class="btn btn-outline-primary-2 btn-order btn-block arabic-font p-3 {% if item|length == 0 %} disabled {% endif %}">انتقل الى
-                                    الدفع</a>
+                                   id="move_to_payment_btn"
+                                   class="btn btn-outline-primary-2 btn-order btn-block arabic-font p-3 {% if total_price|default:0 == 0 %} disabled {% endif %}">انتقل الى
+                                   الدفع</a>
                             </div><!-- End .summary -->
 
                             <a href={% url 'product:list-products' %} class="btn btn-outline-dark-2 btn-block mb-3 py-3 arabic-font force-rtl"><span>ارجع الى خانة المنتجات</span><i

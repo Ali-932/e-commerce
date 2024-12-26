@@ -56,12 +56,12 @@ class RegisterForm(forms.ModelForm):
                 Column(
                     'name',
                     'username',
-                    Div(FieldWithButtons('password', StrictButton(content='<i class="bi bi-eye"></i>', type='button',
+                    Div(FieldWithButtons('password', StrictButton(content='<i class="fa-solid fa-eye-slash"></i>', type='button',
                                                                   css_class='btn btn-outline-secondary',
                                                                   id='password1Button')),
                         ),
                     Div(FieldWithButtons('confirm_password',
-                                         StrictButton(content='<i class="bi bi-eye"></i>', type='button',
+                                         StrictButton(content='<i class="fa-solid fa-eye-slash"></i>', type='button',
                                                       css_class='btn btn-outline-secondary',
                                                       id='password2Button')),
                         ),
@@ -112,7 +112,7 @@ class LoginForm(forms.Form):
             Row(
                 Column(
                     'username',
-                    Div(FieldWithButtons('password', StrictButton(content='<i class="bi bi-eye"></i>', type='button',
+                    Div(FieldWithButtons('password', StrictButton(content='<i class="fa-solid fa-eye-slash"></i>', type='button',
                                                                   css_class='btn btn-outline-secondary',
                                                                   id='password3Button')),
                         Submit('submit', 'تسجيل دخول', css_class='btn btn-primary login-button'),

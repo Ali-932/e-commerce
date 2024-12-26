@@ -282,13 +282,13 @@
 
                         const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
                         password.setAttribute('type', type);
-
-                        if (this.firstChild.classList.contains('bi-eye-slash')) {
-                            this.firstChild.classList.remove('bi-eye-slash')
-                            this.firstChild.classList.add('bi-eye');
+                        console.log(this.firstChild.classList)
+                        if (this.firstChild.classList.contains('fa-eye-slash')) {
+                            this.firstChild.classList.remove('fa-eye-slash')
+                            this.firstChild.classList.add('fa-eye');
                         } else {
-                            this.firstChild.classList.remove('bi-eye');
-                            this.firstChild.classList.add('bi-eye-slash');
+                            this.firstChild.classList.remove('fa-eye');
+                            this.firstChild.classList.add('fa-eye-slash');
                         }
                     });
                 }

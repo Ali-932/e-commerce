@@ -39,185 +39,213 @@
                 </form>
             </div><!-- End .header-search -->
             <div class="header-dropdown-link ">
-{#            here we have 2 account header element, one for desktop and the other for mobile#}
+                {#            here we have 2 account header element, one for desktop and the other for mobile#}
                 <div class="d-block d-md-none dropdown cart-dropdown" id="account_header_mobile">
-                    <a
-                            href="{% url 'auth:login' %}"
-                            title="My account"
-                            class="fix_account"
-                    >
+                    {% if user.is_authenticated %}
+                        <div class="fix_account disabled" title="My account"">
                         <div class="icon">
                             <i class="icon-user"></i>
                         </div>
                         <p class="arabic-font">
-                            {% if user.is_authenticated %}
-                                {{ request.user.name }}
-                            {% else %}
-                                الحساب
-                            {% endif %}
+                            {{ request.user.name }}
                         </p>
-                    </a>
-                </div>
-                <div class="dropdown cart-dropdown d-none d-md-block" id="account_header">
-                    <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static"
-                       title="My account" class="fix_account">
-                        <div class="icon">
-                            <i class="icon-user"></i>
                         </div>
-                        <p class="arabic-font">
-                            {% if user.is_authenticated %}
-                                {{ request.user.name }}
-                            {% else %}
-                                الحساب
-                            {% endif %}
-                        </p></a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown"
-                         style="width: 300px">
-                        <div class="d-flex justify-content-center">
-                            {% if user.is_authenticated %}
-                                <p class="arabic-font">اسم المستخدم: {{ request.user.name }} </p>
-                                </div>
-                                <div class="d-flex justify-content-center mt-4">
-                                    <a
-                                            href="{% url 'auth:logout' %}"
-                                            style="cursor: pointer"
-                                            class="btn btn-outline-primary-2 arabic-font"><span>تسجيل خروج</span><i
-                                            class="icon-long-arrow-right"></i></a>
-                                </div>
-                            {% else %}
-                                <p class="arabic-font"> غير مسجل </p>
-                                </div>
-                                <div class="dropdown-cart-action mt-4">
-                                    <a
-                                            href="#"
-                                            hx-get="{% url 'auth:register' %}"
-                                            hx-target="#main_nav"
-                                            hx-push-url="true"
-                                            hx-select="#main_nav"
-                                            hx-indicator="#main_nav"
-                                            style="cursor: pointer"
-                                            class="btn btn-outline-primary-2 arabic-font"><span>انشئ حساب</span><i
-                                            class="bi bi-file-plus"></i></a>
-                                    <a
-                                            href="#"
-                                            hx-get="{% url 'auth:login' %}"
-                                            hx-target="#main_nav"
-                                            hx-push-url="true"
-                                            hx-select="#main_nav"
-                                            hx-indicator="#main_nav"
-                                            style="cursor: pointer;"
-                                            class="btn btn-outline-primary-2 arabic-font"><span>تسجيل دخول</span><i
-                                            class="bi bi-door-open"></i></a>
+                    {% else %}
+                        <a
+                                href="{% url 'auth:login' %}"
+                                title="My account"
+                                class="fix_account"
+                        >
+                            <div class="icon">
+                                <i class="icon-user"></i>
+                            </div>
+                            <p class="arabic-font">
+                                {% if user.is_authenticated %}
+                                    {{ request.user.name }}
+                                {% else %}
+                                    الحساب
+                                {% endif %}
+                            </p>
+                        </a>
+                    {% endif %}
+            </div>
+            <div class="dropdown cart-dropdown d-none d-md-block" id="account_header">
+                <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static"
+                   title="My account" class="fix_account">
+                    <div class="icon">
+                        <i class="icon-user"></i>
+                    </div>
+                    <p class="arabic-font">
+                        {% if user.is_authenticated %}
+                            {{ request.user.name }}
+                        {% else %}
+                            الحساب
+                        {% endif %}
+                    </p></a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown"
+                     style="width: 300px">
+                    <div class="d-flex justify-content-center">
+                        {% if user.is_authenticated %}
+                            <p class="arabic-font">اسم المستخدم: {{ request.user.name }} </p>
+                            </div>
+                            <div class="d-flex justify-content-center mt-4">
+                                <a
+                                        href="{% url 'auth:logout' %}"
+                                        style="cursor: pointer"
+                                        class="btn btn-outline-primary-2 arabic-font"><span>تسجيل خروج</span><i
+                                        class="icon-long-arrow-right"></i></a>
+                            </div>
+                        {% else %}
+                            <p class="arabic-font"> غير مسجل </p>
+                            </div>
+                            <div class="dropdown-cart-action mt-4">
+                                <a
+                                        href="#"
+                                        hx-get="{% url 'auth:register' %}"
+                                        hx-target="#main_nav"
+                                        hx-push-url="true"
+                                        hx-select="#main_nav"
+                                        hx-indicator="#main_nav"
+                                        style="cursor: pointer"
+                                        class="btn btn-outline-primary-2 arabic-font"><span>انشئ حساب</span><i
+                                        class="bi bi-file-plus"></i></a>
+                                <a
+                                        href="#"
+                                        hx-get="{% url 'auth:login' %}"
+                                        hx-target="#main_nav"
+                                        hx-push-url="true"
+                                        hx-select="#main_nav"
+                                        hx-indicator="#main_nav"
+                                        style="cursor: pointer;"
+                                        class="btn btn-outline-primary-2 arabic-font"><span>تسجيل دخول</span><i
+                                        class="bi bi-door-open"></i></a>
 
-                                </div>
-                            {% endif %}
+                            </div>
+                        {% endif %}
+            </div>
+
+        </div><!-- End .compare-dropdown -->
+
+        <div class="dropdown cart-dropdown" id="dropdown_orders">
+            <a style="cursor: pointer"
+               hx-get="{% url 'orders:view_orders' %}"
+               hx-target="#main_nav"
+               hx-push-url="true"
+               hx-select="#main_nav"
+               hx-indicator="#main_nav"
+               class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
+               aria-expanded="false" data-display="static">
+                <div class="icon">
+                    <i class="fa-solid fa-cube" style="font-size: 29px"></i>
+                    <span class="cart-count">{{ order_total_count }}</span>
                 </div>
+                <p class="arabic-font">الطلبات</p>
+            </a>
+        </div><!-- End .cart-dropdown -->
 
-            </div><!-- End .compare-dropdown -->
+        <div class="dropdown cart-dropdown pl-4 d-none d-md-block {% if total_count|default:0 == 0 %}disabled{% endif %}" id="dropdown_cart">
+            <a style="cursor: pointer"
+               hx-get="{% url 'orders:cart' %}"
+               hx-target="#main_nav"
+               hx-push-url="true"
+               hx-select="#main_nav"
+               hx-indicator="#main_nav"
+               class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
+               aria-expanded="false" data-display="static">
+                <div class="icon">
+                    <i class="icon-shopping-cart"></i>
+                    <span class="cart-count">{{ total_count }}</span>
+                </div>
+                <p class="arabic-font">سلة المشتريات</p>
+            </a>
 
-            <div class="dropdown cart-dropdown" id="dropdown_orders">
-                <a style="cursor: pointer"
-                   hx-get="{% url 'orders:view_orders' %}"
-                   hx-target="#main_nav"
-                   hx-push-url="true"
-                   hx-select="#main_nav"
-                   hx-indicator="#main_nav"
-                   class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
-                   aria-expanded="false" data-display="static">
-                    <div class="icon">
-                        <i class="fa-solid fa-cube" style="font-size: 29px"></i>
-                        <span class="cart-count">{{ order_total_count }}</span>
-                    </div>
-                    <p class="arabic-font">الطلبات</p>
-                </a>
-            </div><!-- End .cart-dropdown -->
+            <div class="dropdown-menu dropdown-menu-right scrollbar-juicy-peach"
+                 style="max-height: 400px; overflow-y: auto;">
+                <div class="dropdown-cart-products hx-disabled">
+                    {% for item in items %}
+                        <div class="product"
+                             style="overflow: visible"
+                        >
+                            <div class="row">
+                                <div class="col-4 p-0">
+                                    <img src="{{ item.item.image.url }}">
+                                </div>
+                                <div class="col-8">
+                                    <h4 class="product-title">
+                                        <a href={% url 'product:view-product' item.item.pk %}>{{ item.item.product }}
+                                            Volume {{ item.item.volume_number }}
+                                            - {{ item.language }}</a>
+                                    </h4>
 
-            <div class="dropdown cart-dropdown pl-4" id="dropdown_cart">
-                <a style="cursor: pointer"
-                   hx-get="{% url 'orders:cart' %}"
-                   hx-target="#main_nav"
-                   hx-push-url="true"
-                   hx-select="#main_nav"
-                   hx-indicator="#main_nav"
-                   class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
-                   aria-expanded="false" data-display="static">
-                    <div class="icon">
-                        <i class="icon-shopping-cart"></i>
-                        <span class="cart-count">{{ total_count }}</span>
-                    </div>
-                    <p class="arabic-font">سلة المشتريات</p>
-                </a>
-
-                <div class="dropdown-menu dropdown-menu-right scrollbar-juicy-peach"
-                     style="max-height: 400px; overflow-y: auto;">
-                    <div class="dropdown-cart-products hx-disabled">
-                        {% for item in items %}
-                            <div class="product"
-                                 style="overflow: visible"
-                            >
-                                <div class="row">
-                                    <div class="col-4 p-0">
-                                        <img src="{{ item.item.image.url }}">
-                                    </div>
-                                    <div class="col-8">
-                                        <h4 class="product-title">
-                                            <a href={% url 'product:view-product' item.item.pk %}>{{ item.item.product }}
-                                                Volume {{ item.item.volume_number }}
-                                                - {{ item.language }}</a>
-                                        </h4>
-
-                                        <span class="cart-product-info arabic-font" dir="ltr">
+                                    <span class="cart-product-info arabic-font" dir="ltr">
                                                     <span class="cart-product-qty"> الكمية :{{ item.quantity }}</span>
                                                     <br>
                                                     IQD السعر :{{ item.price.amount|arabic_intcomma }}
                                                 </span>
-                                    </div>
-                                </div><!-- End .product-cart-details -->
+                                </div>
+                            </div><!-- End .product-cart-details -->
 
-                                <figure class="product-image-container">
-                                    <a href="product.html" class="product-image">
-                                        {#                                                    <img src="assets/images/products/cart/product-1.jpg" alt="product">#}
-                                    </a>
-                                </figure>
-                                <a style="cursor: pointer"
-                                   class="btn-remove"
-                                   title="Remove Product"
-                                   hx-get='{% url 'orders:delete_order' pk=item.id %}'
-                                   hx-swap='innerHTML'
-                                   hx-target="#dropdown_cart"
-                                   hx-select="#dropdown_cart"
-                                   hx-indicator="#dropdown_cart"><i class="icon-close"
-                                ></i></a>
-                            </div><!-- End .product -->
-                        {% endfor %}
-                    </div><!-- End .cart-product -->
+                            <figure class="product-image-container">
+                                <a href="product.html" class="product-image">
+                                    {#                                                    <img src="assets/images/products/cart/product-1.jpg" alt="product">#}
+                                </a>
+                            </figure>
+                            <a style="cursor: pointer"
+                               class="btn-remove"
+                               title="Remove Product"
+                               hx-get='{% url 'orders:delete_order' pk=item.id %}'
+                               hx-swap='outerHTML'
+                               hx-target="#dropdown_cart"
+                               hx-select="#dropdown_cart"
+                               hx-indicator="#dropdown_cart"><i class="icon-close"
+                            ></i></a>
+                        </div><!-- End .product -->
+                    {% endfor %}
+                </div><!-- End .cart-product -->
 
-                    <div class="dropdown-cart-total">
-                        <span class="arabic-font">{% if total_price %}السعر الكلي {% endif %}</span>
+                <div class="dropdown-cart-total">
+                    <span class="arabic-font">{% if total_price %}السعر الكلي {% endif %}</span>
 
-                        <span class="cart-total-price arabic-font">{{ total_price|default:' لا توجد منتجات في السلة'|arabic_intcomma }}
-                            {% if total_price %}IQD{% endif %}</span>
-                    </div><!-- End .dropdown-cart-total -->
+                    <span class="cart-total-price arabic-font">{{ total_price|default:' لا توجد منتجات في السلة'|arabic_intcomma }}
+                        {% if total_price %}IQD{% endif %}</span>
+                </div><!-- End .dropdown-cart-total -->
 
-                    <div class="dropdown-cart-action">
-                        <a href="#" style="cursor: pointer"
-                           hx-get="{% url 'orders:cart' %}"
-                           hx-target="#main_nav"
-                           hx-push-url="true"
-                           hx-select="#main_nav"
-                           hx-indicator="#main_nav"
-                           class="btn btn-outline-primary-2 arabic-font">سلة المشتريات</a>
-                        <a href="#" style="cursor: pointer"
-                           hx-get="{% url 'orders:checkout' %}"
-                           hx-target="#main_nav"
-                           hx-push-url="true"
-                           hx-select="#main_nav"
-                           hx-indicator="#main_nav"
-                           class="btn btn-outline-primary-2 arabic-font"><span>الدفع</span><i
-                                class="icon-long-arrow-right"></i></a>
-                    </div><!-- End .dropdown-cart-total -->
-                </div><!-- End .dropdown-menu -->
-            </div><!-- End .cart-dropdown -->
-        </div>
-    </div><!-- End .header-right -->
+                <div class="dropdown-cart-action">
+                    <a href="#" style="cursor: pointer"
+                       hx-get="{% url 'orders:cart' %}"
+                       hx-target="#main_nav"
+                       hx-push-url="true"
+                       hx-select="#main_nav"
+                       hx-indicator="#main_nav"
+                       class="btn btn-outline-primary-2 arabic-font">سلة المشتريات</a>
+                    <a href="#" style="cursor: pointer"
+                       hx-get="{% url 'orders:checkout' %}"
+                       hx-target="#main_nav"
+                       hx-push-url="true"
+                       hx-select="#main_nav"
+                       hx-indicator="#main_nav"
+                       class="btn btn-outline-primary-2 arabic-font"><span>الدفع</span><i
+                            class="icon-long-arrow-right"></i></a>
+                </div><!-- End .dropdown-cart-total -->
+            </div><!-- End .dropdown-menu -->
+        </div><!-- End .cart-dropdown -->
+        <div class="dropdown cart-dropdown pl-4 d-block d-md-none {% if total_count|default:0 == 0 %}disabled{% endif %}"
+             id="dropdown_cart_mobile">
+            <a style="cursor: pointer"
+               hx-get="{% url 'orders:cart' %}"
+               hx-target="#main_nav"
+               hx-push-url="true"
+               hx-select="#main_nav"
+               hx-indicator="#main_nav"
+               class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
+               aria-expanded="false" data-display="static">
+                <div class="icon">
+                    <i class="icon-shopping-cart"></i>
+                    <span class="cart-count">{{ total_count }}</span>
+                </div>
+                <p class="arabic-font">سلة المشتريات</p>
+            </a>
+        </div><!-- End .cart-dropdown -->
+    </div>
+</div><!-- End .header-right -->
 </div><!-- End .header-middle -->
