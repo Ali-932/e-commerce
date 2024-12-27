@@ -42,14 +42,14 @@
                 {#            here we have 2 account header element, one for desktop and the other for mobile#}
                 <div class="d-block d-md-none dropdown cart-dropdown" id="account_header_mobile">
                     {% if user.is_authenticated %}
-                        <div class="fix_account disabled" title="My account"">
+                        <a class="fix_account disabled" disabled title="My account">
                         <div class="icon">
                             <i class="icon-user"></i>
                         </div>
-                        <p class="arabic-font">
-                            {{ request.user.name }}
+                        <p class="arabic-font" style="white-space: nowrap;">
+                            {{ request.user.name|slice:":15"}}
                         </p>
-                        </div>
+                        </a>
                     {% else %}
                         <a
                                 href="{% url 'auth:login' %}"
@@ -60,11 +60,7 @@
                                 <i class="icon-user"></i>
                             </div>
                             <p class="arabic-font">
-                                {% if user.is_authenticated %}
-                                    {{ request.user.name }}
-                                {% else %}
-                                    الحساب
-                                {% endif %}
+                                الحساب
                             </p>
                         </a>
                     {% endif %}
@@ -143,7 +139,8 @@
             </a>
         </div><!-- End .cart-dropdown -->
 
-        <div class="dropdown cart-dropdown pl-4 d-none d-md-block {% if total_count|default:0 == 0 %}disabled{% endif %}" id="dropdown_cart">
+        <div class="dropdown cart-dropdown pl-4 d-none d-md-block {% if total_count|default:0 == 0 %}disabled{% endif %}"
+             id="dropdown_cart">
             <a style="cursor: pointer"
                hx-get="{% url 'orders:cart' %}"
                hx-target="#main_nav"

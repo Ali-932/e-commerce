@@ -23,23 +23,30 @@ def login_view(request):
             password = log_in_form.cleaned_data['password']
 
             user = authenticate(request, username=username, password=password)
-
+            print(user)
             if user is not None:
                 login(request, user)
                 messages.success(request, 'تم تسجيل الدخول بنجاح')
                 return redirect('home:index')
             else:
                 if User.objects.filter(username=username).exists():
-                    log_in_form.add_error('password', 'كلمة المرور غير صحيحة')
+                    log_in_form.add_error(error='كلمة المرور غير صحيحة', field=None)
                 else:
-                    log_in_form.add_error('username', 'اسم المستخدم غير صحيح')
+                    log_in_form.add_error(error='اسم المستخدم غير صحيح', field=None)
+
             context = {
                 'action': action,
                 'url': url,
                 'form': log_in_form
             }
             return render(request, template, context)
-
+        else:
+            context = {
+                'action': action,
+                'url': url,
+                'form': log_in_form
+            }
+            return render(request, template, context)
     if request.user.is_authenticated:
         return redirect('home:index')
     log_in_form = LoginForm()

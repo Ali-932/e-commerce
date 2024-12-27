@@ -24,6 +24,9 @@
                    hx-select-oob="#main_nav" {# Same as hx select becase this attribute is inhertied from the form
                                                 and it causing problems when clicking on the product pasge#}
                    hx-indicator="#ht-spp, #pagination_pointers, #pagination_pre, #pagination_next"
+                   hx-on::after-request="$(window).scrollTop(0);"
+                   hx-on:click="clearAuthorSelection();"
+
                 >
                     <img src=
                                  {{ volume.image.url }}
@@ -75,9 +78,11 @@
                         >{{ key }} : {{ author }}</a></h2>
                     {% endfor %}
                 </div>
-                <div class="product-cat my-2 scrollbar-juicy-peach text-muted" style="height: 50px; overflow: auto; opacity: 90%">
-                    <a>{% if volume.product.demographics %}{{ volume.product.demographics|remove_brackets }} | {% endif %}
-                        {% if volume.product.themes %}{{ volume.product.themes|remove_brackets }} | {% endif %} 
+                <div class="product-cat my-2 scrollbar-juicy-peach text-muted"
+                     style="height: 50px; overflow: auto; opacity: 90%">
+                    <a>{% if volume.product.demographics %}{{ volume.product.demographics|remove_brackets }}
+                        | {% endif %}
+                        {% if volume.product.themes %}{{ volume.product.themes|remove_brackets }} | {% endif %}
                         {% if volume.product.genres %}{{ volume.product.genres|remove_brackets }}{% endif %}</a>
                 </div><!-- End .product-cat -->
                 <div class="ratings-container ratings-container-sm row align-items-center justify-content-center">

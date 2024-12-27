@@ -4,25 +4,26 @@
 
 <html lang="en">
 {% progressive_web_app_meta %}
-    
-    <body>
+
+<button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+
+<body>
+
     {% include 'abstract/includes/upper/header.html' %}
 
 
-        {% include 'abstract/includes/pwa-popup.html' %}
-        {% include 'abstract/includes/upper/page header.html' with nav_ad=nav_ad nav_num=menu_num items=items authors=authors %}
-        <div id="main_nav" class="hx-disabled">
-            {% block content %}
-            {% endblock %}
-        </div>
-        {% include 'abstract/includes/footer.html' %}
-    </div><!-- End .page-wrapper -->
-
-    <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+    {% include 'abstract/includes/pwa-popup.html' %}
+    {% include 'abstract/includes/upper/page header.html' with nav_ad=nav_ad nav_num=menu_num items=items authors=authors %}
+    <div id="main_nav" class="hx-disabled">
+        {% block content %}
+        {% endblock %}
+    </div>
+    {% include 'abstract/includes/footer.html' %}
 
     <!-- Bottom Navigation Bar -->
     {% include 'abstract/includes/mobile_nav_bar.html' with menu_num=menu_num %}
-    </body>
-    {% include 'abstract/includes/scripts.html' %}
-    {% include 'toasts.html' %}
+
+</body>
+{% include 'abstract/includes/scripts.html' %}
+{% include 'toasts.html' %}
 </html>

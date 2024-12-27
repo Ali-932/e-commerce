@@ -6,7 +6,7 @@
 
     <main class="main" dir="rtl" id="main_single_page">
         <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
-            <div class="container d-flex align-items-center" id="nav_product">
+            <div class="container d-flex align-items-center" id="nav_product" style="align-items: center">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a
                             hx-get="{% url 'product:list-products' %}"
@@ -247,7 +247,8 @@
                 <h2 class="title text-center my-5 arabic-font">مجلدات متشابهة</h2><!-- End .title text-center -->
                 <div id="myCarousel" class="owl-carousel owl-simple carousel-with-shadow" data-toggle="owl" dir="ltr"
                      data-owl-options='{
-                            "nav": true,
+{#                     nav is false here since it will create an arrow to the right and destroy the reponsivness#}
+                            "nav": false,
                             "dots": true,
                             "loop": true,
                             "responsive": {
