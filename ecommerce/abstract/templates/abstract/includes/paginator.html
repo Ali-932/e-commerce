@@ -46,7 +46,7 @@
                   :key="page">
             <li class="page-item"
                 :class="{'active': currentPageA === page}"
-                x-show="currentPageA === page || (currentPageA !== page && page>(currentPageA - 4) && page<(currentPageA + 4))"
+                x-show="currentPageA === page || (currentPageA !== page && page>(currentPageA - 2) && page<(currentPageA + 3))"
             >
                 <a class="page-link hx-disabled included"
                    style="cursor: pointer"
