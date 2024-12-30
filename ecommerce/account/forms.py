@@ -84,7 +84,10 @@ class RegisterForm(forms.ModelForm):
 
         if password and confirm_password and password != confirm_password:
             raise forms.ValidationError("كلمتا المرور غير متطابقتين.")
-        validate_password(password)
+        try:
+            validate_password(password)
+        except Exception as e:
+            raise forms.ValidationError(e)
         return cleaned_data
 
     def save(self, commit=True):

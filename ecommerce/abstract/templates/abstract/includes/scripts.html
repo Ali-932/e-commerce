@@ -123,7 +123,7 @@
     // Store the Owl Carousel configuration in a variable
     var owlCarouselOptions = {
         // Add your carousel options here
-        nav: true,
+        nav: false,
         dots: true,
         loop: true,
         {#autoWidth: true,#}
@@ -326,9 +326,13 @@
             const messageContainer = getErrorElement(password1);
             const passwordLength = password1.value.length;
             let message = '';
-
+            const numericPattern = /^[0-9]+$/;
             if (passwordLength < 8) {
                 message = 'لابد ان يكون الرمز السري عل اقل 8 احرف.';
+            }
+            if (numericPattern.test(password1.value)){
+                console.log('here')
+                message = 'لابد ان يحتوي الرمز السري على احرف'
             }
             if (message) {
                 displayError(password1, message);

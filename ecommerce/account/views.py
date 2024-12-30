@@ -85,6 +85,13 @@ def register_view(request):
             login(request, user)
             messages.success(request, 'تم تسجيل الدخول بنجاح')
             return redirect('home:index')
+        if sign_up_form.errors:
+            # to avoid (dictionary changed size during iteration)
+            errors_copy = list(sign_up_form.errors.items())
+            for field, errors in errors_copy:
+                if field == '__all__':
+                    continue
+                sign_up_form.add_error(error=errors[0], field=None)
         context = {
             'action': action,
             'url': url,

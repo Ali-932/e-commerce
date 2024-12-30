@@ -8,7 +8,7 @@ from ecommerce.abstract.utlites.paginator import paginated_response, CustomPagin
 from ecommerce.abstract.utlites.products.procces_form import process_form
 from ecommerce.abstract.utlites.search import get_search_results
 from ecommerce.product.froms.main_product_from import ProductForm
-from ecommerce.product.models import Volume, ProductBanner, InventoryProduct, VolumesPackage
+from ecommerce.product.models import Volume, InventoryProduct, VolumesPackage
 
 
 def get_product_list_context(request, view_page='products', category=None):
@@ -31,7 +31,6 @@ def get_product_list_context(request, view_page='products', category=None):
     per_page = int(request.GET.get('per_page', 12))
     page = int(request.GET.get('page', 1))
     pag = request.GET.get('pag', False)
-    product_banner = ProductBanner.objects.filter(active=True).first()
     # items = Volume.objects.none()
 
     if view_page == 'products':
@@ -131,7 +130,6 @@ def get_product_list_context(request, view_page='products', category=None):
         'themes': themes,
         'genres': genres,
         'pagination': paginated_response(items, per_page, page),
-        'product_banner': product_banner,
         'form': form,
         'author': author,
         'menu_num': menu_num,

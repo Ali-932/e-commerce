@@ -139,7 +139,7 @@
             </a>
         </div><!-- End .cart-dropdown -->
 
-        <div class="dropdown cart-dropdown pl-4 d-none d-md-block {% if total_count|default:0 == 0 %}disabled{% endif %}"
+        <div class="dropdown cart-dropdown cart-included pl-4 d-none d-md-block {% if total_count|default:0 == 0 %}disabled{% endif %}"
              id="dropdown_cart">
             <a style="cursor: pointer"
                hx-get="{% url 'orders:cart' %}"
@@ -192,9 +192,9 @@
                                title="Remove Product"
                                hx-get='{% url 'orders:delete_order' pk=item.id %}'
                                hx-swap='outerHTML'
-                               hx-target="#dropdown_cart"
-                               hx-select="#dropdown_cart"
-                               hx-indicator="#dropdown_cart"><i class="icon-close"
+                               hx-target="#dropdown_cart, #dropdown_cart_mobile"
+                               hx-select="#dropdown_cart, #dropdown_cart_mobile"
+                               hx-indicator="#dropdown_cart, #dropdown_cart_mobile"><i class="icon-close"
                             ></i></a>
                         </div><!-- End .product -->
                     {% endfor %}
@@ -226,7 +226,7 @@
                 </div><!-- End .dropdown-cart-total -->
             </div><!-- End .dropdown-menu -->
         </div><!-- End .cart-dropdown -->
-        <div class="dropdown cart-dropdown pl-4 d-block d-md-none {% if total_count|default:0 == 0 %}disabled{% endif %}"
+        <div class="dropdown cart-dropdown cart-included pl-4 d-block d-md-none {% if total_count|default:0 == 0 %}disabled{% endif %}"
              id="dropdown_cart_mobile">
             <a style="cursor: pointer"
                hx-get="{% url 'orders:cart' %}"

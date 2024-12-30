@@ -49,6 +49,7 @@ def product(request, pk: int):
             pk=volume.pk - 1
         ).first() if volume.volume_number > 1 else None
     else:
+        volume = volume.annotate(total_volumes=Max('product__volume__volume_number'))
         volume = volume.first()
     suggestions = Item.objects.filter(
         product__genres__overlap=volume.product.genres

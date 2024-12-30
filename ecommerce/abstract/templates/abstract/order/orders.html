@@ -90,7 +90,7 @@
                                                         hx-select="#main_nav"
                                                         hx-trigger="click"
                                                         >
-                                                            {{ item.item.product }} Volume {{ item.item.volume_number }}  -  {{ item.get_language_display }}  </a>
+                                                            {{ item.item.product }}{% if item.item.type == 'Volume'%} Volume {{ item.item.volume_number }} {% elif item.item.type == 'Package' %} Package {% endif %} -  {{ item.get_language_display }}  </a>
 													</h3><!-- End .product-title -->
 												</div><!-- End .product -->
 											</td>

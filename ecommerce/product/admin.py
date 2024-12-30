@@ -5,7 +5,7 @@ from django.core.files.storage import default_storage
 from django.db import transaction
 
 from .models import InventoryProduct, Volume  # Adjust the import path as necessary
-from .models import Product, ProductBanner, VolumesPackage
+from .models import Product, VolumesPackage
 from ..abstract.utlites.menu_nums import CategoryChoices
 
 from djmoney.money import Money
@@ -121,12 +121,4 @@ admin.site.register(Product, ProductAdmin)
 #
 # admin.site.register(Volume, VolumeAdmin)
 
-class AAdmin(admin.ModelAdmin):
-    # Customize the admin options for your model
-    raw_id_fields = ('volume',)
-    list_display = ('Title', 'Description', 'image', 'active')
-    list_filter = ('Title', 'Description')
-    search_fields = ('Title', 'Description')
 
-
-admin.site.register(ProductBanner, AAdmin)

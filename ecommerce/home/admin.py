@@ -12,6 +12,8 @@ class AAdmin(admin.ModelAdmin):
     list_display = ('Title', 'Description', 'image')
     list_filter = ('Title', 'Description')
     search_fields = ('Title', 'Description')
+    autocomplete_fields = ['volume']
+
 
 
 admin.site.register(AModel, AAdmin)
@@ -22,6 +24,7 @@ class BAdmin(admin.ModelAdmin):
     list_display = ('Title', 'Description', 'image')
     list_filter = ('Title', 'Description')
     search_fields = ('Title', 'Description')
+    autocomplete_fields = ['volume']
 
 
 admin.site.register(BModel, BAdmin)
@@ -32,6 +35,7 @@ class CAdmin(admin.ModelAdmin):
     list_display = ('Title', 'Description', 'image')
     list_filter = ('Title', 'Description')
     search_fields = ('Title', 'Description')
+    autocomplete_fields = ['volume']
 
 
 admin.site.register(CModel, CAdmin)
@@ -41,6 +45,7 @@ class DAdmin(admin.ModelAdmin):
     list_display = ('Title', 'Description', 'image')
     list_filter = ('Title', 'Description')
     search_fields = ('Title', 'Description')
+    autocomplete_fields = ['volume']
 
 admin.site.register(DModel, DAdmin)
 
@@ -78,5 +83,7 @@ class VolumeAAdmin(admin.ModelAdmin):
     list_display = ('Title', 'Description', 'image','active')
     list_filter = ('Title', 'Description')
     search_fields = ('Title', 'Description')
+    autocomplete_fields = ['volume']
+
 admin.site.register(VolumeABanner, VolumeAAdmin)
 admin.site.register(VolumeBBanner, VolumeAAdmin)

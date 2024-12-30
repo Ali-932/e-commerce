@@ -83,9 +83,6 @@
                                             <img id="product-zoom" src="{{ volume.image.url }}"
                                                  alt="product image"
                                                  style="size: 30rem">
-                                            <a href="#" id="btn-product-gallery" class="btn-product-gallery">
-                                                <i class="icon-arrows"></i>
-                                            </a>
                                         </figure><!-- End .product-main-image -->
                                     </div><!-- End .row -->
                                 </div><!-- End .product-gallery -->
@@ -106,13 +103,13 @@
                                     <div class="ratings-container mb-0">
                                         <div>
                                             <div class="force-rtl arabic-font"
-                                                 style="margin-bottom: 1.2rem;font-size: 1.2rem; padding-right: 1rem; opacity: 0.7;">{% score_filter volume.product.score %}</div>
+                                                 style="margin-bottom: 1.2rem;font-size: 1.2rem; padding-right: 1rem; opacity: 0.7;">{% score_filter volume.product.score|default:0 %}</div>
                                             <!-- End .ratings-val -->
                                         </div><!-- End .ratings -->
                                     </div><!-- End .rating-container -->
 
                                     <div class="product-content" style="padding-right: 1rem;">
-                                        <p class="arabic-font force-rtl"> القصة : {{ volume.product.synopsis }} </p>
+                                        <p class="arabic-font force-rtl"> القصة : {{ volume.product.synopsis|default:"لا توجد قصة لهذا العنوان" }} </p>
                                     </div><!-- End .product-content -->
 
                                     <div id="product_form">
@@ -148,7 +145,7 @@
                                     <div class="col-10">
                                         <div class="product-desc-content">
                                             <h3>الخلفية</h3>
-                                            <p>{{ volume.product.background }}</p>
+                                            <p>{{ volume.product.background|default:"لا توجد خلفية لهذا العنوان" }}</p>
                                         </div><!-- End .product-desc-content -->
                                     </div>
                                     <div class="col-1"></div>
@@ -166,9 +163,13 @@
                                             <th>العنوان بالغة اليابانية</th>
                                             <td>{{ volume.product.title_japanese|default:"لا يوجد" }}</td>
                                         </tr>
-                                        <tr>
+                                        <tr> {% if volume.type == 'Package' %}
+                                            <th>المجلدات</th>
+                                            <td>{{ volume.start_volume }} - {{ volume.end_volume }}</td>
+                                            {% else %}
                                             <th>الفصول</th>
                                             <td>{{ volume.start_chapter }} - {{ volume.end_chapter }}</td>
+                                            {% endif %}
                                         </tr>
                                         <tr>
                                             <th>عدد المجلدات الكلية</th>
