@@ -234,3 +234,13 @@ input[type="checkbox"] {
     background-image: radial-gradient(circle at center center, #a00000, #e5e5f7), repeating-radial-gradient(circle at center center, #a00000, #a00000, 10px, transparent 20px, transparent 10px);
     background-blend-mode: multiply;
 }
+
+
+.author-single-product {
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+
+.author-single-product-span{
+        font-size: 1.4rem;
+}

@@ -98,7 +98,6 @@ def get_product_list_context(request, view_page='products', category=None):
                                      ''):  # we get the 'sortby' value from the select value which corresponds to the field name
             items = items.order_by(sortby)
         if author := request.GET.get('author', ''):
-            author = author.split(' ')[0]
             filters &= Q(product__author__icontains=author)
         items = items.filter(filters)
         if pag:

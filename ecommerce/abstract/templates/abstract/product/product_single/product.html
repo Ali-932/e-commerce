@@ -97,7 +97,21 @@
                                         {% endif %}</h3><!-- End .product-title -->
                                     {% for author,key in volume.product.author.items %}
                                         <h2 class="product-title product-title-volume force-rtl arabic-font"
-                                        ><a class="arabic-font" style="font-size: 1.2rem">{{ key }} : {{ author }} </a>
+                                        ><span class="arabic-font author-single-product-span">{{ key }} : </span><a
+                                                href="#"
+                                                class="arabic-font author-single-product"
+                                                hx-get="{% url 'product:list-products' %}"
+                                                hx-swap="innerHTML"
+                                                hx-target="#main_nav"
+                                                hx-select="#main_nav"
+                                                hx-indicator="#products_page"
+                                                hx-push-url="true"
+                                                hx-trigger="click"
+                                                class="included"
+                                                name="author"
+                                                hx-vals='{"author": "{{ author }}"}'
+                                                @click="nav_bar='1'"
+                                        >{{ author }} </a>
                                         </h2>
                                     {% endfor %}
                                     <div class="ratings-container mb-0">
@@ -109,7 +123,8 @@
                                     </div><!-- End .rating-container -->
 
                                     <div class="product-content" style="padding-right: 1rem;">
-                                        <p class="arabic-font force-rtl"> القصة : {{ volume.product.synopsis|default:"لا توجد قصة لهذا العنوان" }} </p>
+                                        <p class="arabic-font force-rtl"> القصة :
+                                            {{ volume.product.synopsis|default:"لا توجد قصة لهذا العنوان" }} </p>
                                     </div><!-- End .product-content -->
 
                                     <div id="product_form">
@@ -166,10 +181,10 @@
                                         <tr> {% if volume.type == 'Package' %}
                                             <th>المجلدات</th>
                                             <td>{{ volume.start_volume }} - {{ volume.end_volume }}</td>
-                                            {% else %}
+                                        {% else %}
                                             <th>الفصول</th>
                                             <td>{{ volume.start_chapter }} - {{ volume.end_chapter }}</td>
-                                            {% endif %}
+                                        {% endif %}
                                         </tr>
                                         <tr>
                                             <th>عدد المجلدات الكلية</th>

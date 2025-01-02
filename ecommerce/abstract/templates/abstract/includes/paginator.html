@@ -32,6 +32,7 @@
                                               toRecordA = currentPageA * perPageA;
                                               nextPageA = currentPageA + 1;
                                               previousPageA = currentPageA - 1;
+                                              scrollToTop();
                                               "
                hx-indicator="#ht-spp, #pagination_pointers, #pagination_pre, #pagination_next"
                hx-select="#products_page"
@@ -59,7 +60,8 @@
                         toRecordA = currentPageA * perPageA;
                         nextPageA = currentPageA + 1;
                         previousPageA = currentPageA - 1;
-                                            "
+                        scrollToTop();
+                "
                    x-text="page"
                    hx-get=?{% query_transform %}"
                    hx-swap="outerHTML"
@@ -89,6 +91,7 @@
                         toRecordA = currentPageA * perPageA;
                         nextPageA = currentPageA + 1;
                         previousPageA = currentPageA - 1;
+                        scrollToTop();
                         "
                hx-indicator="#ht-spp, #pagination_pointers, #pagination_pre, #pagination_next"
                hx-select="#products_page"
