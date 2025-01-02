@@ -87,7 +87,7 @@ def get_product_list_context(request, view_page='products', category=None):
         filters = Q()
         if q := request.GET.get('q', ''):
             items = get_search_results(items, ['product__name', 'product__title_english', 'product__title_arabic',
-                                               'product__title_japanese', 'product__title_synonyms', ], q)
+                                               'product__title_japanese', 'product__title_synonyms','product__author' ], q)
         if demo := request.GET.getlist('demo', ''):
             filters &= Q(product__demographics__overlap=demo)
         if theme := request.GET.getlist('theme', ''):
