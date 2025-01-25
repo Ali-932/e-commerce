@@ -1,0 +1,46 @@
+{% load product_tags %}
+{% load humanize %}
+
+
+<div id="product_view_dev">
+    <div class="hx-disabled product product-7 text-center p-0 product-card {% if active %}active{% endif %}"
+         id="ht-spp">
+        <a class="product-link"
+           hx-get="{% url 'product:view-product' pk=volume.id %}"
+           hx-target="#main_nav"
+           hx-push-url="true"
+           hx-swap="innerHTML scroll:false"
+           hx-select="#main_nav"
+           hx-trigger="click"
+           hx-select-oob="#main_nav"
+           hx-indicator="#ht-spp, #pagination_pointers, #pagination_pre, #pagination_next"
+           hx-on::after-request="$(window).scrollTop(0);"
+           hx-on:click="clearAuthorSelection();"
+        >
+
+            <figure class="product-media2">
+                <img src="{{ volume.image.url }}"
+                     alt="Product"
+                     class="product-image"
+                     style="
+                         aspect-ratio: 9/13;
+                         object-fit: cover;">
+            </figure>
+
+            <div class="product-body">
+                <div class="scroll-content">
+                    <h1 class="product-title" style="font-size: 1.8rem; font-weight: 400;">
+                        {{ volume.product.name }}
+                    </h1>
+                    <h3 class="product-title" style="font-size: 1.4rem; opacity: 0.7; font-weight: 200;">
+                        {% if volume.type == 'Package' %}
+                            Package {{ volume.package_name }}
+                        {% else %}
+                            Volume {{ volume.volume_number }}
+                        {% endif %}
+                    </h3>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>

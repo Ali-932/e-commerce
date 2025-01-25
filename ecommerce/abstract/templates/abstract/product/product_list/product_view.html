@@ -104,9 +104,23 @@
                 <div class="row mb-1">
                     <div class="col-sm-7">
                         {% if volume.type == 'Inventory_Manga' %}
-                            <input type="text" name="language" style="pointer-events: none;"
+                            <input type="text" name="language_display" style="pointer-events: none;"
+                                   value="{{ volume.get_language_display }}"
+                                   class="form-control disabled" id="id_language_display">
+                            <input type="hidden" name="language" style="pointer-events: none;"
                                    value="{{ volume.language }}"
                                    class="form-control disabled" id="id_language">
+                        {% elif volume.type == 'Volume' %}
+                            {% if volume.language == 'BOTH' %}
+                                {{ form.language }}
+                            {% else %}
+                            <input type="text" name="language_display" style="pointer-events: none;"
+                                   value="{{ volume.get_language_display }}"
+                                   class="form-control disabled" id="id_language_display">
+                            <input type="hidden" name="language" style="pointer-events: none;"
+                                   value="{{ volume.language }}"
+                                   class="form-control disabled" id="id_language">
+                            {% endif %}
                         {% else %}
                             {{ form.language }}
                         {% endif %}

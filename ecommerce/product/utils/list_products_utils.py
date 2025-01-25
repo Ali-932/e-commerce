@@ -34,7 +34,7 @@ def get_product_list_context(request, view_page='products', category=None):
     # items = Volume.objects.none()
 
     if view_page == 'products':
-        items = Volume.objects.select_related('product').only('product__name',
+        items = Volume.objects.order_by('product__name').select_related('product').only('product__name',
                                                               'product__genres',
                                                               'product__themes',
                                                               'product__demographics',
@@ -87,7 +87,8 @@ def get_product_list_context(request, view_page='products', category=None):
         filters = Q()
         if q := request.GET.get('q', ''):
             items = get_search_results(items, ['product__name', 'product__title_english', 'product__title_arabic',
-                                               'product__title_japanese', 'product__title_synonyms','product__author' ], q)
+                                               'product__title_japanese', 'product__title_synonyms', 'product__author'],
+                                       q)
         if demo := request.GET.getlist('demo', ''):
             filters &= Q(product__demographics__overlap=demo)
         if theme := request.GET.getlist('theme', ''):
@@ -98,7 +99,21 @@ def get_product_list_context(request, view_page='products', category=None):
                                      ''):  # we get the 'sortby' value from the select value which corresponds to the field name
             items = items.order_by(sortby)
         if author := request.GET.get('author', ''):
-            filters &= Q(product__author__icontains=author)
+            # this part is when filtering on a author  that is both it's studio and it's artiest, so we need to split them
+            # and filter on both
+            if '-' in author:
+                author_list = author.split('-')
+                filters &= Q(product__author__icontains=author_list[0].strip(" "))
+                for i in range(1, len(author_list)):
+                    filters &= Q(product__author__icontains=author_list[i].strip(" "))
+
+            else:
+                author = author.strip("\"")
+                # this when some first and last names of the authors are swaped
+                author_reversed = ' '.join(reversed(author.split(' ')))
+                filters &= Q(product__author__icontains=author)
+                filters |= Q(product__author__icontains=author_reversed)
+
         items = items.filter(filters)
         if pag:
             offset = (page - 1) * per_page

@@ -32,7 +32,7 @@ class Product(models.Model):
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
     favorites = models.IntegerField(null=True, blank=True)
-    score = models.FloatField(null=True, blank=True)
+    score = models.DecimalField(max_digits=4, decimal_places=2)
     title_japanese = models.CharField(max_length=200, null=True, blank=True)
     title_english = models.CharField(max_length=200, null=True, blank=True)
     title_arabic = models.CharField(max_length=200, null=True, blank=True)

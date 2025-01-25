@@ -48,9 +48,12 @@ def product(request, pk: int):
             product=volume.product,
             pk=volume.pk - 1
         ).first() if volume.volume_number > 1 else None
+
+        all_volumes = Volume.objects.filter(product_id=volume.product_id).order_by('volume_number')
     else:
         volume = volume.annotate(total_volumes=Max('product__volume__volume_number'))
         volume = volume.first()
+        all_volumes = volume.volumes.all().order_by('volume_number')
     suggestions = Item.objects.filter(
         product__genres__overlap=volume.product.genres
     ).exclude(pk=volume.pk).select_related('product').order_by('?')[:4]
@@ -63,6 +66,7 @@ def product(request, pk: int):
         'volume_suggestions': suggestions,
         'form': form,
         'menu_num': menu_num,
+        'all_volumes': all_volumes,
         **common
     }
 

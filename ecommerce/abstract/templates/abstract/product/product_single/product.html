@@ -46,7 +46,7 @@
                               hx-select="#single_product_page"
                               hx-push-url="true"
                               hx-indicator="#main_nav"
-                              hx-select-oob="#nav_product"
+                              hx-select-oob="#nav_product, #volumes-sidebar"
                         >التالي</span>
                     </a>
                     <a class="product-pager-link product-pager-prev {% if not prev_volume %} custom_disabled {% endif %}"
@@ -58,7 +58,7 @@
                                   hx-select="#single_product_page"
                                   hx-push-url="true"
                                   hx-indicator="#main_nav"
-                                  hx-select-oob="#nav_product"
+                                  hx-select-oob="#nav_product, #volumes-sidebar"
                             >السابق</span>
                         <i class="icon-angle-left"></i>
                     </a>
@@ -67,201 +67,252 @@
         </nav><!-- End .breadcrumb-nav -->
         <div class="page-content">
             <div class="container">
-                <div id="single_product_page">
-                    <div class="product-details-top">
-                        <div class="row">
-                            <div class="col-1">
-                            </div>
-                            <div class="col-md-4">
-                                <div class="product-gallery product-gallery-vertical">
-                                    <div class="row">
-                                        <figure class="product-main-image" style="
+                <div class="row">
+                    <div class="col-md-9">
+                        <div id="single_product_page">
+                            <div class="product-details-top">
+                                <div class="row">
+                                    <div class="col-1">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="product-gallery product-gallery-vertical">
+                                            <div class="row">
+                                                <figure class="product-main-image" style="
                                         padding-left: 2.5rem;
                                         padding-right: 2.5rem;
                                         flex: none;
                                         max-width: 100%">
-                                            <img id="product-zoom" src="{{ volume.image.url }}"
-                                                 alt="product image"
-                                                 style="size: 30rem">
-                                        </figure><!-- End .product-main-image -->
-                                    </div><!-- End .row -->
-                                </div><!-- End .product-gallery -->
-                            </div><!-- End .col-md-6 -->
-                            <div class="col-md-6">
-                                <div class="product-details">
-                                    <h1 class="product-title force-rtl">{{ volume.product.name }}</h1>
-                                    <!-- End .product-title -->
-                                    <h3 class="product-title force-rtl product-title-volume">
-                                        {% if volume.type == 'Package' %} Package {{ volume.package_name }}
-                                        {% else %}Volume {{ volume.volume_number }}
-                                        {% endif %}</h3><!-- End .product-title -->
-                                    {% for author,key in volume.product.author.items %}
-                                        <h2 class="product-title product-title-volume force-rtl arabic-font"
-                                        ><span class="arabic-font author-single-product-span">{{ key }} : </span><a
-                                                href="#"
-                                                class="arabic-font author-single-product"
-                                                hx-get="{% url 'product:list-products' %}"
-                                                hx-swap="innerHTML"
-                                                hx-target="#main_nav"
-                                                hx-select="#main_nav"
-                                                hx-indicator="#products_page"
-                                                hx-push-url="true"
-                                                hx-trigger="click"
-                                                class="included"
-                                                name="author"
-                                                hx-vals='{"author": "{{ author }}"}'
-                                                @click="nav_bar='1'"
-                                        >{{ author }} </a>
-                                        </h2>
+                                                    <img id="product-zoom" src="{{ volume.image.url }}"
+                                                         alt="product image"
+                                                         style="size: 30rem">
+                                                </figure><!-- End .product-main-image -->
+                                            </div><!-- End .row -->
+                                        </div><!-- End .product-gallery -->
+                                    </div><!-- End .col-md-6 -->
+                                    <div class="col-md-6">
+                                        <div class="product-details">
+                                            <h1 class="product-title force-rtl">{{ volume.product.name }}</h1>
+                                            <!-- End .product-title -->
+                                            <h3 class="product-title force-rtl product-title-volume">
+                                                {% if volume.type == 'Package' %} Package {{ volume.package_name }}
+                                                {% else %}Volume {{ volume.volume_number }}
+                                                {% endif %}</h3><!-- End .product-title -->
+                                            {% for author,key in volume.product.author.items %}
+                                                <h2 class="product-title product-title-volume force-rtl arabic-font"
+                                                >
+                                                    <span class="arabic-font author-single-product-span">{{ key }} : </span><a
+                                                        href="#"
+                                                        class="arabic-font author-single-product"
+                                                        hx-get="{% url 'product:list-products' %}"
+                                                        hx-swap="innerHTML"
+                                                        hx-target="#main_nav"
+                                                        hx-select="#main_nav"
+                                                        hx-indicator="#products_page"
+                                                        hx-push-url="true"
+                                                        hx-trigger="click"
+                                                        class="included"
+                                                        name="author"
+                                                        hx-vals='{"author": "{{ author }}"}'
+                                                        @click="nav_bar='1'"
+                                                >{{ author }} </a>
+                                                </h2>
+                                            {% endfor %}
+                                            <div class="ratings-container mb-0">
+                                                <div>
+                                                    <div class="force-rtl arabic-font"
+                                                         style="margin-bottom: 1.2rem;font-size: 1.2rem; padding-right: 1rem; opacity: 0.7;">{% score_filter volume.product.score|default:0 %}</div>
+                                                    <!-- End .ratings-val -->
+                                                </div><!-- End .ratings -->
+                                            </div><!-- End .rating-container -->
+
+                                            <div class="product-content" style="padding-right: 1rem;">
+                                                <p class="arabic-font force-rtl"> القصة :
+                                                    {{ volume.product.synopsis|default:"لا توجد قصة لهذا العنوان" }} </p>
+                                            </div><!-- End .product-content -->
+
+                                            <div id="product_form">
+                                                {% include 'abstract/product/product_single/product_form.html' %}
+                                            </div>
+                                        </div><!-- End .product-details -->
+                                    </div><!-- End .col-md-6 -->
+                                </div><!-- End .row -->
+                            </div><!-- End .product-details-top -->
+
+                            <div class="product-details-tab row justify-content-center" style="display: contents">
+                                <ul class="nav nav-pills justify-content-center" role="tablist">
+                                    <li class="nav-item col-4 m-0">
+                                        <a class="nav-link active" id="product-desc-link" data-toggle="tab"
+                                           href="#product-desc-tab" role="tab" aria-controls="product-desc-tab"
+                                           aria-selected="true">الوصف</a>
+                                    </li>
+                                    <li class="nav-item col-4 m-0">
+                                        <a class="nav-link" id="product-info-link" data-toggle="tab"
+                                           href="#product-info-tab"
+                                           role="tab" aria-controls="product-info-tab" aria-selected="false">معلومات
+                                            اضافية</a>
+                                    </li>
+                                    <li class="nav-item col-4 m-0">
+                                        <a class="nav-link" id="product-shipping-link" data-toggle="tab"
+                                           href="#product-shipping-tab" role="tab" aria-controls="product-shipping-tab"
+                                           aria-selected="false">معلومات التوصيل</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane fade show active arabic-font force-rtl" id="product-desc-tab"
+                                         role="tabpanel" aria-labelledby="product-desc-link">
+                                        <div class="row">
+                                            <div class="col-1"></div>
+                                            <div class="col-10">
+                                                <div class="product-desc-content">
+                                                    <h3>الخلفية</h3>
+                                                    <p>
+                                                        {{ volume.product.background|default:"لا توجد خلفية لهذا العنوان" }}</p>
+                                                </div><!-- End .product-desc-content -->
+                                            </div>
+                                            <div class="col-1"></div>
+                                        </div>
+                                    </div><!-- .End .tab-pane -->
+                                    <div class="tab-pane fade" id="product-info-tab" role="tabpanel"
+                                         aria-labelledby="product-info-link">
+                                        <div class="product-desc-content arabic-font">
+                                            <table>
+                                                <tr>
+                                                    <th>العنوان بالغة الإنكليزية</th>
+                                                    <td>{{ volume.product.title_english|default:"لا يوجد" }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>العنوان بالغة اليابانية</th>
+                                                    <td>{{ volume.product.title_japanese|default:"لا يوجد" }}</td>
+                                                </tr>
+                                                <tr> {% if volume.type == 'Package' %}
+                                                    <th>المجلدات</th>
+                                                    <td>{{ volume.start_volume }} - {{ volume.end_volume }}</td>
+                                                {% else %}
+                                                    <th>الفصول</th>
+                                                    <td>{{ volume.start_chapter }} - {{ volume.end_chapter }}</td>
+                                                {% endif %}
+                                                </tr>
+                                                <tr>
+                                                    <th>عدد المجلدات الكلية</th>
+                                                    <td>{{ volume.total_volumes }}</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <th>الفئة العمرية</th>
+                                                    <td>
+                                                        {{ volume.product.demographics|remove_brackets|default:"لا يوجد" }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>التصنيف</th>
+                                                    <td>
+                                                        {{ volume.product.genres|remove_brackets|default:"لا يوجد" }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>المواضيع</th>
+                                                    <td>
+                                                        {{ volume.product.themes|remove_brackets|default:"لا يوجد" }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>موعد الاطلاق</th>
+                                                    <td>{{ volume.product.start_date|default:"لا يوجد" }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>موعد الانتهاء</th>
+                                                    <td>{{ volume.product.end_date|default:"غير معلوم" }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>التقييم</th>
+                                                    <td>{{ volume.product.score|default:"لا يوجد" }}</td>
+                                                </tr>
+
+                                            </table>
+                                        </div><!-- End .product-desc-content -->
+                                    </div><!-- .End .tab-pane -->
+
+                                    <div class="tab-pane fade arabic-font force-rtl" id="product-shipping-tab"
+                                         role="tabpanel"
+                                         aria-labelledby="product-shipping-link">
+                                        <div class="row">
+                                            <div class="col-1">
+                                            </div>
+                                            <div class="col-10">
+                                                <div class="product-desc-content">
+                                                    <h3>التوصيل</h3>
+                                                    <p class="arabic-font" style="margin-bottom: 1.8rem;">بالنسبة لخدمة
+                                                        التوصيل،
+                                                        نقدم لك خدمة التوصيل إلى جميع المناطق والمحافظات.<br> نحن نضمن
+                                                        وصول طلبك
+                                                        إليك بأمان وسلامة.
+
+                                                        نحرص على حماية محتويات طلبك أثناء عملية الشحن. لذلك، يتم تغليف
+                                                        الطلب
+                                                        بمادة خاصة تساعد في حماية المنتجات وتقليل أي خطر على سلامتها.
+                                                        يمكنك
+                                                        الاطمئنان إلى أن طلبك سيصل إليك في حالة جيدة ومحمي بشكل جيد.
+
+                                                        عندما يتعلق الأمر بالوقت المستغرق للتوصيل، فإن مدة التوصيل
+                                                        تتراوح عادةً
+                                                        ما بين 5 إلى 8 أيام عمل. يجب أن تعلم أننا نبذل قصارى جهدنا
+                                                        لتوفير
+                                                        التسليم في أسرع وقت ممكن.<br>
+
+                                                        أما بالنسبة للتكلفة، فإن تكلفة التوصيل هي 5 آلاف لجميع
+                                                        المحافظات. يجب أن
+                                                        تراعي أن هذه التكلفة تشمل تغليف الطلب والشحن والتسليم إلى باب
+                                                        منزلك. نحن
+                                                        نسعى دائمًا لتقديم خدمة موثوقة وبأسعار معقولة لجميع عملائنا.
+
+                                                    </p>
+                                                    <h3>سياسة الاستبدال</h3>
+                                                    <p class="arabic-font">
+                                                    </p>سياسة الاستبدال تشمل أي خلل في المنتج، سواء في اللغة أو وجود خلل
+                                                    مطبعي.
+                                                    بإمكانك مراسلة الصفحة لعمل طلب استبدال. يُفضل أن يتم الاستبدال في
+                                                    فترة زمنية
+                                                    محددة مقدارها يومان.
+
+                                                </div><!-- End .product-desc-content -->
+                                            </div>
+                                            <div class="col-1">
+                                            </div>
+                                        </div>
+                                    </div><!-- .End .tab-pane -->
+                                </div><!-- End .tab-content -->
+                            </div><!-- End .product-details-tab -->
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="sidebar-scroll" id="volumes-sidebar"
+                             style="height: 100vh; overflow-y: auto; position: sticky; top: 0;">
+                            <div class="p-4">
+                                <div class='text-center text-xl font-bold p-4 mb-2' style="font-size:2.4rem;">
+                                    {% if volume.type == 'Package' %}مجلدات البكج{% else %}
+                                        باقي المجلدات
+                                    {% endif %}
+                                </div>
+
+                                <div class="row g-2">
+                                    {% for other_volume in all_volumes %}
+                                        <div class="col-6 m-0 p-0">
+                                            <div class="bg-light p-2 rounded h-100" dir="ltr" style="background:black;"
+                                            >
+                                                {% if other_volume.pk == volume.pk %}
+                                                    {% include 'abstract/product/product_list/product_view_mini.html' with volume=other_volume active=True %}
+                                                {% else %}
+                                                    {% include 'abstract/product/product_list/product_view_mini.html' with volume=other_volume active=False %}
+                                                {% endif %}
+                                            </div>
+                                        </div>
                                     {% endfor %}
-                                    <div class="ratings-container mb-0">
-                                        <div>
-                                            <div class="force-rtl arabic-font"
-                                                 style="margin-bottom: 1.2rem;font-size: 1.2rem; padding-right: 1rem; opacity: 0.7;">{% score_filter volume.product.score|default:0 %}</div>
-                                            <!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                    </div><!-- End .rating-container -->
-
-                                    <div class="product-content" style="padding-right: 1rem;">
-                                        <p class="arabic-font force-rtl"> القصة :
-                                            {{ volume.product.synopsis|default:"لا توجد قصة لهذا العنوان" }} </p>
-                                    </div><!-- End .product-content -->
-
-                                    <div id="product_form">
-                                        {% include 'abstract/product/product_single/product_form.html' %}
-                                    </div>
-                                </div><!-- End .product-details -->
-                            </div><!-- End .col-md-6 -->
-                        </div><!-- End .row -->
-                    </div><!-- End .product-details-top -->
-
-                    <div class="product-details-tab row justify-content-center" style="display: contents">
-                        <ul class="nav nav-pills justify-content-center" role="tablist">
-                            <li class="nav-item col-4 m-0">
-                                <a class="nav-link active" id="product-desc-link" data-toggle="tab"
-                                   href="#product-desc-tab" role="tab" aria-controls="product-desc-tab"
-                                   aria-selected="true">الوصف</a>
-                            </li>
-                            <li class="nav-item col-4 m-0">
-                                <a class="nav-link" id="product-info-link" data-toggle="tab" href="#product-info-tab"
-                                   role="tab" aria-controls="product-info-tab" aria-selected="false">معلومات اضافية</a>
-                            </li>
-                            <li class="nav-item col-4 m-0">
-                                <a class="nav-link" id="product-shipping-link" data-toggle="tab"
-                                   href="#product-shipping-tab" role="tab" aria-controls="product-shipping-tab"
-                                   aria-selected="false">معلومات التوصيل</a>
-                            </li>
-                        </ul>
-                        <div class="tab-content">
-                            <div class="tab-pane fade show active arabic-font force-rtl" id="product-desc-tab"
-                                 role="tabpanel" aria-labelledby="product-desc-link">
-                                <div class="row">
-                                    <div class="col-1"></div>
-                                    <div class="col-10">
-                                        <div class="product-desc-content">
-                                            <h3>الخلفية</h3>
-                                            <p>{{ volume.product.background|default:"لا توجد خلفية لهذا العنوان" }}</p>
-                                        </div><!-- End .product-desc-content -->
-                                    </div>
-                                    <div class="col-1"></div>
                                 </div>
-                            </div><!-- .End .tab-pane -->
-                            <div class="tab-pane fade" id="product-info-tab" role="tabpanel"
-                                 aria-labelledby="product-info-link">
-                                <div class="product-desc-content arabic-font">
-                                    <table>
-                                        <tr>
-                                            <th>العنوان بالغة الإنكليزية</th>
-                                            <td>{{ volume.product.title_english|default:"لا يوجد" }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>العنوان بالغة اليابانية</th>
-                                            <td>{{ volume.product.title_japanese|default:"لا يوجد" }}</td>
-                                        </tr>
-                                        <tr> {% if volume.type == 'Package' %}
-                                            <th>المجلدات</th>
-                                            <td>{{ volume.start_volume }} - {{ volume.end_volume }}</td>
-                                        {% else %}
-                                            <th>الفصول</th>
-                                            <td>{{ volume.start_chapter }} - {{ volume.end_chapter }}</td>
-                                        {% endif %}
-                                        </tr>
-                                        <tr>
-                                            <th>عدد المجلدات الكلية</th>
-                                            <td>{{ volume.total_volumes }}</td>
-                                        </tr>
+                            </div>
+                        </div>
+                    </div>
 
-                                        <tr>
-                                            <th>الفئة العمرية</th>
-                                            <td>{{ volume.product.demographics|remove_brackets|default:"لا يوجد" }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>التصنيف</th>
-                                            <td>{{ volume.product.genres|remove_brackets|default:"لا يوجد" }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>المواضيع</th>
-                                            <td>{{ volume.product.themes|remove_brackets|default:"لا يوجد" }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>موعد الاطلاق</th>
-                                            <td>{{ volume.product.start_date|default:"لا يوجد" }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>موعد الانتهاء</th>
-                                            <td>{{ volume.product.end_date|default:"غير معلوم" }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>التقييم</th>
-                                            <td>{{ volume.product.score|default:"لا يوجد" }}</td>
-                                        </tr>
-
-                                    </table>
-                                </div><!-- End .product-desc-content -->
-                            </div><!-- .End .tab-pane -->
-
-                            <div class="tab-pane fade arabic-font force-rtl" id="product-shipping-tab" role="tabpanel"
-                                 aria-labelledby="product-shipping-link">
-                                <div class="row">
-                                    <div class="col-1">
-                                    </div>
-                                    <div class="col-10">
-                                        <div class="product-desc-content">
-                                            <h3>التوصيل</h3>
-                                            <p class="arabic-font" style="margin-bottom: 1.8rem;">بالنسبة لخدمة التوصيل،
-                                                نقدم لك خدمة التوصيل إلى جميع المناطق والمحافظات.<br> نحن نضمن وصول طلبك
-                                                إليك بأمان وسلامة.
-
-                                                نحرص على حماية محتويات طلبك أثناء عملية الشحن. لذلك، يتم تغليف الطلب
-                                                بمادة خاصة تساعد في حماية المنتجات وتقليل أي خطر على سلامتها. يمكنك
-                                                الاطمئنان إلى أن طلبك سيصل إليك في حالة جيدة ومحمي بشكل جيد.
-
-                                                عندما يتعلق الأمر بالوقت المستغرق للتوصيل، فإن مدة التوصيل تتراوح عادةً
-                                                ما بين 5 إلى 8 أيام عمل. يجب أن تعلم أننا نبذل قصارى جهدنا لتوفير
-                                                التسليم في أسرع وقت ممكن.<br>
-
-                                                أما بالنسبة للتكلفة، فإن تكلفة التوصيل هي 5 آلاف لجميع المحافظات. يجب أن
-                                                تراعي أن هذه التكلفة تشمل تغليف الطلب والشحن والتسليم إلى باب منزلك. نحن
-                                                نسعى دائمًا لتقديم خدمة موثوقة وبأسعار معقولة لجميع عملائنا.
-
-                                            </p>
-                                            <h3>سياسة الاستبدال</h3>
-                                            <p class="arabic-font">
-                                            </p>سياسة الاستبدال تشمل أي خلل في المنتج، سواء في اللغة أو وجود خلل مطبعي.
-                                            بإمكانك مراسلة الصفحة لعمل طلب استبدال. يُفضل أن يتم الاستبدال في فترة زمنية
-                                            محددة مقدارها يومان.
-
-                                        </div><!-- End .product-desc-content -->
-                                    </div>
-                                    <div class="col-1">
-                                    </div>
-                                </div>
-                            </div><!-- .End .tab-pane -->
-                        </div><!-- End .tab-content -->
-                    </div><!-- End .product-details-tab -->
                 </div>
                 <h2 class="title text-center my-5 arabic-font">مجلدات متشابهة</h2><!-- End .title text-center -->
-                <div id="myCarousel" class="owl-carousel owl-simple carousel-with-shadow" data-toggle="owl" dir="ltr"
+                <div id="myCarousel" class="owl-carousel owl-simple carousel-with-shadow" data-toggle="owl"
+                     dir="ltr"
                      data-owl-options='{
 {#                     nav is false here since it will create an arrow to the right and destroy the reponsivness#}
                             "nav": false,
@@ -296,4 +347,32 @@
             </div><!-- End .container -->
         </div><!-- End .page-content -->
     </main><!-- End .main -->
+    <script>
+        // Add this script at the bottom of your template
+        for (eve of ['htmx:afterSwap', 'DOMContentLoaded']) {
+
+            document.addEventListener(eve, function () {
+                const sidebar = document.getElementById('volumes-sidebar');
+                console.log(sidebar.scrollTop)
+
+                // Store scroll position before HTMX request
+                document.body.addEventListener('htmx:beforeRequest', function (evt) {
+                    sessionStorage.setItem('sidebarScrollPosition', sidebar.scrollTop);
+                });
+
+                // Restore scroll position after HTMX request
+                document.body.addEventListener('htmx:afterSettle', function (evt) {
+                    const scrollPosition = sessionStorage.getItem('sidebarScrollPosition');
+                    if (scrollPosition) {
+                        const newSidebar = document.getElementById('volumes-sidebar');
+                        if (newSidebar) {
+                            newSidebar.scrollTop = parseInt(scrollPosition);
+                        }
+                    }
+                });
+            });
+        }
+
+    </script>
 {% endblock %}
+

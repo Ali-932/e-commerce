@@ -7,7 +7,7 @@ from ecommerce.settings import MEDIA_ROOT
 
 
 def find_cover_path(file_name):
-    cover_root = os.path.join(MEDIA_ROOT, 'images/covers')
+    cover_root = os.path.join('covers')
     for filename in os.listdir(cover_root):
         name, ext = os.path.splitext(filename)
         sanitized_new_file_name = sanitize_filename(file_name)

@@ -38,8 +38,9 @@ class InventoryProductMixins(models.Model):
     class Language_CHOICES(models.TextChoices):
         AR = 'AR', 'عربي'
         EN = 'EN', 'انكليزي'
+        BOTH = 'BOTH', 'عربي وانكليزي' # this is not related to inventory products
 
-    language = models.CharField(max_length=2, choices=Language_CHOICES.choices, default=Language_CHOICES.AR)
+    language = models.CharField(max_length=4, choices=Language_CHOICES.choices, default=Language_CHOICES.AR)
     quantity = models.IntegerField(default=0)
     # price = MoneyField(max_digits=14, decimal_places=0, default_currency='IQD', default=5000)
     # created_at = models.DateTimeField(auto_now_add=True)
@@ -58,7 +59,7 @@ class Item(VolumesPackageMixins, VolumeMixins, InventoryProductMixins):
 
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, blank=True, related_name='volume')
     price = MoneyField(max_digits=14, decimal_places=0, default_currency='IQD', default=8000)
-    image = models.ImageField(max_length=300, null=True, blank=True)
+    image = models.ImageField(max_length=300, null=True, blank=True, upload_to='images/covers/')
     thumbnail = models.ImageField(upload_to='thumbnails/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

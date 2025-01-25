@@ -241,6 +241,64 @@ input[type="checkbox"] {
     cursor: pointer;
 }
 
-.author-single-product-span{
-        font-size: 1.4rem;
+.author-single-product-span {
+    font-size: 1.4rem;
+}
+
+
+.product-card {
+    transition: all 0.3s ease;
+    height: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product-card.active {
+    background: linear-gradient(135deg, #ff6b6b, #fe5353);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(254, 83, 83, 0.3);
+}
+
+.product-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.product-link {
+    display: block;
+    cursor: pointer;
+}
+
+.product-media2 img {
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-media2 img {
+    transform: scale(1.03);
+}
+
+.product-body {
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.scroll-content {
+    height: 70px;
+    overflow: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #fe5353 #f0f0f0;
+}
+
+.scroll-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.scroll-content::-webkit-scrollbar-track {
+    background: #f0f0f0;
+}
+
+.scroll-content::-webkit-scrollbar-thumb {
+    background: #fe5353;
+    border-radius: 3px;
 }
