@@ -1,15 +1,150 @@
 {% extends 'abstract/_base.html' %}
-{#{% extends request.htmx|yesno:"abstract/empty.html,abstract/_base.html" %}#}
 
 {% load static %}
 {% load product_tags %}
+{% load simple_menu %}
 {% block content %}
+
+    <style>
+        /* Category Header */
+        .category-master-header {
+            color: #333333;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 2rem 0 1rem;
+            padding-right: 1.5rem;
+            border-right: 5px solid #fd5252;
+            text-align: right;
+            font-family: 'Your Arabic Font', sans-serif;
+        }
+
+        /* Scrollable bar container */
+        .category-bar {
+            display: flex;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 15px 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+        }
+
+        /* Category Section */
+        .category-section {
+            display: inline-flex;
+            flex-direction: column;
+            margin: 0 20px;
+            padding: 0 20px;
+            border-right: 2px solid #eeeeee;
+        }
+
+        .category-section:last-child {
+            border-right: none;
+        }
+
+        /* Section Header */
+        .section-header {
+            color: #fd5252;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            padding: 0 8px;
+            text-align: right;
+            font-family: 'Your Arabic Font', sans-serif;
+        }
+
+        /* Category Items */
+        .category-item {
+            display: inline-block;
+            margin: 4px;
+            padding: 10px 24px;
+            background: #f8f8f8;
+            border: 2px solid #eeeeee;
+            border-radius: 30px;
+            color: #333333;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .category-item:hover {
+            background: #fd5252;
+            color: white;
+            border-color: #fd5252;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(253, 82, 82, 0.2);
+        }
+
+        .category-item.active {
+            background: #333333;
+            border-color: #333333;
+            color: white;
+            box-shadow: 0 4px 12px rgba(51, 51, 51, 0.2);
+        }
+
+        /* Scrollbar Styling */
+        .category-bar::-webkit-scrollbar {
+            height: 8px;
+            background: #f8f8f8;
+        }
+
+        .category-bar::-webkit-scrollbar-thumb {
+            background: #fd5252;
+            border-radius: 4px;
+        }
+    </style>
     <main class="main" id="main_nav_products">
         <div class="container mb-5 banner-css"
              style="position: relative; width: 100%; height: 13rem; align-content: center;">
             <h1 class="page-title arabic-font stroke-text force-center">{{ title }}
             </h1>
         </div>
+        {% generate_menu %}
+
+        {% for item in menus.onesight %}
+            {% if item.num == 1 %}
+                <div dir="rtl">
+                <h2 class="category-master-header">منتجات مطبوعه</h2>
+                <div class="category-bar">
+
+                <button class="category-item included{% if item.url == request.path %} active{% endif %}"
+                        hx-get="{{ item.url }}"
+                        hx-select="#main_nav"
+                        hx-indicator="#main_nav"
+                        hx-swap="innerHTML"
+                        hx-target="#main_nav"
+                        hx-push-url="true"
+                        hx-target="#product_with_pag"
+                        hx-trigger="click"
+                        hx-on::after-request="scrollToTop();"
+                        hx-on:click="clearAuthorSelection();"
+                        name="category">
+                    جميع المنتجات
+                </button>
+
+                {% for child in item.children %}
+                    <button class="category-item included{% if child.url == request.path %} active{% endif %}"
+                            hx-get="{{ child.url }}"
+                            hx-select="#main_nav"
+                            hx-indicator="#main_nav"
+                            hx-swap="innerHTML"
+                            hx-target="#main_nav"
+                            hx-push-url="true"
+                            hx-target="#product_with_pag"
+                            hx-trigger="click"
+                            hx-on::after-request="scrollToTop();"
+                            hx-on:click="clearAuthorSelection();"
+                            name="category">
+                        {{ child.title }}
+                    </button>
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+
+        </div>
+        </div>
+
         <div class="page-content">
             <div class="container">
                 <div class="row">
@@ -81,11 +216,11 @@
                                 </div><!-- End .toolbox-sort -->
                             </div><!-- End .toolbox-right -->
                         </div><!-- End .toolbox -->
-                    {% if volumes|length != 0 %}
-                        {% include 'abstract/product/product_list/product_list_pag.html' %}
-                    {% else %}
-                    {% include 'abstract/product/product_list/empty_products.html' %}
-                    {% endif %}
+                        {% if volumes|length != 0 %}
+                            {% include 'abstract/product/product_list/product_list_pag.html' %}
+                        {% else %}
+                            {% include 'abstract/product/product_list/empty_products.html' %}
+                        {% endif %}
                     </div><!-- End .col-lg-9 -->
                     <aside class="col-lg-3 order-lg-first">
                         <div class="sidebar sidebar-shop">

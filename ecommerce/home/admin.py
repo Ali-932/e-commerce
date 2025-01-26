@@ -5,8 +5,9 @@ from django.contrib import admin
 
 from .models import AModel, BModel, CModel, DModel, Global, VolumeABanner, VolumeBBanner
 from .models import nav_ad
+from unfold.admin import ModelAdmin
 admin.site.site_header = 'Manga Store Admin'
-class AAdmin(admin.ModelAdmin):
+class AAdmin(ModelAdmin):
     # Customize the admin options for your model
     raw_id_fields = ('volume',)
     list_display = ('Title', 'Description', 'image')
@@ -19,7 +20,7 @@ class AAdmin(admin.ModelAdmin):
 admin.site.register(AModel, AAdmin)
 
 
-class BAdmin(admin.ModelAdmin):
+class BAdmin(ModelAdmin):
     raw_id_fields = ('volume',)
     list_display = ('Title', 'Description', 'image')
     list_filter = ('Title', 'Description')
@@ -30,7 +31,7 @@ class BAdmin(admin.ModelAdmin):
 admin.site.register(BModel, BAdmin)
 
 
-class CAdmin(admin.ModelAdmin):
+class CAdmin(ModelAdmin):
     raw_id_fields = ('volume',)
     list_display = ('Title', 'Description', 'image')
     list_filter = ('Title', 'Description')
@@ -40,7 +41,7 @@ class CAdmin(admin.ModelAdmin):
 
 admin.site.register(CModel, CAdmin)
 
-class DAdmin(admin.ModelAdmin):
+class DAdmin(ModelAdmin):
     raw_id_fields = ('volume',)
     list_display = ('Title', 'Description', 'image')
     list_filter = ('Title', 'Description')
@@ -50,7 +51,7 @@ class DAdmin(admin.ModelAdmin):
 admin.site.register(DModel, DAdmin)
 
 
-class NAVAdmin(admin.ModelAdmin):
+class NAVAdmin(ModelAdmin):
     list_display = ('char', 'icon', 'active')
     list_filter = ('char', 'active')
     search_fields = ('char', 'active')
@@ -77,7 +78,7 @@ class VolumeAForm(forms.ModelForm):
             'active'
         )
 
-class VolumeAAdmin(admin.ModelAdmin):
+class VolumeAAdmin(ModelAdmin):
     form = VolumeAForm
     raw_id_fields = ('volume',)
     list_display = ('Title', 'Description', 'image','active')

@@ -249,6 +249,7 @@ USE_S3 = bool(int(os.getenv('USE_S3', False)))
 if USE_S3:
     CORS_ALLOW_ALL_ORIGINS = True
     AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+    AWS_REGION = os.getenv("AWS_REGION")
     AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
     AWS_DEFAULT_ACL = 'public-read'
     AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")

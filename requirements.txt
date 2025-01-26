@@ -18,6 +18,7 @@ charset-normalizer==3.2.0
 click==8.1.3
 colorama==0.4.6
 crispy-bootstrap4==2022.1
+cryptography==44.0.0
 decorator==5.1.1
 dill==0.3.7
 Django==3.2.19
@@ -26,11 +27,15 @@ django-browser-reload==1.10.0
 django-compressor==4.4
 django-crispy-forms==2.0
 django-currentuser==0.5.3
+django-dbbackup==4.2.1
+django-extensions==3.2.3
 django-filter==23.2
 django-htmx==1.16.0
+django-jazzmin==3.0.1
 django-money==3.2.0
 django-ninja==1.3.0
 django-phonenumber-field==7.1.0
+django-pwa==2.0.1
 django-ratelimit==4.1.0
 django-rich==1.6.0
 django-sass==1.1.0
@@ -38,6 +43,7 @@ django-silk==5.0.3
 django-simple-menu==2.1.2.post1
 django-storages==1.14.4
 django-taggit==4.0.0
+django-unfold==0.43.0
 exceptiongroup==1.1.2
 executing==1.2.0
 fuzzywuzzy==0.18.0
@@ -62,6 +68,7 @@ libsass==0.22.0
 loguru==0.7.2
 lxml==4.9.3
 markdown-it-py==3.0.0
+MarkupSafe==3.0.2
 matplotlib-inline==0.1.6
 mdurl==0.1.2
 multiprocess==0.70.15
@@ -90,6 +97,7 @@ pydantic==2.10.2
 pydantic_core==2.27.1
 PyExecJS==1.5.1
 Pygments==2.15.1
+pyOpenSSL==24.3.0
 pyproject_hooks==1.0.0
 PySocks==1.7.1
 python-dateutil==2.8.2
@@ -111,6 +119,7 @@ selenium==4.11.2
 shortuuid==1.0.11
 six==1.16.0
 sniffio==1.3.0
+sorl-thumbnail==12.11.0
 sortedcontainers==2.4.0
 soupsieve==2.4.1
 SQLAlchemy==2.0.36
@@ -127,5 +136,6 @@ tzdata==2023.3
 urllib3==2.0.4
 uuid==1.30
 wcwidth==0.2.6
+Werkzeug==3.1.3
 win32-setctime==1.1.0
 wsproto==1.2.0

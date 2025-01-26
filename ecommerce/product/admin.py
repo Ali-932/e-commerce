@@ -7,14 +7,21 @@ from django.db import transaction
 from .models import InventoryProduct, Volume  # Adjust the import path as necessary
 from .models import Product, VolumesPackage
 from ..abstract.utlites.menu_nums import CategoryChoices
-
+from unfold.admin import ModelAdmin
 from djmoney.money import Money
 
 
+class VolumeForm(forms.ModelForm):
+    class Meta:
+        model = Volume
+        fields = ['product', 'volume_number', 'price', 'start_chapter', 'end_chapter', 'image']
+
 @admin.register(Volume)
-class VolumeAdmin(admin.ModelAdmin):
+class VolumeAdmin(ModelAdmin):
+    form = VolumeForm
     search_fields = ['product__name', 'volume_number']  # Adjust fields based on your needs
     list_display = ['product', 'volume_number', 'price']  # Adjust fields as necessary
+    autocomplete_fields = ['product']
 
 
 class InventoryProductForm(forms.ModelForm):
@@ -29,7 +36,7 @@ class InventoryProductForm(forms.ModelForm):
 
 
 @admin.register(InventoryProduct)
-class InventoryProductAdmin(admin.ModelAdmin):
+class InventoryProductAdmin(ModelAdmin):
     form = InventoryProductForm
     list_display = ["language", "quantity", "price", "volume"]
     list_filter = ["language"]
@@ -49,12 +56,12 @@ class VolumePackageForm(forms.ModelForm):
         }
 
 
-class VolumesPackageAdmin(admin.ModelAdmin):
+class VolumesPackageAdmin(ModelAdmin):
     form = VolumePackageForm
     autocomplete_fields = ('volumes',)  # Enable autocomplete for 'volumes'
     list_display = ["product", "price", "created_at"]
     search_fields = ["product__name"]
-    list_filter = ["product"]
+    # list_filter = ["product"]
 
     @transaction.atomic
     def save_model(self, request, obj, form, change):
@@ -105,7 +112,7 @@ class ProductForm(forms.ModelForm):
         fields = '__all__'
 
 
-class ProductAdmin(admin.ModelAdmin):
+class ProductAdmin(ModelAdmin):
     list_display = ["name", "created_at"]
     search_fields = ["name"]
     form = ProductForm
@@ -114,7 +121,7 @@ class ProductAdmin(admin.ModelAdmin):
 admin.site.register(Product, ProductAdmin)
 
 
-# class VolumeAdmin(admin.ModelAdmin):
+# class VolumeAdmin(ModelAdmin):
 #     list_display = ["product", "volume_number", "price", "created_at"]
 #     search_fields = ["product__name"]
 #     list_filter = ["product"]

@@ -15,13 +15,14 @@ manga_children = [
         url=reverse('product:list-products-manhwa'),
         icon='cart-arrow-up',
         column=1,
-    ),
-    MenuItem(
-        "الكوميك",
-        url=reverse('product:list-products-comic'),
-        icon='file-invoice',
-        column=1,
     )
+    # ,
+    # MenuItem(
+    #     "الكوميك",
+    #     url=reverse('product:list-products-comic'),
+    #     icon='file-invoice',
+    #     column=1,
+    # )
 
 ]
 
