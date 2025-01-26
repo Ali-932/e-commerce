@@ -32,7 +32,7 @@
 }
 
 /* Hide the bottom nav on wider screens */
-@media (min-width: 768px) {
+@media (min-width: 992px) {
     .bottom-nav {
         display: none;
     }
