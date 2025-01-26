@@ -289,6 +289,7 @@ DBBACKUP_STORAGE_OPTIONS = {'location': 'db_backup/'}
 DBBACKUP_POSTGRESQL_OPTIONS = '--no-owner'
 DBBACKUP_POSTGRESQL_PGDUMP_OPTIONS = '--no-owner'
 
+<<<<<<< Updated upstream
 # PWA settings
 
 
@@ -355,3 +356,6 @@ LOCALE_PATHS = (
 )
 
 # RATELIMIT_IP_META_KEY = 'HTTP_X_FORWARDED_FOR'
+=======
+RATELIMIT_IP_META_KEY = 'HTTP_X_FORWARDED_FOR'  
+>>>>>>> Stashed changes
