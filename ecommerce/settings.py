@@ -188,7 +188,7 @@ else:
     DB_PASS = os.getenv('DB_PASS')
     DB_HOST = os.getenv('DB_HOST')
     DB_PORT = os.getenv('DB_PORT')
-
+IS_SERVER = bool(int(os.getenv('IS_SERVER', TRUE)))
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -354,8 +354,6 @@ LANGUAGES = [
 LOCALE_PATHS = (
     BASE_DIR / 'locale',
 )
-
-# RATELIMIT_IP_META_KEY = 'HTTP_X_FORWARDED_FOR'
-=======
-RATELIMIT_IP_META_KEY = 'HTTP_X_FORWARDED_FOR'  
->>>>>>> Stashed changes
+if IS_SERVER:
+    # RATELIMIT_IP_META_KEY = 'HTTP_X_FORWARDED_FOR'
+    RATELIMIT_IP_META_KEY = 'HTTP_X_FORWARDED_FOR'  
