@@ -14,11 +14,11 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument('--bucket', type=str, required=True)
-        parser.add_argument('--prefix', type=str, default='')
+        parser.add_argument('--prefix', type=str, default='media')
         parser.add_argument('--progress-file', default='s3_upload_progress.json')
         parser.add_argument('--workers', type=int, default=10,
                             help='Number of parallel upload threads')
-        parser.add_argument('--multipart-size', type=int, default=25,
+        parser.add_argument('--multipart-size', type=int, default=50,
                             help='Multipart threshold in MB')
 
     def handle(self, *args, **options):
@@ -35,6 +35,7 @@ class Command(BaseCommand):
 
         # Shared progress state
         self.uploaded_files = self.load_progress()
+        print(len(self.uploaded_files))
         self.media_root = settings.MEDIA_ROOT
         print('starting')
         # Configure parallel uploads
@@ -45,7 +46,7 @@ class Command(BaseCommand):
 
         # Collect all files first for accurate progress tracking
         file_queue = self.get_upload_queue()
-
+        print(f'to queue {len(file_queue)}')
         with ThreadPoolExecutor(max_workers=self.workers) as executor:
             futures = []
             for local_path, s3_key in file_queue:
@@ -64,13 +65,20 @@ class Command(BaseCommand):
 
     def get_upload_queue(self):
         queue = []
+        num_of_uploaded = 0
         for root, _, files in os.walk(self.media_root):
+            if 'cache' in root.split(os.sep):
+                continue
             for filename in files:
                 local_path = os.path.join(root, filename)
                 relative_path = os.path.relpath(local_path, self.media_root)
                 s3_key = os.path.join(self.prefix, relative_path).replace('\\', '/')
+                print(s3_key)
                 if s3_key not in self.uploaded_files:
                     queue.append((local_path, s3_key))
+                else:
+                    num_of_uploaded+=1
+        print(num_of_uploaded)
         return queue
 
     def upload_file(self, local_path, s3_key, transfer_config):

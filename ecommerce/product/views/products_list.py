@@ -10,7 +10,7 @@ from ecommerce.settings import MEDIUM_REQUESTS_RATE_LIMIT, HEAVY_REQUESTS_RATE_L
 
 @ratelimit(key='ip', method='POST', rate=LIGHT_REQUESTS_RATE_LIMIT, block=True)
 @ratelimit(key='ip', method='GET', rate=MEDIUM_REQUESTS_RATE_LIMIT, block=True)
-@cache_page(60 * 15)  # Cache for 15 minutes
+# @cache_page(60 * 15)  # Cache for 15 minutes
 def list_products(request):
     path_to_category = {
         reverse('product:list-products-manga'): ('Manga', 'المانجا'),
