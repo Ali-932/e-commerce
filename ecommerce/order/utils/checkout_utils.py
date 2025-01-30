@@ -77,16 +77,9 @@ def order_save_and_modify_address(form, request, initial_address, template):
         Address.user = request.user
         Address.save()
     items = order.items.all()
-    # print(items.values())
-    # sheet_sc = send_order_to_sheet(cleaned_data, order, request.user, items)
-    sheet_sc = 201
     remove_item_if_special_offer(request, items)
-    if sheet_sc == 201:
-        messages.success(request, 'تم ارسال الطلب بنجاح')
-        return redirect('orders:view_orders')
-
-    else:
-        messages.error(request, 'حدث خطأ اثناء ارسال الطلب')
+    messages.success(request, 'تم ارسال الطلب بنجاح')
+    return redirect('orders:view_orders')
 
 
 def send_order_to_sheet(cleaned_data, order, user, items):

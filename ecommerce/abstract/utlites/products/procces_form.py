@@ -1,6 +1,9 @@
+from decimal import Decimal
+
 from django.contrib import messages
 from django.db import transaction
 
+from ecommerce.home.models import Global
 from ecommerce.order.models import Order, OrderItem
 from ecommerce.product.models import Volume, InventoryProduct, Item
 from django.shortcuts import get_object_or_404
@@ -52,6 +55,8 @@ def process_form(request, form, pk=None, form_temp=None, alternative_temp=None):
         order=order
     )
     order_item.quantity = quantity
+    price, discount = _calculate_discount(price)
+    order_item.discount = discount
     order_item.price = price
     if created:
         messages.success(request, 'تم اضافه الطلب بنجاح')
@@ -76,3 +81,10 @@ def _validate_price(cleaned_data, pk):
         raise ValueError('حدثت مشكله اثناء معالجة الطلب')
 
     return form_price
+
+
+def _calculate_discount(price):
+    discount = Global.get_instance().discount
+    discount_value = 1 - discount / 100
+    price *= discount_value
+    return price, discount

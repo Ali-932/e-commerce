@@ -88,3 +88,10 @@ class VolumeAAdmin(ModelAdmin):
 
 admin.site.register(VolumeABanner, VolumeAAdmin)
 admin.site.register(VolumeBBanner, VolumeAAdmin)
+
+
+class GlobalAdmin(admin.ModelAdmin):
+    list_display = ["delivery_price", "delivery_price_outside_baghdad", "discount"]
+
+
+admin.site.register(Global, GlobalAdmin)
