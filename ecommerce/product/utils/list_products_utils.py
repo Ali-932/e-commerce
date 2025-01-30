@@ -34,7 +34,7 @@ def get_product_list_context(request, view_page='products', category=None):
     # items = Volume.objects.none()
 
     if view_page == 'products':
-        items = Volume.objects.order_by('product__name').select_related('product').only('product__name',
+        items = Volume.objects.select_related('product').only('product__name',
                                                               'product__genres',
                                                               'product__themes',
                                                               'product__demographics',
@@ -46,7 +46,6 @@ def get_product_list_context(request, view_page='products', category=None):
                                                               'price_currency',
                                                               )
         title = 'جميع المنتجات'
-
         if category:
             title = category[1]
             items = items.filter(product__type=category[0])
@@ -119,7 +118,6 @@ def get_product_list_context(request, view_page='products', category=None):
             offset = (page - 1) * per_page
             limit = offset + per_page
             items = items[offset:limit]
-
     common = {} if request.htmx else common_views(request)
     if view_page == 'products':
         menu_num = menu_nums.get('products', 1)
@@ -135,7 +133,7 @@ def get_product_list_context(request, view_page='products', category=None):
     themes = {theme[0]: theme[1] for theme in ThemeChoices.choices}
     genres = {genre[0]: genre[1] for genre in GenresChoices.choices}
     template = 'abstract/product/product_list/products_page.html'
-    if items.__len__() == 0 and request.htmx:
+    if not items.exists() and request.htmx:
         template = 'abstract/product/product_list/empty_products.html'
     context = {
         'title': title,

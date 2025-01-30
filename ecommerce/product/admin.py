@@ -33,6 +33,7 @@ class InventoryProductForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         if not self.instance.pk:
             self.fields['price'].initial = Money(5000, 'IQD')
+            self.fields['quantity'].initial = 1
 
 
 @admin.register(InventoryProduct)

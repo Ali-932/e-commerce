@@ -1,6 +1,9 @@
 import re
 
 from django.core.management.base import BaseCommand
+from django.db.models import Q
+from sorl.thumbnail.templatetags.thumbnail import thumbnail
+
 from ecommerce.product.models import *
 import os
 from ecommerce.settings import MEDIA_ROOT
@@ -24,16 +27,19 @@ def sanitize_filename(filename):
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        items = Item.objects.filter(thumbnail__isnull=True)
+        items = Volume.objects.filter(Q(thumbnail__isnull=True) | Q(thumbnail__exact=''))
         print(items)
         for item in items:
             try:
                 print(item.image)
+                print(item.id)
                 image = Image.open(item.image)
                 print(image)
             except FileNotFoundError:
                 print(f"File not found: {item.image}")
-                cover_path = find_cover_path(f'{item.product.name} - {item.volume_number}')
+                continue
+                print(item.image.name)
+                cover_path = find_cover_path(item.image)
                 print(cover_path)
                 if cover_path is None:
                     raise ValueError(f"File not found: {item.product.name} - {item.volume_number}")

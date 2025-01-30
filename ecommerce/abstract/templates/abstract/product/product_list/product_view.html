@@ -29,9 +29,10 @@
 
                 >
                     <img src=
-                                 {{ volume.image.url }}
+                                 {{ volume.thumbnail.url }}
                                  alt="Product"
                          class="product-image"
+                         loading="lazy"
                          style="{% if volume.type == 'Package' %}
                              {#height: 300px;#}
                              {#width: 300px;#}

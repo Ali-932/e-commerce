@@ -77,7 +77,8 @@ CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 COMPRESS_ROOT = BASE_DIR / 'static'
 
-COMPRESS_ENABLED = True
+COMPRESS_ENABLED = False # Compressing is not used yet
+# COMPRESS_OFFLINE = True
 #
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -188,7 +189,7 @@ else:
     DB_PASS = os.getenv('DB_PASS')
     DB_HOST = os.getenv('DB_HOST')
     DB_PORT = os.getenv('DB_PORT')
-IS_SERVER = bool(int(os.getenv('IS_SERVER', TRUE)))
+IS_SERVER = bool(int(os.getenv('IS_SERVER', True)))
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -289,7 +290,6 @@ DBBACKUP_STORAGE_OPTIONS = {'location': 'db_backup/'}
 DBBACKUP_POSTGRESQL_OPTIONS = '--no-owner'
 DBBACKUP_POSTGRESQL_PGDUMP_OPTIONS = '--no-owner'
 
-<<<<<<< Updated upstream
 # PWA settings
 
 

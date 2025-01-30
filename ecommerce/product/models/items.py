@@ -102,9 +102,8 @@ class Volume(Item):
         return f'{self.product.name} - {self.volume_number}'
 
     def save(self, *args, **kwargs):
-        if self.pk is None:
-            if not self.make_thumbnail():
-                raise Exception('Could not create thumbnail')
+        if not self.make_thumbnail():
+            raise Exception('Could not create thumbnail')
         super(Volume, self).save(*args, **kwargs)
 
 
@@ -124,9 +123,8 @@ class VolumesPackage(Item):
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
         self.type = 'Package'
-        if self.pk is None:
-            if not self.make_thumbnail():
-                raise Exception('Could not create thumbnail')
+        if not self.make_thumbnail():
+            raise Exception('Could not create thumbnail')
         super().save(force_insert, force_update, using, update_fields)
 
 
@@ -150,9 +148,8 @@ class InventoryProduct(Item):
         self.volume_number = self.volume.volume_number
         self.start_chapter = self.volume.start_chapter
         self.end_chapter = self.volume.end_chapter
-        if self.pk is None:
-            if not self.make_thumbnail():
-                raise Exception('Could not create thumbnail')
+        if not self.make_thumbnail():
+            raise Exception('Could not create thumbnail')
 
         super().save(*args, **kwargs)
 

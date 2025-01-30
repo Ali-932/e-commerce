@@ -20,7 +20,7 @@ class CustomPaginator(Paginator):
 
 def paginated_response(queryset, per_page=10, page=1, *args):
     try:
-        total_count = len(queryset)
+        total_count = queryset.count()
     except TypeError:
         total_count = 1
     limit = per_page
