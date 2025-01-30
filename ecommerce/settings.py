@@ -20,6 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 envf = os.path.join(BASE_DIR, '.env')
 load_dotenv()
+IS_SERVER = bool(int(os.getenv('IS_SERVER', True)))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -28,6 +29,8 @@ load_dotenv()
 SECRET_KEY = 'django-insecure-a=zj2!)j7o^jfb56m65f@=6zq9n#b!&b0sqd7i)%)5!g07d4)b'
 SPREADSHEET_API = os.getenv('SPREADSHEET_API')
 DEBUG = True
+if IS_SERVER:
+    DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -189,7 +192,6 @@ else:
     DB_PASS = os.getenv('DB_PASS')
     DB_HOST = os.getenv('DB_HOST')
     DB_PORT = os.getenv('DB_PORT')
-IS_SERVER = bool(int(os.getenv('IS_SERVER', True)))
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
