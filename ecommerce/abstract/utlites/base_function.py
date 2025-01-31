@@ -31,18 +31,24 @@ from ecommerce.abstract.utlites.menu_nums import menu_nums
 #     return nav_ad
 from ecommerce.order.models import OrderItem, Order
 from ecommerce.product.models import Volume
+from django.core.cache import cache
+
+from ecommerce.settings import CacheKeys, CACHE_TIMEOUT
 
 
 def common_views(request):
     nav_bar = 0 if request.htmx else NAV.objects.get(active=True) # we only need the nav bar if we are refreshing the page
-    authors = Volume.objects.filter(
-        product__score__gt=8).values('product__author').annotate(max_score=Max('product__score')).order_by('-max_score')[:10]
-    authors = [
-        f"{list(item['product__author'].keys())[0]} - {list(item['product__author'].keys())[1]}"
-        if len(list(item['product__author'].keys())) > 1
-        else f"{list(item['product__author'].keys())[0]}"
-        for item in authors
-    ]
+    authors = cache.get(CacheKeys.AUTHOR_CACHE_KEY)
+    if not authors:
+        authors = Volume.objects.filter(
+            product__score__gt=8).values('product__author').annotate(max_score=Max('product__score')).order_by('-max_score')[:10]
+        authors = [
+            f"{list(item['product__author'].keys())[0]} - {list(item['product__author'].keys())[1]}"
+            if len(list(item['product__author'].keys())) > 1
+            else f"{list(item['product__author'].keys())[0]}"
+            for item in authors
+        ]
+        cache.set(CacheKeys.AUTHOR_CACHE_KEY, authors, CACHE_TIMEOUT)
     if request.user.is_authenticated:
         items = OrderItem.objects.select_related('item', 'order').filter(order__user=request.user, order__active=True)
         items_total_info = items.aggregate(sum=Sum('price'), count=Count('id'))

@@ -11,8 +11,8 @@ from ecommerce.home.models import BModel, AModel, CModel, DModel, VolumeABanner,
 from ecommerce.order.models import Order
 from ecommerce.product.froms.main_product_from import ProductForm
 from ecommerce.product.models import Volume, Item
-from ecommerce.settings import LIGHT_REQUESTS_RATE_LIMIT
-
+from ecommerce.settings import LIGHT_REQUESTS_RATE_LIMIT, CACHE_TIMEOUT, CacheKeys
+from django.core.cache import cache
 
 class RootUrlView(RedirectView):
     def get_redirect_url(self, *args, **kwargs):
@@ -39,10 +39,19 @@ def index(request):
     template = 'abstract/index-20.html'
     menu_num = menu_nums.get('home', 0)
     common = {} if request.htmx else common_views(request)
-    best_sellers_volumes = Volume.objects.exclude(
-        orderitem__order__status=Order.Status_CHOICES.PENDING).annotate(
-        times_ordered=Count('orderitem')).order_by('-times_ordered')[:12]
-    new_release = Item.objects.order_by('-id')[:12]
+
+    best_sellers_volumes = cache.get(CacheKeys.BEST_SELLERS_CACHE_KEY)
+    if not best_sellers_volumes:
+        best_sellers_volumes = Volume.objects.exclude(
+            orderitem__order__status=Order.Status_CHOICES.PENDING).annotate(
+            times_ordered=Count('orderitem')).order_by('-times_ordered')[:12]
+        cache.set(CacheKeys.BEST_SELLERS_CACHE_KEY, best_sellers_volumes, CACHE_TIMEOUT)
+
+    new_release = cache.get(CacheKeys.NEW_RELEASES_CACHE_KEY)
+    if not new_release:
+        new_release = Item.objects.order_by('-id')[:12]
+        cache.set(CacheKeys.NEW_RELEASES_CACHE_KEY, new_release, CACHE_TIMEOUT)
+
 
     context = {
         'pretitle_url': reverse('home:index'),

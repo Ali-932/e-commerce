@@ -31,6 +31,6 @@ urlpatterns = [
       path('', include('pwa.urls')),  # You MUST use an empty string as the URL prefix
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-urlpatterns += [path('silk/', include('silk.urls', namespace='silk'))]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-# urlpatterns+= [path('', include('pwa.urls'))]
+if not settings.IS_SERVER:
+      urlpatterns += [path('silk/', include('silk.urls', namespace='silk'))]
