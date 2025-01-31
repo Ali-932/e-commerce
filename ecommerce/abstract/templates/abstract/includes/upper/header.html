@@ -25,13 +25,13 @@
 
     <!-- Main Stylesheet -->
 
-    <link href="{% static 'css/tailwind.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/tailwind.min.css' %}" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
 {#    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.2/dist/tailwind.min.css" rel="stylesheet">#}
 
     <!-- Vendor Stylesheets -->
-    <link rel="stylesheet" href="{% static 'vendor/line-awesome/line-awesome/line-awesome/css/line-awesome.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="{% static 'vendor/line-awesome/line-awesome/line-awesome/css/line-awesome.min.css' %}" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link href="{% static 'css/style.min.css' %}" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
 
     <!-- Plugin Stylesheets -->
     <link rel="stylesheet" href="{% static 'css/plugins/magnific-popup/magnific-popup.css' %}">
@@ -43,18 +43,18 @@
     <!-- External Stylesheets -->
     <link rel="stylesheet" href="{% static 'css/meterial_icons.css' %}">
 {#    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">#}
-    <link rel="stylesheet" href="{% static 'css/font_awesome/css/all.min.css' %}">
+    <link href="{% static 'css/font_awesome/css/all.min.css' %}" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
 {#    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">#}
 
     <!-- Custom Stylesheets -->
-    <link href="{% static 'css/custom css/features.css' %}" rel="stylesheet">
-    <link href="{% static 'css/custom css/font.css' %}" rel="stylesheet">
-    <link href="{% static 'css/custom css/lower_header.css' %}" rel="stylesheet">
-    <link href="{% static 'css/custom css/banner.css' %}" rel="stylesheet">
-    <link href="{% static 'css/custom css/quality_rep.css' %}" rel="stylesheet">
-    <link href="{% static 'css/custom css/order_page.css' %}" rel="stylesheet">
-    <link href="{% static 'css/custom css/footer.css' %}" rel="stylesheet">
-    <link href="{% static 'css/custom css/mobile_nav.css' %}" rel="stylesheet">
+    <link href="{% static 'css/custom css/features.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/custom css/font.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/custom css/lower_header.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/custom css/banner.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/custom css/quality_rep.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/custom css/order_page.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/custom css/footer.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/custom css/mobile_nav.min.css' %}" rel="stylesheet">
     <!-- Additional External Stylesheets -->
 {#    <link rel='stylesheet' href='{% static 'css/bootstrap-icons.css' %}'>#}
 {#    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css'>#}
@@ -67,9 +67,9 @@
     <link rel="stylesheet" href="{% static 'css/plugins/owl-carousel/owl.carousel.css' %}">
     <link rel='stylesheet' href='{% static 'css/flickity.min.css' %}'>
 {#    <link rel='stylesheet' href='https://unpkg.com/flickity@2/dist/flickity.min.css'>#}
-    <link href="{% static 'css/custom css/products.css' %}" rel="stylesheet">
-    <link href="{% static 'css/custom css/singe_product.css' %}" rel="stylesheet">
+    <link href="{% static 'css/custom css/products.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/custom css/singe_product.min.css' %}" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/plugins/nouislider/nouislider.css' %}">
-    <link rel="stylesheet" href="{% static 'css/custom css/custom_root.css' %}">
-    <link rel="stylesheet" href="{% static 'css/custom css/toasts.css' %}">
+    <link rel="stylesheet" href="{% static 'css/custom css/custom_root.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/custom css/toasts.min.css' %}">
 </head>
