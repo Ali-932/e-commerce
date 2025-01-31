@@ -15,7 +15,6 @@
     } else {
       obj[key] = value;
     }
-
     return obj;
   }
 

@@ -10,7 +10,6 @@ $(document).ready(function () {
     var $searchWrapper = $('.header-search-wrapper'),
     	$body = $('body'),
         $searchToggle = $('.search-toggle');
-
 	$searchToggle.on('click', function (e) {
 		$searchWrapper.toggleClass('show');
 		$(this).toggleClass('active');

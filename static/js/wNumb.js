@@ -11,7 +11,6 @@
         module.exports = factory();
 
     } else {
-
         // Browser globals
         window.wNumb = factory();
     }
