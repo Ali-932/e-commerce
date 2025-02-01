@@ -2,7 +2,6 @@
 from django.shortcuts import render
 from django.urls import reverse
 from django_ratelimit.decorators import ratelimit
-from silk.profiling.profiler import silk_profile
 from django.views.decorators.cache import cache_page
 from ecommerce.product.utils.list_products_utils import get_product_list_context
 from ecommerce.settings import MEDIUM_REQUESTS_RATE_LIMIT, HEAVY_REQUESTS_RATE_LIMIT, LIGHT_REQUESTS_RATE_LIMIT
