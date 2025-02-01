@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 
 
 # Create your models here.
@@ -22,11 +23,15 @@ class AdModel(models.Model):
     link = models.CharField(max_length=100, blank=True, null=True)
     volume = models.OneToOneField('product.Item', on_delete=models.CASCADE, blank=True, null=True)
 
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        if self.active:
+            AdModel.objects.filter(type=self.type).filter(~Q(pk=self.pk)).update(active=False)
+        super(AdModel, self).save(force_insert, force_update, using, update_fields)
+
     class Meta:
         verbose_name = 'Ad'
         verbose_name_plural = 'Ads'
-        unique_together = ['type', 'active']
-
 
 class AModelManger(models.Manager):
     def get_queryset(self):
@@ -100,8 +105,6 @@ class DModel(AdModel):
         super().save(*args, **kwargs)
 
 
-
-
 class VolumeAModelManger(models.Manager):
     def get_queryset(self):
         # Custom logic for querying the model
@@ -120,7 +123,6 @@ class VolumeABanner(AdModel):
         super().save(*args, **kwargs)
 
 
-
 class VolumeBModelManger(models.Manager):
     def get_queryset(self):
         # Custom logic for querying the model
@@ -137,5 +139,3 @@ class VolumeBBanner(AdModel):
     def save(self, *args, **kwargs):
         self.type = 'VB'
         super().save(*args, **kwargs)
-
-

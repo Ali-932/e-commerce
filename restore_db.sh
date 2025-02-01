@@ -19,4 +19,4 @@ EOF
 rm $PGPASSFILE
 
 
-python manage.py dbrestore
+python manage.py dbrestore --no-drop

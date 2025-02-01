@@ -82,8 +82,10 @@ class Item(VolumesPackageMixins, VolumeMixins, InventoryProductMixins):
         self.thumbnail.save(thumbnail.name, thumbnail, save=False)
         return True
 
-    # def __str__(self):
-    #     return f'{self.product.name} - {self.volume_number}'
+    def __str__(self):
+        if self.type == 'Package':
+            return f'{self.product.name} - {self.package_name}'
+        return f'{self.product.name} - {self.volume_number}'
 
 class VolumeManger(models.Manager):
     def get_queryset(self):

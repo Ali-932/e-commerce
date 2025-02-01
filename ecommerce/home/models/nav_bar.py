@@ -10,7 +10,6 @@ class nav_ad(models.Model):
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
-        print('here saving')
-        if self.active == True:
+        if self.active:
             nav_ad.objects.filter(~Q(pk=self.pk)).update(active=False)
         super(nav_ad, self).save(force_insert, force_update, using, update_fields)

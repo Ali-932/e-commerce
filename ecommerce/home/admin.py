@@ -14,7 +14,7 @@ admin.site.site_header = 'Manga Store Admin'
 class AAdmin(ModelAdmin):
     # Customize the admin options for your model
     raw_id_fields = ('volume',)
-    list_display = ('Title', 'Description', 'image')
+    list_display = ('Title', 'Description', 'active')
     list_filter = ('Title', 'Description')
     search_fields = ('Title', 'Description')
     autocomplete_fields = ['volume']
@@ -25,7 +25,7 @@ admin.site.register(AModel, AAdmin)
 
 class BAdmin(ModelAdmin):
     raw_id_fields = ('volume',)
-    list_display = ('Title', 'Description', 'image')
+    list_display = ('Title', 'Description', 'active')
     list_filter = ('Title', 'Description')
     search_fields = ('Title', 'Description')
     autocomplete_fields = ['volume']
@@ -35,8 +35,7 @@ admin.site.register(BModel, BAdmin)
 
 
 class CAdmin(ModelAdmin):
-    raw_id_fields = ('volume',)
-    list_display = ('Title', 'Description', 'image')
+    list_display = ('Title', 'Description', 'active')
     list_filter = ('Title', 'Description')
     search_fields = ('Title', 'Description')
     autocomplete_fields = ['volume']
@@ -47,7 +46,7 @@ admin.site.register(CModel, CAdmin)
 
 class DAdmin(ModelAdmin):
     raw_id_fields = ('volume',)
-    list_display = ('Title', 'Description', 'image')
+    list_display = ('Title', 'Description', 'active')
     list_filter = ('Title', 'Description')
     search_fields = ('Title', 'Description')
     autocomplete_fields = ['volume']
