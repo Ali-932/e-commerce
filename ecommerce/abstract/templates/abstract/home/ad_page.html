@@ -53,7 +53,7 @@
                 <!-- End .banner-subtitle -->
                 <h3 class="banner-title text-white force-rtl mr-4"><a class="arabic-font" >{{ adC.Description }}</a></h3>
                 <!-- End .banner-title -->
-                {% if adC.link %}
+                {% if adC.volume %}
                     <a href="{% url 'product:view-product' pk=adC.volume.pk %}" class="btn btn-outline-white-3 banner-link arabic-font">{{ adC.prompt_text }}<i
                             class="icon-long-arrow-right"></i></a>
                 {% endif %}
