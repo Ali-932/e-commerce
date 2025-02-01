@@ -24,7 +24,7 @@ class Order(models.Model):
     class Payment_CHOICES(models.TextChoices):
         CASH = 'كاش', 'cash'
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
-    total_price = MoneyField(max_digits=14, decimal_places=0, default_currency='IQD', default=8000)
+    total_price = MoneyField(max_digits=14, decimal_places=0, default_currency='IQD', default=0)
     total_quantity = models.IntegerField(default=0)
     status = models.CharField(max_length=100, choices=Status_CHOICES.choices, default=Status_CHOICES.PENDING)
     created_at = models.DateTimeField(auto_now_add=True)

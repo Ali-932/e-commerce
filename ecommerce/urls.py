@@ -21,7 +21,7 @@ from django.conf.urls.static import static
 from ecommerce.order.api import api
 
 urlpatterns = [
-      path('admin/', admin.site.urls),
+      path(settings.ADMIN_URL, admin.site.urls),
       path("reload/", include("django_browser_reload.urls")),
       path('', include('ecommerce.home.urls')),
       path('', include('ecommerce.product.urls')),

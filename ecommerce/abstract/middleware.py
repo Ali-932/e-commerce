@@ -14,7 +14,7 @@ class AdminEnglishMiddleware:
 
     def __call__(self, request):
         # Check if the request is for the admin interface
-        if request.path.startswith('/admin/'):
+        if request.path.startswith(f'/{settings.ADMIN_URL}'):
             # Activate English for admin
             translation.activate('en')
             request.LANGUAGE_CODE = 'en'

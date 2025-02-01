@@ -21,17 +21,6 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 IS_SERVER = bool(int(os.getenv('IS_SERVER', True)))
 
-# ---------- PRODUCTION SETTINGS ----------
-if IS_SERVER:
-    DEBUG = False
-    RATELIMIT_IP_META_KEY = 'HTTP_X_FORWARDED_FOR'
-    SECURE_HSTS_SECONDS = 31536000
-    CSRF_COOKIE_SECURE = True
-    SESSION_COOKIE_SECURE = True
-    # SECURE_SSL_REDIRECT = True
-    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-    SECURE_HSTS_PRELOAD = True
-    ALLOWED_HOSTS = ['mangastore1.com', 'www.mangastore1.com']
 
 # ---------- APPLICATION DEFINITION ----------
 INSTALLED_APPS = [
@@ -264,4 +253,19 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CURRENCIES = ('USD', 'IQD')
 mimetypes.add_type("text/css", ".css", True)
 INTERNAL_IPS = ["127.0.0.1"]
-SILKY_IGNORE_PATHS = ['/admin/jsi18n/']
+ADMIN_URL = 'los-pollos-hermanous-admin/'
+SILKY_IGNORE_PATHS = [f'/{ADMIN_URL}/jsi18n/']
+# ---------- PRODUCTION SETTINGS ----------
+if IS_SERVER:
+    DEBUG = False
+    RATELIMIT_IP_META_KEY = 'HTTP_X_FORWARDED_FOR'
+    SECURE_HSTS_SECONDS = 31536000
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+    # SECURE_SSL_REDIRECT = True
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    ALLOWED_HOSTS = ['mangastore1.com', 'www.mangastore1.com']
+    LIGHT_REQUESTS_RATE_LIMIT = '50/m'
+    MEDIUM_REQUESTS_RATE_LIMIT = '25/m'
+    HEAVY_REQUESTS_RATE_LIMIT = '10/m'
