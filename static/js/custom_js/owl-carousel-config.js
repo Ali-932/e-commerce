@@ -22,14 +22,14 @@ var owlCarouselOptions2 = {
     dots: true,
     loop: false,
     responsive: {
-        0:   { items: 2 },
+        0:   { items: 1.5 },
         480: { items: 2 },
         768: { items: 3 },
-        992: { items: 3 },
+        992: { items: 3.5 },
         1200: {
-            items: 3,
+            items: 3.5,
             nav: true,
-            dots: false
+            dots: true
         }
     }
 };
@@ -73,7 +73,7 @@ function initOwlCarousel() {
             if (this.id === 'myCarousel') {
                 $carouselContainer.owlCarousel(owlCarouselOptions);
             } else if (this.id === 'CarouselLatest') {
-                $carouselContainer.owlCarousel(owlCarouselOptions);
+                $carouselContainer.owlCarousel(owlCarouselOptions2);
             } else if (this.id === 'CarouselSideLatest') {
                 $carouselContainer.owlCarousel(owlCarouselOptionsSide);
             }

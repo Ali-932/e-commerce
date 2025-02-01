@@ -9,15 +9,15 @@ from django.utils import timezone
 from django.utils.text import smart_split, unescape_string_literal
 
 
+from functools import reduce
+import operator
+from django.db.models import Q, Value, IntegerField, Case, When
+
 def get_search_results(qs, search_fields, search_term):
     """
-    It takes a queryset, a list of search fields, and a search term, and returns a queryset that is filtered by the search
-    term
-
-    :param qs: The queryset to filter
-    :param search_fields: A list of fields to search
-    :param search_term: The search term entered by the user
-    :return: A queryset
+    Filters the queryset by search_term on provided search_fields and
+    annotates with a score that reflects how well each row matches the search.
+    Orders results by the score in descending order.
     """
 
     def construct_search(field_name):
@@ -29,38 +29,61 @@ def get_search_results(qs, search_fields, search_term):
             return f"{field_name[1:]}__search"
         opts = qs.model._meta
         lookup_fields = field_name.split('__')
-        # Go through the fields, following all relations.
         prev_field = None
         for path_part in lookup_fields:
             if path_part == 'pk':
                 path_part = opts.pk.name
             try:
                 field = opts.get_field(path_part)
-            except FieldDoesNotExist:
-                # Use valid query lookups.
+            except Exception:
+                # In case the field lookup fails, return the lookup as-is.
                 if prev_field and prev_field.get_lookup(path_part):
                     return field_name
             else:
                 prev_field = field
                 if hasattr(field, 'get_path_info'):
-                    # Update opts to follow the relation.
                     opts = field.get_path_info()[-1].to_opts
-        # Otherwise, use the field with icontains.
         return f"{field_name}__icontains"
 
+    # Only proceed if both search_fields and search_term are provided.
     if search_fields and search_term:
-        orm_lookups = [construct_search(str(search_field))
-                       for search_field in search_fields]
-        or_queries=[]
-        for bit in smart_split(search_term):
+        # Prepare lookup expressions from each search_field.
+        orm_lookups = [construct_search(str(field)) for field in search_fields]
+
+        # Split the search_term into bits.
+        # (Assuming smart_split and unescape_string_literal are defined elsewhere.)
+        # gives a generator (demon, slayer)
+        search_bits = smart_split(search_term)
+
+        # Build the Q filter: for each bit, match any of the field lookups.
+        combined_q = Q()
+        for bit in search_bits:
             if bit.startswith(('"', "'")) and bit[0] == bit[-1]:
                 bit = unescape_string_literal(bit)
-            or_queries.extend([Q(**{orm_lookup: bit})
-                          for orm_lookup in orm_lookups])
-            qs = qs.filter(reduce(operator.or_, or_queries))
+            # For this search token, create a disjunction across all lookups.
+            sub_q = reduce(operator.or_, (Q(**{lookup: bit}) for lookup in orm_lookups))
+            combined_q |= sub_q
+        # Filter the queryset.
+        qs = qs.filter(combined_q).distinct()
+
+        # Build a list of score contributions. For every lookup & token combination,
+        # if the condition matches then add a point (or more, if you want weighting).
+        score_cases = []
+        for lookup in orm_lookups:
+            score_cases.append(
+                Case(
+                    When(**{lookup: search_term}, then=Value(1)),
+                    default=Value(0),
+                    output_field=IntegerField()
+                )
+            )
+        # Sum the score contributions.
+        # We use reduce to add up the cases; starting with 0.
+        total_score = reduce(operator.add, score_cases, Value(0))
+        qs = qs.annotate(ft_score=total_score)
+        qs = qs.order_by('-ft_score')
 
     return qs
-
 
 
 

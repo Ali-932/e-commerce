@@ -4,7 +4,7 @@ from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from django.db import transaction
 
-from .models import InventoryProduct, Volume  # Adjust the import path as necessary
+from .models import InventoryProduct, Volume, Item  # Adjust the import path as necessary
 from .models import Product, VolumesPackage
 from ..abstract.utlites.menu_nums import CategoryChoices
 from unfold.admin import ModelAdmin
@@ -19,6 +19,18 @@ class VolumeForm(forms.ModelForm):
 @admin.register(Volume)
 class VolumeAdmin(ModelAdmin):
     form = VolumeForm
+    search_fields = ['product__name', 'volume_number']  # Adjust fields based on your needs
+    list_display = ['product', 'volume_number', 'price']  # Adjust fields as necessary
+    autocomplete_fields = ['product']
+
+class ItemForm(forms.ModelForm):
+    class Meta:
+        model = Item
+        fields = ['product', 'volume_number', 'price', 'start_chapter', 'end_chapter', 'image']
+
+@admin.register(Item)
+class ItemAdmin(ModelAdmin):
+    form = ItemForm
     search_fields = ['product__name', 'volume_number']  # Adjust fields based on your needs
     list_display = ['product', 'volume_number', 'price']  # Adjust fields as necessary
     autocomplete_fields = ['product']

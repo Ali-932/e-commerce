@@ -38,7 +38,8 @@
                              width: 300px;
                              aspect-ratio: 4/5;
                              object-fit: fill;
-                             max-width: fit-content{% else %}
+                             max-width: fit-content;
+                         {% else %}
                              aspect-ratio: 9/13;
                              {#height: 30rem;#}
                              object-fit: cover;
@@ -67,12 +68,13 @@
                         {% endif %}</a>
                     </h1><!-- End .product-title -->
                 </div>
-                {% if volume.type == 'Package' %}
-                    <h2 class="product-title fxs-1 arabic-font" style="direction: rtl;"
-                    ><a class="arabic-font" style="font-size: 1.2rem"
-                    >عدد المجلدات : {{ volume.volume_count }}</a></h2>
-                {% endif %}
                 <div class="scrollbar-juicy-peach" style="height: 45px; overflow: auto;">
+
+                    {% if volume.type == 'Package' %}
+                        <h2 class="product-title fxs-1 arabic-font" style="direction: rtl;"
+                        ><a class="arabic-font" style="font-size: 1.2rem"
+                        >عدد المجلدات : {{ volume.volume_count }}</a></h2>
+                    {% endif %}
                     {% for author,key in volume.product.author.items %}
                         <h2 class="product-title fxs-1 arabic-font" style="direction: rtl;"
                         ><a class="arabic-font" style="font-size: 1.2rem"
@@ -115,12 +117,12 @@
                             {% if volume.language == 'BOTH' %}
                                 {{ form.language }}
                             {% else %}
-                            <input type="text" name="language_display" style="pointer-events: none;"
-                                   value="{{ volume.get_language_display }}"
-                                   class="form-control disabled" id="id_language_display">
-                            <input type="hidden" name="language" style="pointer-events: none;"
-                                   value="{{ volume.language }}"
-                                   class="form-control disabled" id="id_language">
+                                <input type="text" name="language_display" style="pointer-events: none;"
+                                       value="{{ volume.get_language_display }}"
+                                       class="form-control disabled" id="id_language_display">
+                                <input type="hidden" name="language" style="pointer-events: none;"
+                                       value="{{ volume.language }}"
+                                       class="form-control disabled" id="id_language">
                             {% endif %}
                         {% else %}
                             {{ form.language }}

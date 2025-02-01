@@ -49,6 +49,8 @@
                                         hx-swap="innerHTML"
                                         hx-select="#main_nav"
                                         hx-trigger="click"
+                                        hx-on::after-request="scrollToTop();"
+                                        hx-on:click="clearAuthorSelection();"
                                         hx-indicator="#ht-spp, #pagination_pointers, #pagination_pre, #pagination_next"
                                         class="btn-product btn-cart volume-button-banner arabic-font"><span
                                         style="cursor: pointer">شاهد المنتج</span></a>
@@ -59,7 +61,7 @@
 
                 <div class="product-big">
                     <img src="{{ volume_b_banner.image.url }}" loading="lazy" alt="product bg img">
-                    
+
                     <div class="product-wrap">
                         <figure class="product-media">
                             <a>
@@ -86,6 +88,8 @@
                                         hx-swap="innerHTML"
                                         hx-select="#main_nav"
                                         hx-trigger="click"
+                                        hx-on::after-request="scrollToTop();"
+                                        hx-on:click="clearAuthorSelection();"
                                         hx-indicator="#ht-spp, #pagination_pointers, #pagination_pre, #pagination_next"
                                         class="btn-product btn-cart volume-button-banner arabic-font"><span
                                         style="cursor: pointer">شاهد المنتج</span></a>
@@ -118,10 +122,10 @@
                                     "items":3
                                 },
                                 "992": {
-                                    "items":4
+                                    "items":3.5
                                 },
                                 "1200": {
-                                    "items":4,
+                                    "items":3.5,
                                     "nav": true,
                                     "dots": true
                                 }

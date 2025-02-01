@@ -19,8 +19,8 @@ class AdModel(models.Model):
     date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     active = models.BooleanField(default=False)
     prompt_text = models.CharField(max_length=100, blank=True, null=True)
-    link = models.URLField(blank=True, null=True)
-    volume = models.OneToOneField('product.Volume', on_delete=models.CASCADE, blank=True, null=True)
+    link = models.CharField(max_length=100, blank=True, null=True)
+    volume = models.OneToOneField('product.Item', on_delete=models.CASCADE, blank=True, null=True)
 
     class Meta:
         verbose_name = 'Ad'
