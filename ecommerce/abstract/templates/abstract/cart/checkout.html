@@ -11,20 +11,6 @@
                             href="{% url 'orders:checkout' %}"
                             method='post'
                             id="ConfirmForm"
-
-                            {#                            _="on htmx:confirm(issueRequest)#}
-                            {#                            halt the event#}
-                            {#                            call Swal.fire({#}
-                            {#                            title: 'تأكيد',#}
-                            {#                            text:'هل تريد تثبيت طلبك؟',#}
-                            {#                            icon: 'warning',#}
-                            {#                            showCancelButton: true,#}
-                            {#                            confirmButtonText: 'نعم, ثبت الطلب',#}
-                            {#                            confirmButtonColor: '#FE5656',#}
-                            {#                            cancelButtonText: 'لا',#}
-                            {#                            customClass: 'arabic-font p-2 h6'#}
-                            {#                            })#}
-                            {#                            if result.isConfirmed issueRequest()"#}
                     >
                         <div class="row">
                             {% include 'abstract/cart/checkout_form.html' %}

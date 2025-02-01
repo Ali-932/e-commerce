@@ -39,7 +39,8 @@ def checkout_page(request):
                     form, request, initial_address, template
                 )
         elif not form.is_valid():
-            return render(request, template, {'form': form})
+            template = 'abstract/cart/checkout.html'
+            return render(request, template, {'form': form, **common})
 
     context = {
         'form': form,
