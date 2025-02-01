@@ -31,7 +31,7 @@ if IS_SERVER:
     SECURE_SSL_REDIRECT = True
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
-    ALLOWED_HOSTS = ['mangastore1.com', 'www.yourdomain.com']
+    ALLOWED_HOSTS = ['mangastore1.com', 'www.mangastore1.com']
 
 # ---------- APPLICATION DEFINITION ----------
 INSTALLED_APPS = [
