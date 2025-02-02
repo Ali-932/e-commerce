@@ -2,12 +2,13 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
+from unfold.admin import ModelAdmin
 
 from ecommerce.account.models import User
 
 
 @admin.register(User)
-class CustomUserAdmin(UserAdmin):
+class CustomUserAdmin(ModelAdmin):
     list_display = (
         'username',
         'name',
