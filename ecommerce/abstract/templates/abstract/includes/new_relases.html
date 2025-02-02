@@ -25,7 +25,7 @@
 
                     <div class="product-wrap">
                         <figure class="product-media">
-                            <a href="product.html">
+                            <a>
                                 <img src="{{ volume_a_banner.volume.image.url }}" loading="lazy" alt="Product image"
                                      class="product-image">
                             </a>
@@ -33,9 +33,9 @@
 
                         <div class="product-body">
                             <div class="product-cat">
-                                <span class="arabic-font force-rtl d-flex justify-content-start">{{ volume_a_banner.Title }}</span>
+                                <span class="arabic-font force-rtl d-flex justify-content-start text-white">{{ volume_a_banner.Title }}</span>
                             </div><!-- End .product-cat -->
-                            <h3 class="product-title"><a href="product.html">{{ volume_a_banner.volume.product }}
+                            <h3 class="product-title"><a>{{ volume_a_banner.volume.product }}
                                 Volume {{ volume_a_banner.volume.volume_number }}</a></h3><!-- End .product-title -->
                             <div class="product-price">
                                 {{ volume_a_banner.volume.price.amount|arabic_intcomma }} IQD
@@ -74,7 +74,7 @@
                             <div class="product-cat">
                                 <span class="arabic-font force-rtl d-flex justify-content-start">{{ volume_b_banner.Title }}</span>
                             </div><!-- End .product-cat -->
-                            <h3 class="product-title"><a href="product.html">{{ volume_b_banner.volume.product }}
+                            <h3 class="product-title"><a>{{ volume_b_banner.volume.product }}
                                 Volume {{ volume_b_banner.volume.volume_number }}</a></h3><!-- End .product-title -->
                             <div class="product-price">
                                 {{ volume_b_banner.volume.price.amount|arabic_intcomma }} IQD

@@ -13,7 +13,6 @@ admin.site.site_header = 'Manga Store Admin'
 
 class AAdmin(ModelAdmin):
     # Customize the admin options for your model
-    raw_id_fields = ('volume',)
     list_display = ('Title', 'Description', 'active')
     list_filter = ('Title', 'Description')
     search_fields = ('Title', 'Description')
@@ -24,7 +23,6 @@ admin.site.register(AModel, AAdmin)
 
 
 class BAdmin(ModelAdmin):
-    raw_id_fields = ('volume',)
     list_display = ('Title', 'Description', 'active')
     list_filter = ('Title', 'Description')
     search_fields = ('Title', 'Description')
@@ -45,7 +43,6 @@ admin.site.register(CModel, CAdmin)
 
 
 class DAdmin(ModelAdmin):
-    raw_id_fields = ('volume',)
     list_display = ('Title', 'Description', 'active')
     list_filter = ('Title', 'Description')
     search_fields = ('Title', 'Description')
@@ -83,7 +80,6 @@ class VolumeAForm(forms.ModelForm):
 
 class VolumeAAdmin(ModelAdmin):
     form = VolumeAForm
-    raw_id_fields = ('volume',)
     list_display = ('Title', 'Description', 'image', 'active')
     list_filter = ('Title', 'Description')
     search_fields = ('Title', 'Description')

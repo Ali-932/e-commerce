@@ -1,14 +1,18 @@
 {% load static %}
+<style>
+</style>
+
 <div class="row">
     <div class="col-md-12 col-lg-6">
         <div class="banner banner-big banner-overlay">
             <a {% if adA.link %}href="{{ adA.link }}"{% endif %}>
-                <img src="{{ adA.image.url }}"  alt="Banner">
+                <img src="{{ adA.image.url }}" alt="Banner">
             </a>
+            <div class="overlay"></div>
             <div class="banner-content force-rtl row d-flex justify-content-center">
                 <h4 class="banner-subtitle text-white"><a class="arabic-font force-rtl">{{ adA.Title }}</a>
                 </h4><!-- End .banner-subtitle -->
-                <h2 class="banner-title text-white force-rtl"><a class="arabic-font force-rtl" >
+                <h2 class="banner-title text-white force-rtl"><a class="arabic-font force-rtl">
                     {{ adA.Description|slice:"20" }} <br>{{ adA.Description|slice:"20:60" }}</a></h2>
                 <!-- End .banner-title -->
                 {% if adA.prompt_text %}
@@ -28,7 +32,7 @@
                 <h4 class="banner-subtitle text-white force-rtl mr-4"><a class="arabic-font">{{ adB.Title }}</a></h4>
                 <!-- End .banner-subtitle -->
                 <h3 class="banner-title text-white force-rtl mr-4"><a class="arabic-font center-text"
-                                                        >{{ adB.Description }}</a></h3>
+                >{{ adB.Description }}</a></h3>
                 <!-- End .banner-title -->
                 <a
                         {% if adB.link %}
@@ -49,12 +53,13 @@
 
             <div class="banner-content">
                 <h4 class="banner-subtitle text-white d-lg-none d-xl-block force-rtl mr-4"><a class="arabic-font"
-                                                                               >{{ adC.Title }}</a></h4>
+                >{{ adC.Title }}</a></h4>
                 <!-- End .banner-subtitle -->
-                <h3 class="banner-title text-white force-rtl mr-4"><a class="arabic-font" >{{ adC.Description }}</a></h3>
+                <h3 class="banner-title text-white force-rtl mr-4"><a class="arabic-font">{{ adC.Description }}</a></h3>
                 <!-- End .banner-title -->
                 {% if adC.volume %}
-                    <a href="{% url 'product:view-product' pk=adC.volume.pk %}" class="btn btn-outline-white-3 banner-link arabic-font">{{ adC.prompt_text }}<i
+                    <a href="{% url 'product:view-product' pk=adC.volume.pk %}"
+                       class="btn btn-outline-white-3 banner-link arabic-font">{{ adC.prompt_text }}<i
                             class="icon-long-arrow-right"></i></a>
                 {% endif %}
             </div><!-- End .banner-content -->
@@ -67,12 +72,13 @@
 
             <div class="banner-content">
                 <h4 class="banner-subtitle text-white d-lg-none d-xl-block"><a class="arabic-font"
-                                                                               >{{ adD.Title }}</a></h4>
+                >{{ adD.Title }}</a></h4>
                 <!-- End .banner-subtitle -->
                 <h3 class="banner-title text-white force-rtl mr-4"><a class="arabic-font">{{ adD.Description }}</a></h3>
                 <!-- End .banner-title -->
                 {% if adD.link %}
-                    <a href="{{ adD.link }}" class="btn btn-outline-white-3 banner-link arabic-font">{{ adD.prompt_text }}<i
+                    <a href="{{ adD.link }}"
+                       class="btn btn-outline-white-3 banner-link arabic-font">{{ adD.prompt_text }}<i
                             class="icon-long-arrow-right"></i></a>
                 {% endif %}
 

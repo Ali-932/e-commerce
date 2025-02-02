@@ -6,6 +6,7 @@
     box-shadow: none;
 
 }
+
 .btn-outline-white-3:hover,
 .btn-outline-white-3:focus,
 .btn-outline-white-3.focus,
@@ -25,26 +26,31 @@
 }
 
 
-.banner-content-top-custom{
-    top:105px;
+.banner-content-top-custom {
+    top: 105px;
     left: 100px;
 }
 
-.volume-button-banner{
+.volume-button-banner {
     background: transparent !important;
 }
-.volume-button-banner:hover{
+
+.volume-button-banner:hover {
     background: white !important;
 }
 
-.login-button{
+.login-button {
     background: #FE5353 !important;
     border-color: #FE5353 !important;
 
 }
-.volume-button:hover{
+
+.volume-button:hover {
     background: white !important;
     color: #FE5353 !important;
     border-color: #FE5353 !important;
 }
 
+.text-white {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 2);
+}
