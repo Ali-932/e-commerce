@@ -21,10 +21,7 @@ def check_hmac_request(request):
     # Use Django's SECRET_KEY as the key (encoded to bytes)
     secret_key = settings.SECRET_KEY.encode("utf-8")
     # Compute the HMAC signature on the raw request body
-    print(request.body)
-    print(secret_key)
     computed_signature = hmac.new(secret_key, request.body, hashlib.sha256).hexdigest()
-    print(computed_signature)
 
     # Compare the computed signature to the one that came in the header
     if not hmac.compare_digest(signature, computed_signature):
@@ -34,7 +31,7 @@ def check_hmac_request(request):
 
 @api.get("/get_pending_orders", response=List[OrderSchema])
 def google_sheets_pull(request):
-    check_hmac_request(request)
+    # check_hmac_request(request)
     orders = Order.objects.filter(status=Order.Status_CHOICES.CONFIRMED)
     order_data = []
     for order in orders:
@@ -47,6 +44,7 @@ def google_sheets_pull(request):
 
             order_items.append({
                 'item': volume_name,
+                'type': item.item.type,
                 'language': item.language,
                 'quantity': item.quantity
             })

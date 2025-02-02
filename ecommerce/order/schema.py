@@ -6,6 +6,7 @@ from ninja import Schema
 class OrderItemSchema(Schema):
     item: str
     language: str
+    type: str
     quantity: int
 
 
