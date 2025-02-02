@@ -4,6 +4,8 @@ import re
 from django.contrib.humanize.templatetags.humanize import intcomma
 from django.utils.safestring import mark_safe
 
+from ecommerce.home.models import Global
+
 register = template.Library()
 
 @register.filter(name='remove_brackets')
@@ -47,3 +49,34 @@ def arabic_intcomma(value):
     """
     value_with_commas = intcomma(value, use_l10n=False)
     return value_with_commas.replace(",", "،")
+
+
+@register.simple_tag
+def render_discounted_price(price):
+    """
+    Renders the original and discounted prices.
+
+    If there is no discount (discount == 0), the original price is returned.
+    Otherwise, the original price is shown with a strikethrough and the discounted price is highlighted.
+    """
+    discount = Global.get_instance().discount
+    # No discount, return the original price formatted
+    if discount == 0:
+        price = arabic_intcomma(price)
+        return mark_safe(f'<span class="price">{price} IQD</span>')
+
+    # Calculate the discounted price
+    discounted = price * (1 - discount / 100)
+    price = arabic_intcomma(price)
+    discounted = arabic_intcomma(discounted)
+    # Build the HTML string with a non-breaking space between spans
+    html = (
+        f'<span class="original-price" style="text-decoration: line-through; color: red;">'
+        f'IQD {price}'
+        '</span>&nbsp;&nbsp;'
+        f'<span class="discounted-price" style="color: green; font-weight: bold;">'
+        f'IQD {discounted}'
+        '</span>'
+    )
+
+    return mark_safe(html)

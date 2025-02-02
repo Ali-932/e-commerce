@@ -142,10 +142,11 @@
                 <div class="product-price">
                     <div style="display: flex; align-items: center;">
                         <input type="hidden" name="price" id="price_id" value="{{ volume.price.amount }}">
-                        <input type="text"
-                               style="pointer-events: none; width: 50px;"
-                               value="{{ volume.price.amount | arabic_intcomma }}">
-                        <span>IQD</span>
+                        {% render_discounted_price volume.price.amount %}
+{#                        <input type="text"#}
+{#                               style="pointer-events: none; width: 50px;"#}
+{#                               {% render_discounted_price volume.price.amount %}#}
+{#                               value={% render_discounted_price volume.price.amount %}>#}
                     </div>
                 </div><!-- End .product-price -->
             </div><!-- End .product-body -->
