@@ -11,17 +11,16 @@
 <body>
 
 
+{% include 'abstract/includes/pwa-popup.html' %}
+{% include 'abstract/includes/upper/page header.html' with nav_ad=nav_ad nav_num=menu_num items=items authors=authors %}
+<div id="main_nav" class="hx-disabled">
+    {% block content %}
+    {% endblock %}
+</div>
+{% include 'abstract/includes/footer.html' %}
 
-    {% include 'abstract/includes/pwa-popup.html' %}
-    {% include 'abstract/includes/upper/page header.html' with nav_ad=nav_ad nav_num=menu_num items=items authors=authors %}
-    <div id="main_nav" class="hx-disabled">
-        {% block content %}
-        {% endblock %}
-    </div>
-    {% include 'abstract/includes/footer.html' %}
-
-    <!-- Bottom Navigation Bar -->
-    {% include 'abstract/includes/mobile_nav_bar.html' with menu_num=menu_num %}
+<!-- Bottom Navigation Bar -->
+{% include 'abstract/includes/mobile_nav_bar.html' with menu_num=menu_num %}
 
 </body>
 {% include 'abstract/includes/scripts.html' %}

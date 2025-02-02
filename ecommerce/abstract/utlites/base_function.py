@@ -1,11 +1,9 @@
-from django.core.exceptions import ObjectDoesNotExist
-from django.db.models import Sum, Max
-from django.http import HttpRequest
+from django.core.cache import cache
 from django.db.models import Count, F, Window
+from django.db.models import Sum, Max
 from django.db.models.functions import RowNumber
 
 from ecommerce.home.models import nav_ad as NAV, Global
-from ecommerce.abstract.utlites.menu_nums import menu_nums
 # def _common_base_View(request: HttpRequest,
 #                       model,
 #                       query,
@@ -31,17 +29,17 @@ from ecommerce.abstract.utlites.menu_nums import menu_nums
 #     return nav_ad
 from ecommerce.order.models import OrderItem, Order
 from ecommerce.product.models import Volume
-from django.core.cache import cache
-
 from ecommerce.settings import CacheKeys, CACHE_TIMEOUT
 
 
 def common_views(request):
-    nav_bar = 0 if request.htmx else NAV.objects.get(active=True) # we only need the nav bar if we are refreshing the page
+    nav_bar = 0 if request.htmx else NAV.objects.get(
+        active=True)  # we only need the nav bar if we are refreshing the page
     authors = cache.get(CacheKeys.AUTHOR_CACHE_KEY)
     if not authors:
         authors = Volume.objects.filter(
-            product__score__gt=8).values('product__author').annotate(max_score=Max('product__score')).order_by('-max_score')[:10]
+            product__score__gt=8).values('product__author').annotate(max_score=Max('product__score')).order_by(
+            '-max_score')[:10]
         authors = [
             f"{list(item['product__author'].keys())[0]} - {list(item['product__author'].keys())[1]}"
             if len(list(item['product__author'].keys())) > 1
@@ -58,10 +56,10 @@ def common_views(request):
         ))
         order_total_info = orders.aggregate(count=Count('id'))
     else:
-        orders=[]
-        order_total_info = { 'count': 0}
+        orders = []
+        order_total_info = {'count': 0}
         items = []
-        items_total_info= {'sum': 0, 'count': 0}
+        items_total_info = {'sum': 0, 'count': 0}
     glo = Global.get_instance()
     return {
         'items': items,

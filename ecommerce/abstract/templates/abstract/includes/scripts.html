@@ -29,3 +29,15 @@
 <script src="{% static 'js/custom_js/password-toggle.min.js' %}"></script>
 <script src="{% static 'js/custom_js/password-validation.min.js' %}"></script>
 <script src="{% static 'js/custom_js/scroll-to-top.min.js' %}"></script>
+{% if messages %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const messagesData = [
+                {% for message in messages %}
+                    {message: "{{ message|escapejs }}", tags: "{{ message.tags }}"},
+                {% endfor %}
+            ];
+            htmx.trigger(document.body, "messages", {value: messagesData});
+        });
+    </script>
+{% endif %}
