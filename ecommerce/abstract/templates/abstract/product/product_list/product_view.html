@@ -34,11 +34,9 @@
                          class="product-image"
                          loading="lazy"
                          style="{% if volume.type == 'Package' %}
-                             height: 300px;
-                             width: 300px;
-                             aspect-ratio: 4/5;
-                             object-fit: fill;
-                             max-width: fit-content;
+                             aspect-ratio: 9/13;
+                             {#height: 30rem;#}
+                             object-fit: cover;
                          {% else %}
                              aspect-ratio: 9/13;
                              {#height: 30rem;#}

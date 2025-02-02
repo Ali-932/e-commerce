@@ -12,11 +12,9 @@
         <div class="col-6">
             <div class="product-price force-rtl"
                  style="display: flex;margin-bottom: 1.6rem; align-items: center; flex-wrap: nowrap">
-                <span style="margin-left: 0.5rem"> IQD</span>
                 <input type="hidden" name="price" id="price_id" value="{{ volume.price.amount }}">
-                <input type="text"
-                       style="pointer-events: none;"
-                       value="{{ volume.price.amount | arabic_intcomma }}">
+                {% render_discounted_price volume.price.amount %}
+
             </div><!-- End .product-price -->
         </div>
     </div>
