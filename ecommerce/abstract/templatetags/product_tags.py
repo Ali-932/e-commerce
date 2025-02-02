@@ -68,7 +68,7 @@ def render_discounted_price(price):
     # Calculate the discounted price
     discounted = price * (1 - discount / 100)
     price = arabic_intcomma(price)
-    discounted = arabic_intcomma(discounted)
+    discounted = arabic_intcomma(int(discounted))
     # Build the HTML string with a non-breaking space between spans
     html = (
         f'<span class="original-price" style="text-decoration: line-through; color: red;">'
