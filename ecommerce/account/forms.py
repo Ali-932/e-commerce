@@ -14,10 +14,23 @@ class DateInput(forms.DateInput):
     input_type = 'date'
 
 
+def arabic_to_english_numerals(value):
+    arabic_digits = '٠١٢٣٤٥٦٧٨٩'
+    english_digits = '0123456789'
+    translation_table = str.maketrans(arabic_digits, english_digits)
+    return value.translate(translation_table)
+
+class LocalNumberField(forms.CharField):
+    def to_python(self, value):
+        # First, do the normal conversion (strip, etc.)
+        value = super().to_python(value)
+        if value:
+            value = arabic_to_english_numerals(value)
+        return value
 class RegisterForm(forms.ModelForm):
     english_username_validator = RegexValidator(
-        regex=r'^[a-zA-Z0-9_]+$',
-        message="اسم المستخدم يجب أن يكون بالأحرف الإنجليزية والأرقام فقط."
+        regex=r'^[a-zA-Z0-9@._-]+$',
+        message="اسم المستخدم يجب أن يحتوي على أحرف إنجليزية، أرقام، و/أو الرموز مثل: @ . _ -."
     )
 
     class Meta:
@@ -34,9 +47,9 @@ class RegisterForm(forms.ModelForm):
     province = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control'}), choices=ProvinceChoices.choices,
                                  label="المحافظة")
     address1 = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}), label="العنوان")
-    phone_number_1 = forms.CharField(max_length=11, widget=forms.TextInput(attrs={'class': 'form-control'}),
+    phone_number_1 = LocalNumberField(max_length=11, widget=forms.TextInput(attrs={'class': 'form-control'}),
                                      validators=[digits_only, starts_with_07], label="رقم الهاتف الاول")
-    phone_number_2 = forms.CharField(max_length=11, widget=forms.TextInput(attrs={'class': 'form-control'}),
+    phone_number_2 = LocalNumberField(max_length=11, widget=forms.TextInput(attrs={'class': 'form-control'}),
                                      validators=[digits_only, starts_with_07], required=False,
                                      label="رقم الهاتف الثاني")
     email = forms.EmailField(max_length=100, widget=forms.EmailInput(attrs={'class': 'form-control'}), required=False,
@@ -56,9 +69,10 @@ class RegisterForm(forms.ModelForm):
                 Column(
                     'name',
                     'username',
-                    Div(FieldWithButtons('password', StrictButton(content='<i class="fa-solid fa-eye-slash"></i>', type='button',
-                                                                  css_class='btn btn-outline-secondary',
-                                                                  id='password1Button')),
+                    Div(FieldWithButtons('password',
+                                         StrictButton(content='<i class="fa-solid fa-eye-slash"></i>', type='button',
+                                                      css_class='btn btn-outline-secondary',
+                                                      id='password1Button')),
                         ),
                     Div(FieldWithButtons('confirm_password',
                                          StrictButton(content='<i class="fa-solid fa-eye-slash"></i>', type='button',
@@ -81,7 +95,6 @@ class RegisterForm(forms.ModelForm):
         cleaned_data = super().clean()
         password = cleaned_data.get("password")
         confirm_password = cleaned_data.get("confirm_password")
-
         if password and confirm_password and password != confirm_password:
             raise forms.ValidationError("كلمتا المرور غير متطابقتين.")
         try:
@@ -99,13 +112,11 @@ class RegisterForm(forms.ModelForm):
 
 
 class LoginForm(forms.Form):
-    starts_with_07 = RegexValidator(r'^07', 'Field must start with "07".')
-    digits_only = RegexValidator(r'^\d{11}$', 'Field must be exactly 11 digits.')
 
-    username = forms.CharField(max_length=255, widget=forms.TextInput(attrs={'class': 'form-control'}),
+    username = forms.CharField(max_length=255, widget=forms.TextInput(attrs={'class': 'form-control', 'autocomplete': "off"}),
                                label="اسم المستخدم")
     password = forms.CharField(max_length=100,
-                               widget=forms.PasswordInput(attrs={'class': 'form-control', 'id': 'id_password3'}),
+                               widget=forms.PasswordInput(attrs={'class': 'form-control', 'id': 'id_password3', "autocomplete": "new-password"}),
                                label="كلمة المرور")
 
     def __init__(self, *args, **kwargs):
@@ -115,9 +126,10 @@ class LoginForm(forms.Form):
             Row(
                 Column(
                     'username',
-                    Div(FieldWithButtons('password', StrictButton(content='<i class="fa-solid fa-eye-slash"></i>', type='button',
-                                                                  css_class='btn btn-outline-secondary',
-                                                                  id='password3Button')),
+                    Div(FieldWithButtons('password',
+                                         StrictButton(content='<i class="fa-solid fa-eye-slash"></i>', type='button',
+                                                      css_class='btn btn-outline-secondary',
+                                                      id='password3Button')),
                         Submit('submit', 'تسجيل دخول', css_class='btn btn-primary login-button'),
                         ),
                 )))
