@@ -29,6 +29,63 @@
 <script src="{% static 'js/custom_js/password-toggle.min.js' %}"></script>
 <script src="{% static 'js/custom_js/password-validation.min.js' %}"></script>
 <script src="{% static 'js/custom_js/scroll-to-top.min.js' %}"></script>
+
+{# Meta pixel functions #}
+{#<script src="{% static 'js/facebook_pixel/complete_registerion.js' %}"></script>#}
+{#<script src="{% static 'js/facebook_pixel/add_to_cart.js' %}"></script>#}
+{#<script src="{% static 'js/facebook_pixel/inital_checkout.js' %}"></script>#}
+{#<script src="{% static 'js/facebook_pixel/complete_purchase.js' %}"></script>#}
+<script>
+    for (eve of ['htmx:afterSwap', 'DOMContentLoaded']) {
+
+        document.addEventListener(eve, function () {
+            registrationForm = document.getElementById('registrationForm')
+            if (registrationForm) {
+                registrationForm.addEventListener('submit', function (e) {
+                    // Track the CompleteRegistration event
+                    fbq('track', 'CompleteRegistration', {});
+                    fbq('track', 'Lead', {})
+                });
+            }
+        });
+    }
+</script>
+<script>
+    function trackAddToCart(
+        contentIds = [1, 2, 3, 4],
+        contentType = "product",
+        contents = [{'id': 'ABC123', 'quantity': 2}, {'id': 'XYZ789', 'quantity': 2}],
+        currency = "IQD",
+        value = 30.00
+    ) {
+        fbq('track', 'AddToCart', {
+            content_ids: contentIds,
+            content_type: contentType,
+            contents: contents,
+            currency: currency,
+            value: value
+        });
+    }
+
+</script>
+<script>
+    function CompletePurchase(totalValue) {
+        fbq('track', 'Purchase', {
+            currency: 'IQD',
+            value: totalValue
+        });
+    }
+</script>
+<script>
+    function InitalCheckout(
+        totalValue = 30
+    ) {
+        fbq('track', 'InitiateCheckout', {
+            currency: 'IQD',
+            value: totalValue
+        });
+    }
+</script>
 {% if messages %}
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -41,21 +98,3 @@
         });
     </script>
 {% endif %}
-<script>
-    
-function trackAddToCart(
-    contentIds = [1, 2, 3, 4],
-    contentType = "product",
-    contents = [{'id': 'ABC123', 'quantity': 2}, {'id': 'XYZ789', 'quantity': 2}],
-    currency = "USD",
-    value = 30.00
-) {
-    fbq('track', 'AddToCart', {
-        content_ids: contentIds,
-        content_type: contentType,
-        contents: contents,
-        currency: currency,
-        value: value
-    });
-}
-</script>
