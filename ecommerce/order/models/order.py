@@ -40,7 +40,7 @@ class OrderItem(models.Model):
         AR = 'AR', 'عربي'
         EN = 'EN', 'انكليزي'
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
-    item = models.ForeignKey(Item, on_delete=models.SET_NULL, null=True, blank=True) #this should be pointing to named item not volume
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, null=True, blank=True) #this should be pointing to named item not volume
     quantity = models.IntegerField(default=0)
     single_piece_price = MoneyField(max_digits=14, decimal_places=0, default_currency='IQD', default=8000)
     price = MoneyField(max_digits=14, decimal_places=0, default_currency='IQD', default=8000)
