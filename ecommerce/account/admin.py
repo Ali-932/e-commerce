@@ -13,9 +13,9 @@ class CustomUserAdmin(ModelAdmin):
         'username',
         'name',
         'phone_number_1',
-        'phone_number_2',
-        'is_staff',
-        'is_active'
+        'province',
+        'dob',
+        'address1'
     )
 
     list_filter = (
@@ -30,7 +30,6 @@ class CustomUserAdmin(ModelAdmin):
         'username',
         'name',
         'phone_number_1',
-        'phone_number_2',
     )
 
     # Control how fields are displayed when editing a user
@@ -42,7 +41,6 @@ class CustomUserAdmin(ModelAdmin):
                 'dob',
                 'address1',
                 'phone_number_1',
-                'phone_number_2',
                 'province'
             )
         }),
@@ -78,5 +76,5 @@ class CustomUserAdmin(ModelAdmin):
         }),
     )
 
-    ordering = ('username',)
+    ordering = ('-date_joined',)
 
