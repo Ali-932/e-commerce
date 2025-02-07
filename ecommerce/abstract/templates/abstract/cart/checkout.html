@@ -22,16 +22,19 @@
                                     <table class="table table-summary">
                                         <tbody>
                                         <tr class="summary-subtotal arabic-font" dir="rtl">
-                                            <td dir="ltr">{{ total_price|default:' لا توجد منتجات في السلة'|arabic_intcomma }}
+                                            <td dir="ltr">
+                                                {{ total_price|default:' لا توجد منتجات في السلة'|arabic_intcomma }}
                                                 {% if total_price %}IQD{% endif %}</td>
                                             <td>مجموع سعر المنتجات:</td>
                                         </tr><!-- End .summary-subtotal -->
                                         <tr class="summary-subtotal arabic-font" dir="rtl">
-                                            <td dir="ltr">{{ delivery_price.amount|arabic_intcomma|default:' ' }} IQD</td>
+                                            <td dir="ltr">{{ delivery_price.amount|arabic_intcomma|default:' ' }} IQD
+                                            </td>
                                             <td>التوصيل:</td>
                                         </tr><!-- End .summary-subtotal -->
                                         <tr class="summary-total arabic-font">
-                                            <td>{{ total_price|add:delivery_price.amount|default:' لا توجد منتجات في السلة'|arabic_intcomma }}
+                                            <td>
+                                                {{ total_price|add:delivery_price.amount|default:' لا توجد منتجات في السلة'|arabic_intcomma }}
                                                 {% if total_price %}IQD{% endif %}</td>
                                             <td>:المجموع الكلي</td>
                                         </tr><!-- End .summary-total -->
@@ -60,7 +63,8 @@
 
                                     <button type="submit"
                                             class="btn btn-outline-primary-2 btn-order btn-block"
-                                            id="confirmLink">
+                                            id="confirmLink"
+                                            data-total="{{ total_price|add:delivery_price.amount|default:0 }}">
                                         <span class="btn-text arabic-font">ثبت طلبك</span>
                                         <span class="btn-hover-text arabic-font">اضغظ لثبيت الطلب</span>
                                     </button>

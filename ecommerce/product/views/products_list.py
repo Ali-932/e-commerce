@@ -1,10 +1,9 @@
-
-from django.shortcuts import render
+from django.urls import reverse
 from django.urls import reverse
 from django_ratelimit.decorators import ratelimit
-from django.views.decorators.cache import cache_page
+
 from ecommerce.product.utils.list_products_utils import get_product_list_context
-from ecommerce.settings import MEDIUM_REQUESTS_RATE_LIMIT, HEAVY_REQUESTS_RATE_LIMIT, LIGHT_REQUESTS_RATE_LIMIT
+from ecommerce.settings import MEDIUM_REQUESTS_RATE_LIMIT, LIGHT_REQUESTS_RATE_LIMIT
 
 
 @ratelimit(key='ip', method='POST', rate=LIGHT_REQUESTS_RATE_LIMIT, block=True)
@@ -18,22 +17,22 @@ def list_products(request):
     }
 
     category = path_to_category.get(request.path, None)
-    context, template = get_product_list_context(request, 'products', category)
+    response = get_product_list_context(request, 'products', category)
 
-    return render(request, template, context)
+    return response
 
 
 @ratelimit(key='ip', method='POST', rate=LIGHT_REQUESTS_RATE_LIMIT, block=True)
 @ratelimit(key='ip', method='GET', rate=MEDIUM_REQUESTS_RATE_LIMIT, block=True)
 def list_special_offer_products(request):
-    context, template = get_product_list_context(request, 'special-offer')
+    response = get_product_list_context(request, 'special-offer')
 
-    return render(request, template, context)
+    return response
+
 
 @ratelimit(key='ip', method='POST', rate=LIGHT_REQUESTS_RATE_LIMIT, block=True)
 @ratelimit(key='ip', method='GET', rate=MEDIUM_REQUESTS_RATE_LIMIT, block=True)
 def list_package_products(request):
-    context, template = get_product_list_context(request, 'packages')
+    response = get_product_list_context(request, 'packages')
 
-    return render(request, template, context)
-
+    return response

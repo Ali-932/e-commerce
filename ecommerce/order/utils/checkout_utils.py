@@ -92,31 +92,10 @@ def order_save_and_modify_address(form, request, initial_address, template):
             Address.user = request.user
             Address.save()
         messages.success(request, 'تم ارسال الطلب بنجاح')
-        return redirect('orders:view_orders')
-
-
-def send_order_to_sheet(cleaned_data, order, user, items):
-    order_str = ''
-    languages = set()
-    for item in items:
-        order_str += f'{item.volume.product.name} vol {item.volume.volume_number} X {item.quantity} {item.language}) \n'
-        languages.add(item.language)
-    language = languages.pop() if len(languages) == 1 else 'MIXED'
-    order_dict = {
-        'data': {
-            'USER': user.username,
-            'INSTA': cleaned_data['instagram_username'],
-            'ADDRESS': cleaned_data['province'] + cleaned_data['address'],
-            'ORDER': order_str,
-            'LANG': language,
-            'Count': order.total_quantity,
-            'Deliv': float(Global.get_instance().delivery_price.amount),
-            'PRICE': float(order.total_price.amount),
-            'PHONE': f'{cleaned_data["phone"]} \n {cleaned_data["phone2"] or ""}',
-            'STATUS': order.status,
-            'DATE': str(order.updated_at.date()),
-            'CODE': str(order.uuid)
-        }}
-    post_to_sheet = requests.post(SPREADSHEET_API, json=order_dict)
-
-    return post_to_sheet.status_code
+        response = redirect('orders:view_orders')
+        order_data = {
+            'total_price': float(order.total_price.amount),
+            'number_items': order.total_quantity
+        }
+        response.set_cookie('ordered', json.dumps(order_data), max_age=10)
+        return response

@@ -54,7 +54,8 @@
                                                 </h3><!-- End .product-title -->
                                             </div><!-- End .product -->
                                         </td>
-                                        <td class="price-col">{{ item.single_piece_price.amount|arabic_intcomma }} IQD</td>
+                                        <td class="price-col">{{ item.single_piece_price.amount|arabic_intcomma }} IQD
+                                        </td>
                                         <td class="quantity-col">
                                             <div class="cart-product-quantity" style="margin-left: 2rem">
                                                 <span>{{ item.quantity }}</span>
@@ -87,7 +88,8 @@
                                 <table class="table table-summary">
                                     <tbody>
                                     <tr class="summary-subtotal arabic-font" dir="rtl">
-                                        <td dir="ltr">{{ total_price|default:' لا توجد منتجات في السلة'|arabic_intcomma }}
+                                        <td dir="ltr">
+                                            {{ total_price|default:' لا توجد منتجات في السلة'|arabic_intcomma }}
                                             {% if total_price %}IQD{% endif %}</td>
                                         <td>المجموع الكلي للمنتجات:</td>
                                     </tr><!-- End .summary-subtotal -->
@@ -96,7 +98,8 @@
                                         <td>التوصيل:</td>
                                     </tr><!-- End .summary-subtotal -->
                                     <tr class="summary-total arabic-font">
-                                        <td>{{ total_price|add:delivery_price.amount|arabic_intcomma|default:' لا توجد منتجات في السلة' }}
+                                        <td>
+                                            {{ total_price|add:delivery_price.amount|arabic_intcomma|default:' لا توجد منتجات في السلة' }}
                                             {% if total_price %}IQD{% endif %}</td>
                                         <td>:المجموع الكلي</td>
                                     </tr><!-- End .summary-total -->
@@ -110,12 +113,16 @@
                                    hx-select="#main_nav"
                                    hx-indicator="#main_nav"
                                    id="move_to_payment_btn"
-                                   class="btn btn-outline-primary-2 btn-order btn-block arabic-font p-3 {% if total_price|default:0 == 0 %} disabled {% endif %}">انتقل الى
-                                   الدفع</a>
+                                   hx-on::after-request="InitalCheckout({{ total_price }});"
+                                   hx-on:click="clearAuthorSelection()"
+                                   class="btn btn-outline-primary-2 btn-order btn-block arabic-font p-3 {% if total_price|default:0 == 0 %} disabled {% endif %}">انتقل
+                                    الى
+                                    الدفع</a>
                             </div><!-- End .summary -->
 
-                            <a href={% url 'product:list-products' %} class="btn btn-outline-dark-2 btn-block mb-3 py-3 arabic-font force-rtl"><span>ارجع الى خانة المنتجات</span><i
-                                    class="icon-refresh"></i></a>
+                            <a href={% url 'product:list-products' %} class="btn btn-outline-dark-2 btn-block mb-3 py-3
+                               arabic-font force-rtl"><span>ارجع الى خانة المنتجات</span><i
+                                class="icon-refresh"></i></a>
                         </aside><!-- End .col-lg-3 -->
                     </div><!-- End .row -->
                 </div><!-- End .container -->

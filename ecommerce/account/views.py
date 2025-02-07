@@ -23,7 +23,6 @@ def login_view(request):
             password = log_in_form.cleaned_data['password']
 
             user = authenticate(request, username=username, password=password)
-            print(user)
             if user is not None:
                 login(request, user)
                 messages.success(request, 'تم تسجيل الدخول بنجاح')
@@ -84,7 +83,9 @@ def register_view(request):
             user = authenticate(request, username=username, password=password)
             login(request, user)
             messages.success(request, 'تم تسجيل الدخول بنجاح')
-            return redirect('home:index')
+            response = redirect('home:index')
+            response.set_cookie('registered', '1', max_age=10)  # Cookie expires quickly
+            return response
         if sign_up_form.errors:
             # to avoid (dictionary changed size during iteration)
             errors_copy = list(sign_up_form.errors.items())

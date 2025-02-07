@@ -18,6 +18,7 @@ for (eve of ['htmx:afterSwap', 'DOMContentLoaded']) {
                     if (result.isConfirmed) {
                         document.getElementById('ConfirmForm').submit();
                     }
+
                 });
             });
         }

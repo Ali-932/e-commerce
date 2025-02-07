@@ -1,3 +1,5 @@
+import json
+
 from django.db import transaction
 from django.db import transaction
 from django.shortcuts import render, redirect
@@ -46,4 +48,12 @@ def checkout_page(request):
         'form': form,
         **common
     }
-    return render(request, template, context)
+    response = render(request, template, context)
+    response['HX-Trigger'] = json.dumps({
+        "InitalCheckout": True,
+        "params": {
+            "totalCost": float(common['total_price']) + float(common['delivery_price'].amount),
+        }
+    })
+
+    return response

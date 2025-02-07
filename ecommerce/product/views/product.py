@@ -1,3 +1,5 @@
+import json
+
 from django.db.models import Max
 from django.shortcuts import render
 from django_ratelimit.decorators import ratelimit
@@ -20,13 +22,24 @@ def product(request, pk: int):
                                         'abstract/product/product_single/product.html',
                                         'abstract/product/product_list/product_view.html')
         common = common_views(request)
+
         context = {
             'volume': volume,
             'form': form,
+            'post_success': True,
             **common
         }
-
-        return render(request, template, context)
+        response = render(request, template, context)
+        # For meta ad pixel
+        trigger_payload = {
+            "ProductPostSuccess": True,
+            "params": {
+                "volume_price": int(volume.price.amount),
+                "volume_id": volume.id,
+            }
+        }
+        response['HX-Trigger'] = json.dumps(trigger_payload)
+        return response
     # main function for the view
 
     volume = Item.objects.filter(pk=pk).select_related('product')
@@ -69,5 +82,12 @@ def product(request, pk: int):
         'all_volumes': all_volumes,
         **common
     }
-
-    return render(request, template, context)
+    response = render(request, template, context)
+    # facebook pixel
+    response['HX-Trigger'] = json.dumps({
+        "ProductView": True,
+        "params": {
+            "volume_id": volume.id,
+        }
+    })
+    return response
