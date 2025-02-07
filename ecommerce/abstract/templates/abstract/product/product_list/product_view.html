@@ -25,7 +25,7 @@
                    hx-select-oob="#main_nav" {# Same as hx select becase this attribute is inhertied from the form
                                                 and it causing problems when clicking on the product pasge#}
                    hx-indicator="#ht-spp, #pagination_pointers, #pagination_pre, #pagination_next"
-                   hx-on::after-request="$(window).scrollTop(0);"
+                   hx-on::after-request="$(window).scrollTop(0); ViewContent();"
                    hx-on:click="clearAuthorSelection();"
 
                 >

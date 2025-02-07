@@ -28,6 +28,7 @@
                         hx-get="{% url 'product:list-products' %}"
                         hx-select="#main_nav"
                         hx-indicator="#main_nav"
+                        hx-on::after-request="MadeSearch(document.getElementById('q').value);"
                         {#                        hx-on:click="clearAuthorSelection()"#}
                 >
                     <div class="header-search-wrapper search-wrapper-wide">

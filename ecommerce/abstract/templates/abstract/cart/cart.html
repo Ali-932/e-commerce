@@ -113,7 +113,7 @@
                                    hx-select="#main_nav"
                                    hx-indicator="#main_nav"
                                    id="move_to_payment_btn"
-                                   hx-on::after-request="trackAddToCart({{ total_price }})"
+                                   hx-on::after-request="InitalCheckout({{ total_price }});"
                                    hx-on:click="clearAuthorSelection()"
                                    class="btn btn-outline-primary-2 btn-order btn-block arabic-font p-3 {% if total_price|default:0 == 0 %} disabled {% endif %}">انتقل
                                     الى
