@@ -1,6 +1,8 @@
+import json
+
 from django.contrib import messages
-from django.db.models import Q, F, OuterRef, Subquery, Count
-from django.db.models.functions import Coalesce
+from django.db.models import Q
+from django.shortcuts import render
 
 from ecommerce.abstract.utlites.base_function import common_views
 from ecommerce.abstract.utlites.menu_nums import menu_nums, DemographicChoices, ThemeChoices, GenresChoices
@@ -23,7 +25,18 @@ def get_product_list_context(request, view_page='products', category=None):
                 'form': form,
                 **common
             }
-            return context, template
+            response = render(request, template, context)
+            # For meta ad pixel
+            trigger_payload = {
+                "ProductPostSuccess": True,
+                "params": {
+                    "volume_price": int(volume.price.amount),
+                    "volume_id": volume.id,
+                }
+            }
+            response['HX-Trigger'] = json.dumps(trigger_payload)
+            return response
+
         elif not form.is_valid():
             print(form.errors)
             messages.error(request, 'حدث خطا اثناء اضافة العنصر')
@@ -88,6 +101,7 @@ def get_product_list_context(request, view_page='products', category=None):
             items = get_search_results(items, ['product__name', 'product__title_english', 'product__title_arabic',
                                                'product__title_japanese', 'product__title_synonyms', 'product__author'],
                                        q)
+
         if demo := request.GET.getlist('demo', ''):
             filters &= Q(product__demographics__overlap=demo)
         if theme := request.GET.getlist('theme', ''):
@@ -148,4 +162,13 @@ def get_product_list_context(request, view_page='products', category=None):
         **common
     }
 
-    return context, template
+    response = render(request, template, context)
+    #facebook pixel
+    if q := request.GET.get('q', ''):
+        response['HX-Trigger'] = json.dumps({
+            "SearchView": True,
+            "params": {
+                "q": q,
+            }
+        })
+    return response

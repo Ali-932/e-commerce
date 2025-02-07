@@ -9,8 +9,8 @@
             hx-select="#product_view_dev"
             hx-select-oob="#dropdown_cart, #dropdown_cart_mobile"
             hx-swap="afterbegin"
+            id="product-form-view"
             style="height: 100%"
-            hx-on::after-request="trackAddToCart([{{ volume.id }}], 'product', [{'id': '{{ volume.id }}', 'quantity': 1}], 'IQD', {{ volume.price.amount }});"
     >
         {% csrf_token %}
         <div class="hx-disabled product product-7 text-center" id="ht-spp">
@@ -25,7 +25,6 @@
                    hx-select-oob="#main_nav" {# Same as hx select becase this attribute is inhertied from the form
                                                 and it causing problems when clicking on the product pasge#}
                    hx-indicator="#ht-spp, #pagination_pointers, #pagination_pre, #pagination_next"
-                   hx-on::after-request="$(window).scrollTop(0); ViewContent();"
                    hx-on:click="clearAuthorSelection();"
 
                 >
@@ -142,15 +141,14 @@
                     <div style="display: flex; align-items: center;">
                         <input type="hidden" name="price" id="price_id" value="{{ volume.price.amount }}">
                         {% render_discounted_price volume.price.amount %}
-{#                        <input type="text"#}
-{#                               style="pointer-events: none; width: 50px;"#}
-{#                               {% render_discounted_price volume.price.amount %}#}
-{#                               value={% render_discounted_price volume.price.amount %}>#}
+                        {#                        <input type="text"#}
+                        {#                               style="pointer-events: none; width: 50px;"#}
+                        {#                               {% render_discounted_price volume.price.amount %}#}
+                        {#                               value={% render_discounted_price volume.price.amount %}>#}
                     </div>
                 </div><!-- End .product-price -->
             </div><!-- End .product-body -->
         </div><!-- End .product -->
 
     </form>
-
 </div>

@@ -16,9 +16,6 @@ for (eve of ['htmx:afterSwap', 'DOMContentLoaded']) {
                     customClass: 'arabic-font p-2 h6'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        let confirmLink = document.getElementById('confirmLink');
-                        let totalValue = parseFloat(confirmLink.dataset.total);
-                        CompletePurchase(totalValue);
                         document.getElementById('ConfirmForm').submit();
                     }
 

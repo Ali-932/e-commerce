@@ -353,8 +353,6 @@
 
             document.addEventListener(eve, function () {
                 const sidebar = document.getElementById('volumes-sidebar');
-                console.log(sidebar.scrollTop)
-
                 // Store scroll position before HTMX request
                 document.body.addEventListener('htmx:beforeRequest', function (evt) {
                     sessionStorage.setItem('sidebarScrollPosition', sidebar.scrollTop);
@@ -374,5 +372,6 @@
         }
 
     </script>
+
 {% endblock %}
 
