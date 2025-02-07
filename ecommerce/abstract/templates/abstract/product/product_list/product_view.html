@@ -10,6 +10,7 @@
             hx-select-oob="#dropdown_cart, #dropdown_cart_mobile"
             hx-swap="afterbegin"
             style="height: 100%"
+            hx-on::after-request="trackAddToCart();"
     >
         {% csrf_token %}
         <div class="hx-disabled product product-7 text-center" id="ht-spp">
